@@ -1,4 +1,6 @@
 *.swp
+.idea*
+fixtures/vcr_cassettes/*
 
 README.html
 collmex-ruby-0.1.0.gem
