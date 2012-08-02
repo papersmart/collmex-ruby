@@ -81,7 +81,6 @@ module Collmex
 end
 
 
-
 module Collmex
   module Api
     class Line
@@ -176,11 +175,6 @@ module Collmex
 end
 
 
-
-
-
-
-
 module Collmex
   module Api
 
@@ -188,9 +182,55 @@ module Collmex
       def self.specification
           [
               { name: :identifyer,    type: :string,    fix: "LOGIN"   },
-              { name: :username,      type: :integer },
-              { name: :password,      type: :integer }
+              { name: :benutzer,      type: :integer },
+              { name: :passwort,      type: :integer }
           ]
+      end
+    end
+
+    class CustomerGet < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Kunden
+      def self.specification
+        [
+            { name: :identifyer       , type: :string    , fix: "CUSTOMER_GET"    },
+            { name: :id               , type: :integer                            },
+            { name: :company_id       , type: :integer   , default: 1             },
+            { name: :searchtext       , type: :string                             },
+            { name: :due_to_review    , type: :integer                            },
+            { name: :zip_code         , type: :string                             },
+            { name: :adress_group     , type: :integer                            },
+            { name: :price_group      , type: :integer                            },
+            { name: :discout_group    , type: :integer                            },
+            { name: :agent            , type: :integer                            },
+            { name: :only_changed     , type: :integer                            },
+            { name: :system_name      , type: :string                             },
+            { name: :inactive         , type: :integer                            },
+        ]
+
+
+      end
+    end
+
+    class AccdocGet < Line
+      def self.specification
+        [
+            { name: :identifyer       , type: :string    , fix: "ACCDOC_GET"     },
+            { name: :company_id       , type: :integer   , default: 1             },
+            { name: :business_year    , type: :integer                            },
+            { name: :id               , type: :integer                            },
+            { name: :account_id       , type: :integer                            },
+            { name: :cost_unit        , type: :integer                            },
+            { name: :customer_id      , type: :integer                            },
+            { name: :provider_id      , type: :integer                            },
+            { name: :asset_id         , type: :integer                            },
+            { name: :invoice_id       , type: :integer                            },
+            { name: :jorney_id        , type: :integer                            },
+            { name: :text             , type: :string                             },
+            { name: :date_start       , type: :date                               },
+            { name: :date_end         , type: :date                               },
+            { name: :cancellattion    , type: :integer                            },
+            { name: :changed_only     , type: :integer                            },
+            { name: :system_name      , type: :string                             },
+        ]
       end
     end
 
@@ -204,7 +244,7 @@ module Collmex
             { name: :title            , type: :string                             },
             { name: :firstname        , type: :string                             },
             { name: :lastname         , type: :string                             },
-            { name: :comapyn          , type: :string                             },
+            { name: :company          , type: :string                             },
             { name: :department       , type: :string                             },
             { name: :street           , type: :string                             },
             { name: :zipcode          , type: :string                             },
@@ -275,52 +315,6 @@ module Collmex
         else
           :undefined
         end
-      end
-    end
-
-    class CustomerGet < Line
-      def self.specification
-          [
-            { name: :identifyer       , type: :string    , fix: "CUSTOMER_GET"    },
-            { name: :id               , type: :integer                            },
-            { name: :company_id       , type: :integer   , default: 1             },
-            { name: :searchtext       , type: :string                             },
-            { name: :due_to_review    , type: :integer                            },
-            { name: :zip_code         , type: :string                             },
-            { name: :adress_group     , type: :integer                            },
-            { name: :price_group      , type: :integer                            },
-            { name: :discout_group    , type: :integer                            },
-            { name: :agent            , type: :integer                            },
-            { name: :only_changed     , type: :integer                            },
-            { name: :system_name      , type: :string                             },
-            { name: :inactive         , type: :integer                            },
-          ]
-
-
-      end
-    end
-
-    class AccdocGet < Line
-      def self.specification
-          [
-            { name: :identifyer       , type: :string    , fix: "ACCDOC_GET"     },
-            { name: :company_id       , type: :integer   , default: 1             },
-            { name: :business_year    , type: :integer                            },
-            { name: :id               , type: :integer                            },
-            { name: :account_id       , type: :integer                            },
-            { name: :cost_unit        , type: :integer                            },
-            { name: :customer_id      , type: :integer                            },
-            { name: :provider_id      , type: :integer                            },
-            { name: :asset_id         , type: :integer                            },
-            { name: :invoice_id       , type: :integer                            },
-            { name: :jorney_id        , type: :integer                            },
-            { name: :text             , type: :string                             },
-            { name: :date_start       , type: :date                               },
-            { name: :date_end         , type: :date                               },
-            { name: :cancellattion    , type: :integer                            },
-            { name: :changed_only     , type: :integer                            },
-            { name: :system_name      , type: :string                             },
-          ]
       end
     end
 

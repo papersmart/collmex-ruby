@@ -16,7 +16,6 @@ filled_array = ["BLA", 20, 5.1, 10, Date.parse("12.10.1985")]
 
 filled_csv   = "BLA;0,20;5,10;10;19851012\n"
 
-
 describe Collmex::Api do
 
   describe ".is_a_collmex_api_line_obj?" do
@@ -126,12 +125,13 @@ describe Collmex::Api do
 
               { type: :float,       input: "2",               outcome: 2.0 },
               { type: :float,       input: 2,                 outcome: 2.0 },
-              { type: :float,       input: 2.2,               outcome: 2.2 },
               { type: :float,       input: "2,0",             outcome: 2.0 },
               { type: :float,       input: "2.0",             outcome: 2.0 },
+              { type: :float,       input: 2.0,               outcome: 2.0 },
+              { type: :float,       input: "2.2",             outcome: 2.2 },
+              { type: :float,       input: 2.2,               outcome: 2.2 },
               { type: :float,       input: "2,3",             outcome: 2.3 },
               { type: :float,       input: "-2,3",            outcome: -2.3 },
-              { type: :float,       input: "2.2",             outcome: 2.2 },
               { type: :float,       input: nil,               outcome: nil },
 
               { type: :currency,    input: "2",               outcome: 2 },
@@ -143,7 +143,7 @@ describe Collmex::Api do
               { type: :currency,    input: "2,0",             outcome: 200 },
               { type: :currency,    input: "2,1",             outcome: 210 },
               { type: :currency,    input: "-2,1",            outcome: -210 },
-              { type: :currency,    input: "-2,1",            outcome: -210 },
+              { type: :currency,    input: "-2.1",            outcome: -210 },
               { type: :currency,    input: "20,00",           outcome: 2000 },
               { type: :currency,    input: "20,12",           outcome: 2012 },
               { type: :currency,    input: "-20,12",          outcome: -2012 },
@@ -335,14 +335,16 @@ describe Collmex::Api::Line do
   it_behaves_like "Collmex Api Command" 
 end
 
+
+
 describe Collmex::Api::Login do
-  subject { Collmex::Api::Login.new({:username => 12, :password => 34}) }
+  subject { Collmex::Api::Login.new({:benutzer => 12, :passwort => 34}) }
   it_behaves_like "Collmex Api Command" 
   spec =  
           [
               { name: :identifyer,    type: :string,    fix: "LOGIN"   },
-              { name: :username,      type: :integer },
-              { name: :password,      type: :integer }
+              { name: :benutzer,      type: :integer },
+              { name: :passwort,      type: :integer }
           ]
 
   specify { described_class.specification.should eql spec } 
@@ -351,7 +353,7 @@ describe Collmex::Api::Login do
   specify { subject.to_a.should eql output }
 end
 
-describe Collmex::Api::CustomerGet do
+describe Collmex::Api::CustomerGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Kunden
   it_behaves_like "Collmex Api Command" 
 
   spec = 
@@ -415,7 +417,6 @@ describe Collmex::Api::AccdocGet do
   specify { subject.to_a.should eql output }
 end
 
-
 describe Collmex::Api::Cmxknd do 
 
   it_behaves_like "Collmex Api Command" 
@@ -428,7 +429,7 @@ describe Collmex::Api::Cmxknd do
             { name: :title            , type: :string                             },
             { name: :firstname        , type: :string                             },
             { name: :lastname         , type: :string                             },
-            { name: :comapyn          , type: :string                             },
+            { name: :company          , type: :string                             },
             { name: :department       , type: :string                             },
             { name: :street           , type: :string                             },
             { name: :zipcode          , type: :string                             },
@@ -474,7 +475,6 @@ describe Collmex::Api::Cmxknd do
 
   specify { subject.to_a.should eql output }
 end
-
 
 describe Collmex::Api::Message do 
 
@@ -532,7 +532,6 @@ describe Collmex::Api::Message do
 
 end
 
-
 describe Collmex::Api::Accdoc do   # fixme ACCDOC
 
   it_behaves_like "Collmex Api Command" 
@@ -577,6 +576,4 @@ describe Collmex::Api::Accdoc do   # fixme ACCDOC
 
   specify { subject.to_a.should eql output }
 end
-
-
 

@@ -41,8 +41,11 @@ describe "CollmexIntegration" do
 
    # ap  Collmex::Api::AccdocGet.new("ASDASD;2;2")
 
-    request = Collmex::Request.run do
-      enqueue :customer_get, id: 9999
+    request = ""
+    VCR.use_cassette('standard_request2') do
+      request = Collmex::Request.run do
+        enqueue :customer_get, id: 9999
+      end
     end
 
     #ap request.response
