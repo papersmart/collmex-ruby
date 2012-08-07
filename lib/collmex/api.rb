@@ -181,17 +181,101 @@ module Collmex
     class Login < Line
       def self.specification
           [
-              { name: :identifyer,    type: :string,    fix: "LOGIN"   },
+              { name: :identifier,    type: :string,    fix: "LOGIN"   },
               { name: :benutzer,      type: :integer },
               { name: :passwort,      type: :integer }
           ]
       end
     end
 
+    class AccdocGet < Line
+      def self.specification
+        [
+            { name: :identifier       , type: :string    , fix: "ACCDOC_GET"     },
+            { name: :company_id       , type: :integer   , default: 1             },
+            { name: :business_year    , type: :integer                            },
+            { name: :id               , type: :integer                            },
+            { name: :account_id       , type: :integer                            },
+            { name: :cost_unit        , type: :integer                            },
+            { name: :customer_id      , type: :integer                            },
+            { name: :provider_id      , type: :integer                            },
+            { name: :asset_id         , type: :integer                            },
+            { name: :invoice_id       , type: :integer                            },
+            { name: :journey_id       , type: :integer                            },
+            { name: :text             , type: :string                             },
+            { name: :date_start       , type: :date                               },
+            { name: :date_end         , type: :date                               },
+            { name: :cancellation     , type: :integer                            },
+            { name: :changed_only     , type: :integer                            },
+            { name: :system_name      , type: :string                             },
+        ]
+      end
+    end
+
+    class Accdoc < Line
+      def self.specification
+        [
+            { name: :identifier        , type: :string    , fix: "ACCDOC"          },
+            { name: :company_id        , type: :integer   , default: 1             },
+            { name: :business_year     , type: :integer                            },
+            { name: :accdoc_id         , type: :integer                            },
+            { name: :accdoc_date       , type: :date                               },
+            { name: :accounted_date    , type: :date                               },
+            { name: :test              , type: :string                             },
+            { name: :accdoc_position_id, type: :integer                            },
+            { name: :account_id        , type: :integer                            },
+            { name: :account_name      , type: :string                             },
+            { name: :should_have       , type: :integer                            },
+            { name: :amount            , type: :currency                           },
+            { name: :customer_id       , type: :integer                            },
+            { name: :customer_name     , type: :string                             },
+            { name: :provider_id       , type: :integer                            },
+            { name: :provider_name     , type: :string                             },
+            { name: :asset_id          , type: :integer                            },
+            { name: :asset_name        , type: :string                             },
+            { name: :canceled_accdoc   , type: :integer                            },
+            { name: :cost_unit         , type: :string                             },
+            { name: :invoice_id        , type: :string                             },
+            { name: :customer_order_id , type: :integer                            },
+            { name: :journey_id        , type: :integer                            },
+            { name: :belongs_to_id     , type: :integer                            },
+            { name: :belongs_to_year   , type: :integer                            },
+            { name: :belongs_to_pos    , type: :integer                            },
+        ]
+      end
+    end
+
+    class InvoicePaymentGet < Line
+      def self.specification
+        [
+            { name: :identifier       , type: :string    , fix: "INVOICE_PAYMENT_GET"     },
+            { name: :company_id       , type: :integer   , default: 1             },
+            { name: :invoice_id       , type: :integer                            },
+            { name: :changed_only     , type: :integer                            },
+            { name: :system_name      , type: :string                             },
+        ]
+      end
+    end
+
+    class InvoicePayment < Line
+      def self.specification
+        [
+            { name: :identifier       , type: :string    , fix: "INVOICE_PAYMENT"     },
+            { name: :invoice_id       , type: :integer                            },
+            { name: :invoice_date     , type: :date                               },
+            { name: :amount_paid      , type: :integer                            },
+            { name: :amount_reduced   , type: :integer                            },
+            { name: :business_year    , type: :integer                            },
+            { name: :accdoc_id        , type: :integer                            },
+            { name: :accdoc_position  , type: :integer                            },
+        ]
+      end
+    end
+
     class CustomerGet < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Kunden
       def self.specification
         [
-            { name: :identifyer       , type: :string    , fix: "CUSTOMER_GET"    },
+            { name: :identifier       , type: :string    , fix: "CUSTOMER_GET"    },
             { name: :id               , type: :integer                            },
             { name: :company_id       , type: :integer   , default: 1             },
             { name: :searchtext       , type: :string                             },
@@ -210,34 +294,10 @@ module Collmex
       end
     end
 
-    class AccdocGet < Line
-      def self.specification
-        [
-            { name: :identifyer       , type: :string    , fix: "ACCDOC_GET"     },
-            { name: :company_id       , type: :integer   , default: 1             },
-            { name: :business_year    , type: :integer                            },
-            { name: :id               , type: :integer                            },
-            { name: :account_id       , type: :integer                            },
-            { name: :cost_unit        , type: :integer                            },
-            { name: :customer_id      , type: :integer                            },
-            { name: :provider_id      , type: :integer                            },
-            { name: :asset_id         , type: :integer                            },
-            { name: :invoice_id       , type: :integer                            },
-            { name: :jorney_id        , type: :integer                            },
-            { name: :text             , type: :string                             },
-            { name: :date_start       , type: :date                               },
-            { name: :date_end         , type: :date                               },
-            { name: :cancellattion    , type: :integer                            },
-            { name: :changed_only     , type: :integer                            },
-            { name: :system_name      , type: :string                             },
-        ]
-      end
-    end
-
     class Cmxknd < Line
       def self.specification
           [
-            { name: :identifyer       , type: :string    , fix: "CMXKND"          },
+            { name: :identifier       , type: :string    , fix: "CMXKND"          },
             { name: :customer_id      , type: :integer                            },
             { name: :company_id       , type: :integer   , default: 1             },
             { name: :salutation       , type: :string                             },
@@ -287,7 +347,7 @@ module Collmex
     class Message < Line
       def self.specification
           [
-            { name: :identifyer       , type: :string    , fix: "MESSAGE"         },
+            { name: :identifier       , type: :string    , fix: "MESSAGE"         },
             { name: :type             , type: :string                             },
             { name: :id               , type: :integer                            },
             { name: :text             , type: :string                             },
@@ -315,39 +375,6 @@ module Collmex
         else
           :undefined
         end
-      end
-    end
-
-    class Accdoc < Line
-      def self.specification
-          [
-            { name: :identifyer       , type: :string    , fix: "ACCDOC"          },
-            { name: :company_id       , type: :integer   , default: 1             },
-            { name: :business_year    , type: :integer                            },
-            { name: :id               , type: :integer                            },
-            { name: :accdoc_date      , type: :date                               },
-            { name: :accounted_date   , type: :date                               },
-            { name: :test             , type: :string                             },
-            { name: :position_id      , type: :integer                            },
-            { name: :account_id       , type: :integer                            },
-            { name: :account_name     , type: :string                             },
-            { name: :should_have      , type: :integer                            },
-            { name: :amount           , type: :currency                           },
-            { name: :customer_id      , type: :integer                            },
-            { name: :customer_name    , type: :string                             },
-            { name: :provider_id      , type: :integer                            },
-            { name: :provider_name    , type: :string                             },
-            { name: :asset_id         , type: :integer                            },
-            { name: :asset_name       , type: :string                             },
-            { name: :canceled_accdoc  , type: :integer                            },
-            { name: :cost_unit        , type: :string                             },
-            { name: :invoice_id       , type: :string                             },
-            { name: :customer_order_id, type: :integer                            },
-            { name: :jorney_id        , type: :integer                            },
-            { name: :belongs_to_id    , type: :integer                            },
-            { name: :belongs_to_year  , type: :integer                            },
-            { name: :belongs_to_pos   , type: :integer                            },
-          ]
       end
     end
 

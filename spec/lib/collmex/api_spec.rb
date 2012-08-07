@@ -76,7 +76,6 @@ describe Collmex::Api do
     end
   end
 
-
   describe ".parse_line" do
     context "when given a valid line" do
       context "as an array" do
@@ -342,7 +341,7 @@ describe Collmex::Api::Login do
   it_behaves_like "Collmex Api Command" 
   spec =  
           [
-              { name: :identifyer,    type: :string,    fix: "LOGIN"   },
+              { name: :identifier,    type: :string,    fix: "LOGIN"   },
               { name: :benutzer,      type: :integer },
               { name: :passwort,      type: :integer }
           ]
@@ -353,12 +352,141 @@ describe Collmex::Api::Login do
   specify { subject.to_a.should eql output }
 end
 
+describe Collmex::Api::AccdocGet do
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier       , type: :string    , fix: "ACCDOC_GET"     },
+          { name: :company_id       , type: :integer   , default: 1             },
+          { name: :business_year    , type: :integer                            },
+          { name: :id               , type: :integer                            },
+          { name: :account_id       , type: :integer                            },
+          { name: :cost_unit        , type: :integer                            },
+          { name: :customer_id      , type: :integer                            },
+          { name: :provider_id      , type: :integer                            },
+          { name: :asset_id         , type: :integer                            },
+          { name: :invoice_id       , type: :integer                            },
+          { name: :journey_id       , type: :integer                            },
+          { name: :text             , type: :string                             },
+          { name: :date_start       , type: :date                               },
+          { name: :date_end         , type: :date                               },
+          { name: :cancellation     , type: :integer                            },
+          { name: :changed_only     , type: :integer                            },
+          { name: :system_name      , type: :string                             },
+      ]
+
+
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1} ) }
+
+  output = ["ACCDOC_GET", 1, nil, 1, nil, nil, nil, nil, nil, nil, nil, "", nil, nil, nil, nil, ""]
+
+  specify { subject.to_a.should eql output }
+end
+
+describe Collmex::Api::Accdoc do   # fixme ACCDOC
+
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier        , type: :string    , fix: "ACCDOC"          },
+          { name: :company_id        , type: :integer   , default: 1             },
+          { name: :business_year     , type: :integer                            },
+          { name: :accdoc_id         , type: :integer                            },
+          { name: :accdoc_date       , type: :date                               },
+          { name: :accounted_date    , type: :date                               },
+          { name: :test              , type: :string                             },
+          { name: :accdoc_position_id, type: :integer                            },
+          { name: :account_id        , type: :integer                            },
+          { name: :account_name      , type: :string                             },
+          { name: :should_have       , type: :integer                            },
+          { name: :amount            , type: :currency                           },
+          { name: :customer_id       , type: :integer                            },
+          { name: :customer_name     , type: :string                             },
+          { name: :provider_id       , type: :integer                            },
+          { name: :provider_name     , type: :string                             },
+          { name: :asset_id          , type: :integer                            },
+          { name: :asset_name        , type: :string                             },
+          { name: :canceled_accdoc   , type: :integer                            },
+          { name: :cost_unit         , type: :string                             },
+          { name: :invoice_id        , type: :string                             },
+          { name: :customer_order_id , type: :integer                            },
+          { name: :journey_id        , type: :integer                            },
+          { name: :belongs_to_id     , type: :integer                            },
+          { name: :belongs_to_year   , type: :integer                            },
+          { name: :belongs_to_pos    , type: :integer                            },
+      ]
+
+
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {accdoc_id: 1} ) }
+
+  output = ["ACCDOC", 1, nil, 1, nil, nil, "", nil, nil, "", nil, nil, nil, "", nil, "", nil, "", nil, "", "", nil, nil, nil, nil, nil]
+
+  specify { subject.to_a.should eql output }
+end
+
+describe Collmex::Api::InvoicePaymentGet do
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier       , type: :string    , fix: "INVOICE_PAYMENT_GET"     },
+          { name: :company_id       , type: :integer   , default: 1             },
+          { name: :invoice_id       , type: :integer                            },
+          { name: :changed_only     , type: :integer                            },
+          { name: :system_name      , type: :string                             },
+      ]
+
+
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1} ) }
+
+  output = ["INVOICE_PAYMENT_GET", 1, nil, nil, ""]
+
+  specify { subject.to_a.should eql output }
+end
+
+describe Collmex::Api::InvoicePayment do
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier       , type: :string    , fix: "INVOICE_PAYMENT"     },
+          { name: :invoice_id       , type: :integer                            },
+          { name: :invoice_date     , type: :date                               },
+          { name: :amount_paid      , type: :integer                            },
+          { name: :amount_reduced   , type: :integer                            },
+          { name: :business_year    , type: :integer                            },
+          { name: :accdoc_id        , type: :integer                            },
+          { name: :accdoc_position  , type: :integer                            },
+      ]
+
+
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {invoice_id: 1} ) }
+
+  output = ["INVOICE_PAYMENT", 1, nil, nil, nil, nil, nil, nil]
+
+  specify { subject.to_a.should eql output }
+end
+
 describe Collmex::Api::CustomerGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Kunden
   it_behaves_like "Collmex Api Command" 
 
   spec = 
           [
-            { name: :identifyer       , type: :string    , fix: "CUSTOMER_GET"    },
+            { name: :identifier       , type: :string    , fix: "CUSTOMER_GET"    },
             { name: :id               , type: :integer                            },
             { name: :company_id       , type: :integer   , default: 1             },
             { name: :searchtext       , type: :string                             },
@@ -382,47 +510,12 @@ describe Collmex::Api::CustomerGet do # http://www.collmex.de/cgi-bin/cgi.exe?10
   specify { subject.to_a.should eql output }
 end
 
-describe Collmex::Api::AccdocGet do
-  it_behaves_like "Collmex Api Command" 
-
-  spec = 
-          [
-            { name: :identifyer       , type: :string    , fix: "ACCDOC_GET"     },
-            { name: :company_id       , type: :integer   , default: 1             },
-            { name: :business_year    , type: :integer                            },
-            { name: :id               , type: :integer                            },
-            { name: :account_id       , type: :integer                            },
-            { name: :cost_unit        , type: :integer                            },
-            { name: :customer_id      , type: :integer                            },
-            { name: :provider_id      , type: :integer                            },
-            { name: :asset_id         , type: :integer                            },
-            { name: :invoice_id       , type: :integer                            },
-            { name: :jorney_id        , type: :integer                            },
-            { name: :text             , type: :string                             },
-            { name: :date_start       , type: :date                               },
-            { name: :date_end         , type: :date                               },
-            { name: :cancellattion    , type: :integer                            },
-            { name: :changed_only     , type: :integer                            },
-            { name: :system_name      , type: :string                             },
-          ]
-
-
-
-  specify { described_class.specification.should eql spec } 
-
-  subject { described_class.new( {id: 1} ) }
-
-  output = ["ACCDOC_GET", 1, nil, 1, nil, nil, nil, nil, nil, nil, nil, "", nil, nil, nil, nil, ""]
-
-  specify { subject.to_a.should eql output }
-end
-
-describe Collmex::Api::Cmxknd do 
+describe Collmex::Api::Cmxknd do
 
   it_behaves_like "Collmex Api Command" 
   spec = 
           [
-            { name: :identifyer       , type: :string    , fix: "CMXKND"          },
+            { name: :identifier       , type: :string    , fix: "CMXKND"          },
             { name: :customer_id      , type: :integer                            },
             { name: :company_id       , type: :integer   , default: 1             },
             { name: :salutation       , type: :string                             },
@@ -482,7 +575,7 @@ describe Collmex::Api::Message do
 
   spec = 
           [
-            { name: :identifyer       , type: :string    , fix: "MESSAGE"         },
+            { name: :identifier       , type: :string    , fix: "MESSAGE"         },
             { name: :type             , type: :string                             },
             { name: :id               , type: :integer                            },
             { name: :text             , type: :string                             },
@@ -531,49 +624,3 @@ describe Collmex::Api::Message do
 
 
 end
-
-describe Collmex::Api::Accdoc do   # fixme ACCDOC
-
-  it_behaves_like "Collmex Api Command" 
-
-  spec = 
-          [
-            { name: :identifyer       , type: :string    , fix: "ACCDOC"          },
-            { name: :company_id       , type: :integer   , default: 1             },
-            { name: :business_year    , type: :integer                            },
-            { name: :id               , type: :integer                            },
-            { name: :accdoc_date      , type: :date                               },
-            { name: :accounted_date   , type: :date                               },
-            { name: :test             , type: :string                             },
-            { name: :position_id      , type: :integer                            },
-            { name: :account_id       , type: :integer                            },
-            { name: :account_name     , type: :string                             },
-            { name: :should_have      , type: :integer                            },
-            { name: :amount           , type: :currency                           },
-            { name: :customer_id      , type: :integer                            },
-            { name: :customer_name    , type: :string                             },
-            { name: :provider_id      , type: :integer                            },
-            { name: :provider_name    , type: :string                             },
-            { name: :asset_id         , type: :integer                            },
-            { name: :asset_name       , type: :string                             },
-            { name: :canceled_accdoc  , type: :integer                            },
-            { name: :cost_unit        , type: :string                             },
-            { name: :invoice_id       , type: :string                             },
-            { name: :customer_order_id, type: :integer                            },
-            { name: :jorney_id        , type: :integer                            },
-            { name: :belongs_to_id    , type: :integer                            },
-            { name: :belongs_to_year  , type: :integer                            },
-            { name: :belongs_to_pos   , type: :integer                            },
-          ]
-
-
-
-  specify { described_class.specification.should eql spec } 
-
-  subject { described_class.new( {id: 1} ) }
-
-  output = ["ACCDOC", 1, nil, 1, nil, nil, "", nil, nil, "", nil, nil, nil, "", nil, "", nil, "", nil, "", "", nil, nil, nil, nil, nil]
-
-  specify { subject.to_a.should eql output }
-end
-
