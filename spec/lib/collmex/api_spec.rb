@@ -352,7 +352,7 @@ describe Collmex::Api::Login do
   specify { subject.to_a.should eql output }
 end
 
-describe Collmex::Api::AccdocGet do
+describe Collmex::Api::AccdocGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Buchhaltungsbelege
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -387,7 +387,7 @@ describe Collmex::Api::AccdocGet do
   specify { subject.to_a.should eql output }
 end
 
-describe Collmex::Api::Accdoc do   # fixme ACCDOC
+describe Collmex::Api::Accdoc do   # fixme ACCDOC # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Buchhaltungsbelege
 
   it_behaves_like "Collmex Api Command"
 
@@ -432,7 +432,7 @@ describe Collmex::Api::Accdoc do   # fixme ACCDOC
   specify { subject.to_a.should eql output }
 end
 
-describe Collmex::Api::InvoicePaymentGet do
+describe Collmex::Api::InvoicePaymentGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Zahlungen
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -455,7 +455,7 @@ describe Collmex::Api::InvoicePaymentGet do
   specify { subject.to_a.should eql output }
 end
 
-describe Collmex::Api::InvoicePayment do
+describe Collmex::Api::InvoicePayment do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Zahlungen
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -481,8 +481,34 @@ describe Collmex::Api::InvoicePayment do
   specify { subject.to_a.should eql output }
 end
 
-describe Collmex::Api::CustomerGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Kunden
-  it_behaves_like "Collmex Api Command" 
+describe Collmex::Api::ProductGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Produkte
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier          , type: :string    , fix: "PRODUCT_GET"     },
+          { name: :company_id          , type: :integer   , default: 1             },
+          { name: :product_id          , type: :integer                            },
+          { name: :product_group       , type: :integer                            },
+          { name: :product_price_group , type: :string                             },
+          { name: :changed_only        , type: :integer                            },
+          { name: :system_name         , type: :string                             },
+          { name: :website_id          , type: :integer                            },
+      ]
+
+
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {product_id: 1} ) }
+
+  output = ["PRODUCT_GET", 1, 1, nil, "", nil, "", nil]
+
+  specify { subject.to_a.should eql output }
+end
+
+describe Collmex::Api::CustomerGet  do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Kunden
+  it_behaves_like "Collmex Api Command"
 
   spec = 
           [
@@ -501,11 +527,11 @@ describe Collmex::Api::CustomerGet do # http://www.collmex.de/cgi-bin/cgi.exe?10
             { name: :inactive         , type: :integer                            },
           ]
 
-  specify { described_class.specification.should eql spec } 
+  specify { described_class.specification.should eql spec }
 
   subject { described_class.new( {:customer_id => 9999} ) }
 
-  output = ["CUSTOMER_GET", nil, 1, "", nil, "", nil, nil, nil, nil, nil, "", nil] 
+  output = ["CUSTOMER_GET", nil, 1, "", nil, "", nil, nil, nil, nil, nil, "", nil]
 
   specify { subject.to_a.should eql output }
 end

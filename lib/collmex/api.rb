@@ -272,6 +272,21 @@ module Collmex
       end
     end
 
+    class ProductGet < Line
+      def self.specification
+        [
+            { name: :identifier          , type: :string    , fix: "PRODUCT_GET"     },
+            { name: :company_id          , type: :integer   , default: 1             },
+            { name: :product_id          , type: :integer                            },
+            { name: :product_group       , type: :integer                            },
+            { name: :product_price_group , type: :string                             },
+            { name: :changed_only        , type: :integer                            },
+            { name: :system_name         , type: :string                             },
+            { name: :website_id          , type: :integer                            },
+        ]
+      end
+    end
+
     class CustomerGet < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Kunden
       def self.specification
         [
