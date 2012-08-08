@@ -439,7 +439,7 @@ describe Collmex::Api::InvoicePaymentGet do # http://www.collmex.de/cgi-bin/cgi.
       [
           { name: :identifier       , type: :string    , fix: "INVOICE_PAYMENT_GET"     },
           { name: :company_id       , type: :integer   , default: 1             },
-          { name: :id               , type: :integer                            },
+          { name: :id               , type: :string                             },
           { name: :changed_only     , type: :integer                            },
           { name: :system_name      , type: :string                             },
       ]
@@ -450,7 +450,7 @@ describe Collmex::Api::InvoicePaymentGet do # http://www.collmex.de/cgi-bin/cgi.
 
   subject { described_class.new( {id: 1} ) }
 
-  output = ["INVOICE_PAYMENT_GET", 1, 1, nil, ""]
+  output = ["INVOICE_PAYMENT_GET", 1, "1", nil, ""]
 
   specify { subject.to_a.should eql output }
 end
@@ -461,7 +461,7 @@ describe Collmex::Api::InvoicePayment do # http://www.collmex.de/cgi-bin/cgi.exe
   spec =
       [
           { name: :identifier       , type: :string    , fix: "INVOICE_PAYMENT"     },
-          { name: :id               , type: :integer                            },
+          { name: :id               , type: :string                             },
           { name: :date             , type: :date                               },
           { name: :amount_paid      , type: :currency                           },
           { name: :amount_reduced   , type: :currency                           },
@@ -476,7 +476,7 @@ describe Collmex::Api::InvoicePayment do # http://www.collmex.de/cgi-bin/cgi.exe
 
   subject { described_class.new( {id: 1} ) }
 
-  output = ["INVOICE_PAYMENT", 1, nil, nil, nil, nil, nil, nil]
+  output = ["INVOICE_PAYMENT", "1", nil, nil, nil, nil, nil, nil]
 
   specify { subject.to_a.should eql output }
 end
@@ -486,14 +486,14 @@ describe Collmex::Api::ProductGet do # http://www.collmex.de/cgi-bin/cgi.exe?100
 
   spec =
       [
-          { name: :identifier          , type: :string    , fix: "PRODUCT_GET"     },
-          { name: :company_id          , type: :integer   , default: 1             },
-          { name: :id                  , type: :integer                            },
-          { name: :group               , type: :integer                            },
-          { name: :price_group         , type: :string                             },
-          { name: :changed_only        , type: :integer                            },
-          { name: :system_name         , type: :string                             },
-          { name: :website_id          , type: :integer                            },
+          { name: :identifier          , type: :string    , fix: "PRODUCT_GET"  },
+          { name: :company_id          , type: :integer   , default: 1          },
+          { name: :id                  , type: :string                          },
+          { name: :group               , type: :integer                         },
+          { name: :price_group         , type: :string                          },
+          { name: :changed_only        , type: :integer                         },
+          { name: :system_name         , type: :string                          },
+          { name: :website_id          , type: :integer                         },
       ]
 
 
@@ -502,7 +502,7 @@ describe Collmex::Api::ProductGet do # http://www.collmex.de/cgi-bin/cgi.exe?100
 
   subject { described_class.new( {id: 1} ) }
 
-  output = ["PRODUCT_GET", 1, 1, nil, "", nil, "", nil]
+  output = ["PRODUCT_GET", 1, "1", nil, "", nil, "", nil]
 
   specify { subject.to_a.should eql output }
 end
@@ -531,7 +531,7 @@ describe Collmex::Api::StockAvailableGet do # http://www.collmex.de/cgi-bin/cgi.
       [
           { name: :identifier       , type: :string    , fix: "STOCK_AVAILABLE_GET" },
           { name: :company_id       , type: :integer   , default: 1             },
-          { name: :product_id       , type: :integer                            },
+          { name: :product_id       , type: :string                             },
           { name: :changed_only     , type: :integer                            },
           { name: :system_name      , type: :string                             },
       ]
@@ -542,7 +542,7 @@ describe Collmex::Api::StockAvailableGet do # http://www.collmex.de/cgi-bin/cgi.
 
   subject { described_class.new( {product_id: 1} ) }
 
-  output = ["STOCK_AVAILABLE_GET", 1, 1, nil, ""]
+  output = ["STOCK_AVAILABLE_GET", 1, "1", nil, ""]
 
   specify { subject.to_a.should eql output }
 end
@@ -553,7 +553,7 @@ describe Collmex::Api::StockAvailable do # http://www.collmex.de/cgi-bin/cgi.exe
   spec =
       [
           { name: :identifier         , type: :string    , fix: "STOCK_AVAILABLE" },
-          { name: :product_id         , type: :integer                            },
+          { name: :product_id         , type: :string                             },
           { name: :company_id         , type: :integer   , default: 1             },
           { name: :amount             , type: :integer                            },
           { name: :quantity_unit      , type: :string                             },
@@ -566,24 +566,29 @@ describe Collmex::Api::StockAvailable do # http://www.collmex.de/cgi-bin/cgi.exe
 
   subject { described_class.new( {product_id: 1} ) }
 
-  output = ["STOCK_AVAILABLE", 1, 1, nil, "", nil]
+  output = ["STOCK_AVAILABLE", "1", 1, nil, "", nil]
 
   specify { subject.to_a.should eql output }
 end
 
-describe Collmex::Api::ProductGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Produkte
+describe Collmex::Api::CustomerGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Kunden
   it_behaves_like "Collmex Api Command"
 
   spec =
       [
-          { name: :identifier          , type: :string    , fix: "PRODUCT_GET"     },
-          { name: :company_id          , type: :integer   , default: 1             },
-          { name: :id                  , type: :integer                            },
-          { name: :group               , type: :integer                            },
-          { name: :price_group         , type: :string                             },
-          { name: :changed_only        , type: :integer                            },
-          { name: :system_name         , type: :string                             },
-          { name: :website_id          , type: :integer                            },
+          { name: :identifier       , type: :string    , fix: "CUSTOMER_GET"    },
+          { name: :id               , type: :integer                            },
+          { name: :company_id       , type: :integer   , default: 1             },
+          { name: :searchtext       , type: :string                             },
+          { name: :due_to_review    , type: :integer                            },
+          { name: :zip_code         , type: :string                             },
+          { name: :address_group    , type: :integer                            },
+          { name: :price_group      , type: :integer                            },
+          { name: :discount_group   , type: :integer                            },
+          { name: :agent            , type: :integer                            },
+          { name: :only_changed     , type: :integer                            },
+          { name: :system_name      , type: :string                             },
+          { name: :inactive         , type: :integer                            },
       ]
 
 
@@ -592,7 +597,7 @@ describe Collmex::Api::ProductGet do # http://www.collmex.de/cgi-bin/cgi.exe?100
 
   subject { described_class.new( {id: 1} ) }
 
-  output = ["PRODUCT_GET", 1, 1, nil, "", nil, "", nil]
+  output = ["CUSTOMER_GET", 1, 1, "", nil, "", nil, nil, nil, nil, nil, "", nil]
 
   specify { subject.to_a.should eql output }
 end

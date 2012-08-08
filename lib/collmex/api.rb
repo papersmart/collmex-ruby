@@ -250,7 +250,7 @@ module Collmex
         [
             { name: :identifier       , type: :string    , fix: "INVOICE_PAYMENT_GET" },
             { name: :company_id       , type: :integer   , default: 1             },
-            { name: :id               , type: :integer                            },
+            { name: :id               , type: :string                             },
             { name: :changed_only     , type: :integer                            },
             { name: :system_name      , type: :string                             },
         ]
@@ -261,7 +261,7 @@ module Collmex
       def self.specification
         [
             { name: :identifier       , type: :string    , fix: "INVOICE_PAYMENT" },
-            { name: :id               , type: :integer                            },
+            { name: :id               , type: :string                             },
             { name: :date             , type: :date                               },
             { name: :amount_paid      , type: :currency                           },
             { name: :amount_reduced   , type: :currency                           },
@@ -277,7 +277,7 @@ module Collmex
         [
             { name: :identifier          , type: :string    , fix: "PRODUCT_GET"  },
             { name: :company_id          , type: :integer   , default: 1          },
-            { name: :id                  , type: :integer                         },
+            { name: :id                  , type: :string                          },
             { name: :group               , type: :integer                         },
             { name: :price_group         , type: :string                          },
             { name: :changed_only        , type: :integer                         },
@@ -300,7 +300,7 @@ module Collmex
         [
             { name: :identifier       , type: :string    , fix: "STOCK_AVAILABLE_GET" },
             { name: :company_id       , type: :integer   , default: 1             },
-            { name: :product_id       , type: :integer                            },
+            { name: :product_id       , type: :string                             },
             { name: :changed_only     , type: :integer                            },
             { name: :system_name      , type: :string                             },
         ]
@@ -311,7 +311,7 @@ module Collmex
       def self.specification
         [
             { name: :identifier         , type: :string    , fix: "STOCK_AVAILABLE" },
-            { name: :product_id         , type: :integer                            },
+            { name: :product_id         , type: :string                             },
             { name: :company_id         , type: :integer   , default: 1             },
             { name: :amount             , type: :integer                            },
             { name: :quantity_unit      , type: :string                             },
