@@ -307,6 +307,19 @@ module Collmex
       end
     end
 
+    class StockAvailable < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Verfuegbarkeit
+      def self.specification
+        [
+            { name: :identifier         , type: :string    , fix: "STOCK_AVAILABLE" },
+            { name: :product_id         , type: :integer                            },
+            { name: :company_id         , type: :integer   , default: 1             },
+            { name: :amount             , type: :integer                            },
+            { name: :quantity_unit      , type: :string                             },
+            { name: :replenishment_time , type: :integer                            },
+        ]
+      end
+    end
+
     class CustomerGet < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Kunden
       def self.specification
         [

@@ -547,6 +547,30 @@ describe Collmex::Api::StockAvailableGet do # http://www.collmex.de/cgi-bin/cgi.
   specify { subject.to_a.should eql output }
 end
 
+describe Collmex::Api::StockAvailable do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Verfuegbarkeit
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier         , type: :string    , fix: "STOCK_AVAILABLE" },
+          { name: :product_id         , type: :integer                            },
+          { name: :company_id         , type: :integer   , default: 1             },
+          { name: :amount             , type: :integer                            },
+          { name: :quantity_unit      , type: :string                             },
+          { name: :replenishment_time , type: :integer                            },
+      ]
+
+
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {product_id: 1} ) }
+
+  output = ["STOCK_AVAILABLE", 1, 1, nil, "", nil]
+
+  specify { subject.to_a.should eql output }
+end
+
 describe Collmex::Api::CustomerGet  do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Kunden
   it_behaves_like "Collmex Api Command"
 
