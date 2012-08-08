@@ -342,11 +342,30 @@ module Collmex
       end
     end
 
-    class Cmxknd < Line
+    class QuotationGet < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Angebote
+      def self.specification
+        [
+            { name: :identifier       , type: :string    , fix: "QUOTATION_GET"   },
+            { name: :id               , type: :integer                            },
+            { name: :company_id       , type: :integer   , default: 1             },
+            { name: :customer_id      , type: :integer                            },
+            { name: :date_start       , type: :date                               },
+            { name: :date_end         , type: :date                               },
+            { name: :paperless        , type: :integer                            },
+            { name: :return_format    , type: :string                             },
+            { name: :only_changed     , type: :integer                            },
+            { name: :system_name      , type: :string                             },
+        ]
+
+
+      end
+    end
+
+    class Cmxknd < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_kunde
       def self.specification
           [
             { name: :identifier       , type: :string    , fix: "CMXKND"          },
-            { name: :customer_id      , type: :integer                            },
+            { name: :id               , type: :integer                            },
             { name: :company_id       , type: :integer   , default: 1             },
             { name: :salutation       , type: :string                             },
             { name: :title            , type: :string                             },

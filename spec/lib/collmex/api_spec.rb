@@ -293,7 +293,7 @@ shared_examples_for "Collmex Api Command" do
 
     context "something given" do
       it "should build the specified and filled hash" do
-        input = {:a => "bla" }
+        input = { a: "bla" }
         output = empty_hash.merge(input)
 
         described_class.stub(:default_hash).and_return(empty_hash)
@@ -337,7 +337,7 @@ end
 
 
 describe Collmex::Api::Login do
-  subject { Collmex::Api::Login.new({:username => 12, :password => 34}) }
+  subject { Collmex::Api::Login.new({username: 12, password: 34}) }
   it_behaves_like "Collmex Api Command" 
   spec =  
           [
@@ -380,9 +380,9 @@ describe Collmex::Api::AccdocGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005
 
   specify { described_class.specification.should eql spec }
 
-  subject { described_class.new( {id: 1} ) }
+  subject { described_class.new( {id: 1, customer_id: 9999} ) }
 
-  output = ["ACCDOC_GET", 1, nil, 1, nil, nil, nil, nil, nil, nil, nil, "", nil, nil, nil, nil, ""]
+  output = ["ACCDOC_GET", 1, nil, 1, nil, nil, 9999, nil, nil, nil, nil, "", nil, nil, nil, nil, ""]
 
   specify { subject.to_a.should eql output }
 end
@@ -425,9 +425,9 @@ describe Collmex::Api::Accdoc do   # fixme ACCDOC # http://www.collmex.de/cgi-bi
 
   specify { described_class.specification.should eql spec }
 
-  subject { described_class.new( {id: 1} ) }
+  subject { described_class.new( {id: 1, customer_id: 9999} ) }
 
-  output = ["ACCDOC", 1, nil, 1, nil, nil, "", nil, nil, "", nil, nil, nil, "", nil, "", nil, "", nil, "", "", nil, nil, nil, nil, nil]
+  output = ["ACCDOC", 1, nil, 1, nil, nil, "", nil, nil, "", nil, nil, 9999, "", nil, "", nil, "", nil, "", "", nil, nil, nil, nil, nil]
 
   specify { subject.to_a.should eql output }
 end
@@ -571,42 +571,65 @@ describe Collmex::Api::StockAvailable do # http://www.collmex.de/cgi-bin/cgi.exe
   specify { subject.to_a.should eql output }
 end
 
-describe Collmex::Api::CustomerGet  do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Kunden
+describe Collmex::Api::ProductGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Produkte
   it_behaves_like "Collmex Api Command"
 
-  spec = 
-          [
-            { name: :identifier       , type: :string    , fix: "CUSTOMER_GET"    },
-            { name: :id               , type: :integer                            },
-            { name: :company_id       , type: :integer   , default: 1             },
-            { name: :searchtext       , type: :string                             },
-            { name: :due_to_review    , type: :integer                            },
-            { name: :zip_code         , type: :string                             },
-            { name: :address_group    , type: :integer                            },
-            { name: :price_group      , type: :integer                            },
-            { name: :discount_group   , type: :integer                            },
-            { name: :agent            , type: :integer                            },
-            { name: :only_changed     , type: :integer                            },
-            { name: :system_name      , type: :string                             },
-            { name: :inactive         , type: :integer                            },
-          ]
+  spec =
+      [
+          { name: :identifier          , type: :string    , fix: "PRODUCT_GET"     },
+          { name: :company_id          , type: :integer   , default: 1             },
+          { name: :id                  , type: :integer                            },
+          { name: :group               , type: :integer                            },
+          { name: :price_group         , type: :string                             },
+          { name: :changed_only        , type: :integer                            },
+          { name: :system_name         , type: :string                             },
+          { name: :website_id          , type: :integer                            },
+      ]
+
+
 
   specify { described_class.specification.should eql spec }
 
-  subject { described_class.new( {:customer_id => 9999} ) }
+  subject { described_class.new( {id: 1} ) }
 
-  output = ["CUSTOMER_GET", nil, 1, "", nil, "", nil, nil, nil, nil, nil, "", nil]
+  output = ["PRODUCT_GET", 1, 1, nil, "", nil, "", nil]
 
   specify { subject.to_a.should eql output }
 end
 
-describe Collmex::Api::Cmxknd do
+describe Collmex::Api::QuotationGet  do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Angebote
+  it_behaves_like "Collmex Api Command"
+
+  spec = 
+          [
+            { name: :identifier       , type: :string    , fix: "QUOTATION_GET"   },
+            { name: :id               , type: :integer                            },
+            { name: :company_id       , type: :integer   , default: 1             },
+            { name: :customer_id      , type: :integer                            },
+            { name: :date_start       , type: :date                               },
+            { name: :date_end         , type: :date                               },
+            { name: :paperless        , type: :integer                            },
+            { name: :return_format    , type: :string                             },
+            { name: :only_changed     , type: :integer                            },
+            { name: :system_name      , type: :string                             },
+          ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1, customer_id: 9999} ) }
+
+  output = ["QUOTATION_GET", 1, 1, 9999, nil, nil, nil, "", nil, ""]
+
+  specify { subject.to_a.should eql output }
+end
+
+describe Collmex::Api::Cmxknd do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_kunde
 
   it_behaves_like "Collmex Api Command" 
   spec = 
           [
             { name: :identifier       , type: :string    , fix: "CMXKND"          },
-            { name: :customer_id      , type: :integer                            },
+            { name: :id               , type: :integer                            },
             { name: :company_id       , type: :integer   , default: 1             },
             { name: :salutation       , type: :string                             },
             { name: :title            , type: :string                             },
@@ -654,7 +677,7 @@ describe Collmex::Api::Cmxknd do
 
   subject { described_class.new( {id: 1} ) }
 
-  output = ["CMXKND", nil, 1, "", "", "", "", "", "", "", "", "", "", nil, "", "", "", "", "", "", "", "", "", "", nil, nil, "", "", nil, "", nil, "", nil, "", nil, "", nil, nil, nil, "", nil, "", ""]
+  output = ["CMXKND", 1, 1, "", "", "", "", "", "", "", "", "", "", nil, "", "", "", "", "", "", "", "", "", "", nil, nil, "", "", nil, "", nil, "", nil, "", nil, "", nil, nil, nil, "", nil, "", ""]
 
   specify { subject.to_a.should eql output }
 end
