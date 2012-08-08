@@ -361,6 +361,27 @@ module Collmex
       end
     end
 
+    class SalesOrderGet < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Kundenauftraege
+      def self.specification
+        [
+            { name: :identifier       , type: :string    , fix: "SALES_ORDER_GET" },
+            { name: :id               , type: :integer                            },
+            { name: :company_id       , type: :integer   , default: 1             },
+            { name: :customer_id      , type: :integer                            },
+            { name: :date_start       , type: :date                               },
+            { name: :date_end         , type: :date                               },
+            { name: :customer_sales_order_id, type: :string                       },
+            { name: :return_format    , type: :string                             },
+            { name: :only_changed     , type: :integer                            },
+            { name: :system_name      , type: :string                             },
+            { name: :system_name_only , type: :integer                            },
+            { name: :paperless        , type: :integer                            },
+        ]
+
+
+      end
+    end
+
     class Cmxknd < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_kunde
       def self.specification
           [
