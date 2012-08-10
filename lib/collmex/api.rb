@@ -395,7 +395,7 @@ module Collmex
       def self.specification
         [
             { name: :identifier       , type: :string    , fix: "INVOICE_GET"     },
-            { name: :id               , type: :integer                            },
+            { name: :id               , type: :string                            },
             { name: :company_id       , type: :integer   , default: 1             },
             { name: :customer_id      , type: :integer                            },
             { name: :date_start       , type: :date                               },
@@ -406,6 +406,25 @@ module Collmex
             { name: :system_name      , type: :string                             },
             { name: :system_name_only , type: :integer                            },
             { name: :paperless        , type: :integer                            },
+        ]
+      end
+    end
+
+    class DeliveryGet < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferungen
+      def self.specification
+        [
+            { name: :identifier       , type: :string    , fix: "DELIVERY_GET"    },
+            { name: :id               , type: :string                             },
+            { name: :company_id       , type: :integer   , default: 1             },
+            { name: :customer_id      , type: :integer                            },
+            { name: :date_start       , type: :date                               },
+            { name: :date_end         , type: :date                               },
+            { name: :sent_only        , type: :integer                            },
+            { name: :return_format    , type: :string                             },
+            { name: :only_changed     , type: :integer                            },
+            { name: :system_name      , type: :string                             },
+            { name: :paperless        , type: :integer                            },
+            { name: :sales_order_id   , type: :integer                            },
         ]
       end
     end
