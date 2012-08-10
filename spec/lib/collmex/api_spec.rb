@@ -608,7 +608,7 @@ describe Collmex::Api::QuotationGet do # http://www.collmex.de/cgi-bin/cgi.exe?1
   spec = 
           [
             { name: :identifier       , type: :string    , fix: "QUOTATION_GET"   },
-            { name: :id               , type: :integer                            },
+            { name: :id               , type: :string                             },
             { name: :company_id       , type: :integer   , default: 1             },
             { name: :customer_id      , type: :integer                            },
             { name: :date_start       , type: :date                               },
@@ -623,7 +623,7 @@ describe Collmex::Api::QuotationGet do # http://www.collmex.de/cgi-bin/cgi.exe?1
 
   subject { described_class.new( {id: 1, customer_id: 9999} ) }
 
-  output = ["QUOTATION_GET", 1, 1, 9999, nil, nil, nil, "", nil, ""]
+  output = ["QUOTATION_GET", "1", 1, 9999, nil, nil, nil, "", nil, ""]
 
   specify { subject.to_a.should eql output }
 end
@@ -634,7 +634,7 @@ describe Collmex::Api::SalesOrderGet do # http://www.collmex.de/cgi-bin/cgi.exe?
   spec =
       [
           { name: :identifier       , type: :string    , fix: "SALES_ORDER_GET" },
-          { name: :id               , type: :integer                            },
+          { name: :id               , type: :string                             },
           { name: :company_id       , type: :integer   , default: 1             },
           { name: :customer_id      , type: :integer                            },
           { name: :date_start       , type: :date                               },
@@ -651,7 +651,7 @@ describe Collmex::Api::SalesOrderGet do # http://www.collmex.de/cgi-bin/cgi.exe?
 
   subject { described_class.new( {id: 1, customer_id: 9999} ) }
 
-  output = ["SALES_ORDER_GET", 1, 1, 9999, nil, nil, "", "", nil, "", nil, nil]
+  output = ["SALES_ORDER_GET", "1", 1, 9999, nil, nil, "", "", nil, "", nil, nil]
 
   specify { subject.to_a.should eql output }
 end

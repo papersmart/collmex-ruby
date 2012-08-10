@@ -344,7 +344,7 @@ module Collmex
       def self.specification
         [
             { name: :identifier       , type: :string    , fix: "QUOTATION_GET"   },
-            { name: :id               , type: :integer                            },
+            { name: :id               , type: :string                             },
             { name: :company_id       , type: :integer   , default: 1             },
             { name: :customer_id      , type: :integer                            },
             { name: :date_start       , type: :date                               },
@@ -361,7 +361,7 @@ module Collmex
       def self.specification
         [
             { name: :identifier       , type: :string    , fix: "SALES_ORDER_GET" },
-            { name: :id               , type: :integer                            },
+            { name: :id               , type: :string                             },
             { name: :company_id       , type: :integer   , default: 1             },
             { name: :customer_id      , type: :integer                            },
             { name: :date_start       , type: :date                               },
