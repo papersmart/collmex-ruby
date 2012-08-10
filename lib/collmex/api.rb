@@ -337,8 +337,6 @@ module Collmex
             { name: :system_name      , type: :string                             },
             { name: :inactive         , type: :integer                            },
         ]
-
-
       end
     end
 
@@ -356,8 +354,6 @@ module Collmex
             { name: :only_changed     , type: :integer                            },
             { name: :system_name      , type: :string                             },
         ]
-
-
       end
     end
 
@@ -377,8 +373,6 @@ module Collmex
             { name: :system_name_only , type: :integer                            },
             { name: :paperless        , type: :integer                            },
         ]
-
-
       end
     end
 
@@ -394,8 +388,25 @@ module Collmex
             { name: :paypal_email      , type: :string                             },
             { name: :paypal_transaction_id , type: :string                         },
         ]
+      end
+    end
 
-
+    class InvoiceGet < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Rechnungen
+      def self.specification
+        [
+            { name: :identifier       , type: :string    , fix: "INVOICE_GET"     },
+            { name: :id               , type: :integer                            },
+            { name: :company_id       , type: :integer   , default: 1             },
+            { name: :customer_id      , type: :integer                            },
+            { name: :date_start       , type: :date                               },
+            { name: :date_end         , type: :date                               },
+            { name: :sent_only        , type: :integer                            },
+            { name: :return_format    , type: :string                             },
+            { name: :only_changed     , type: :integer                            },
+            { name: :system_name      , type: :string                             },
+            { name: :system_name_only , type: :integer                            },
+            { name: :paperless        , type: :integer                            },
+        ]
       end
     end
 

@@ -602,7 +602,7 @@ describe Collmex::Api::CustomerGet do # http://www.collmex.de/cgi-bin/cgi.exe?10
   specify { subject.to_a.should eql output }
 end
 
-describe Collmex::Api::QuotationGet  do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Angebote
+describe Collmex::Api::QuotationGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Angebote
   it_behaves_like "Collmex Api Command"
 
   spec = 
@@ -628,7 +628,7 @@ describe Collmex::Api::QuotationGet  do # http://www.collmex.de/cgi-bin/cgi.exe?
   specify { subject.to_a.should eql output }
 end
 
-describe Collmex::Api::SalesOrderGet  do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Kundenauftraege
+describe Collmex::Api::SalesOrderGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Kundenauftraege
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -679,6 +679,34 @@ describe Collmex::Api::PaymentConfirmation do # http://www.collmex.de/cgi-bin/cg
   subject { described_class.new( {customer_order_id: 1} ) }
 
   output = ["PAYMENT_CONFIRMATION", 1, nil, nil, nil, "", "", ""]
+
+  specify { subject.to_a.should eql output }
+end
+
+describe Collmex::Api::InvoiceGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Rechnungen
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier       , type: :string    , fix: "INVOICE_GET"     },
+          { name: :id               , type: :integer                            },
+          { name: :company_id       , type: :integer   , default: 1             },
+          { name: :customer_id      , type: :integer                            },
+          { name: :date_start       , type: :date                               },
+          { name: :date_end         , type: :date                               },
+          { name: :sent_only        , type: :integer                            },
+          { name: :return_format    , type: :string                             },
+          { name: :only_changed     , type: :integer                            },
+          { name: :system_name      , type: :string                             },
+          { name: :system_name_only , type: :integer                            },
+          { name: :paperless        , type: :integer                            },
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1, customer_id: 9999} ) }
+
+  output = ["INVOICE_GET", 1, 1, 9999, nil, nil, nil, "", nil, "", nil, nil]
 
   specify { subject.to_a.should eql output }
 end
