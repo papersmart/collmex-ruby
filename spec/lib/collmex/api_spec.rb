@@ -656,54 +656,81 @@ describe Collmex::Api::SalesOrderGet  do # http://www.collmex.de/cgi-bin/cgi.exe
   specify { subject.to_a.should eql output }
 end
 
+describe Collmex::Api::PaymentConfirmation do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Payment
+
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier        , type: :string    , fix: "PAYMENT_CONFIRMATION"          },
+          { name: :customer_order_id , type: :integer                            },
+          { name: :date              , type: :date                               },
+          { name: :amount            , type: :currency                           },
+          { name: :fee               , type: :currency                           },
+          { name: :currency          , type: :string                             },
+          { name: :paypal_email      , type: :string                             },
+          { name: :paypal_transaction_id , type: :string                         },
+      ]
+
+
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {customer_order_id: 1} ) }
+
+  output = ["PAYMENT_CONFIRMATION", 1, nil, nil, nil, "", "", ""]
+
+  specify { subject.to_a.should eql output }
+end
+
 describe Collmex::Api::Cmxknd do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_kunde
 
   it_behaves_like "Collmex Api Command" 
   spec = 
           [
-            { name: :identifier       , type: :string    , fix: "CMXKND"          },
-            { name: :id               , type: :integer                            },
-            { name: :company_id       , type: :integer   , default: 1             },
-            { name: :salutation       , type: :string                             },
-            { name: :title            , type: :string                             },
-            { name: :firstname        , type: :string                             },
-            { name: :lastname         , type: :string                             },
-            { name: :company          , type: :string                             },
-            { name: :department       , type: :string                             },
-            { name: :street           , type: :string                             },
-            { name: :zipcode          , type: :string                             },
-            { name: :city             , type: :string                             },
-            { name: :annotation       , type: :string                             },
-            { name: :inactive         , type: :integer                            },
-            { name: :country          , type: :string                             },
-            { name: :phone            , type: :string                             },
-            { name: :fax              , type: :string                             },
-            { name: :email            , type: :string                             },
-            { name: :account_id       , type: :string                             },
-            { name: :blz              , type: :string                             },
-            { name: :iban             , type: :string                             },
-            { name: :bic              , type: :string                             },
-            { name: :bank_name        , type: :string                             },
-            { name: :vat_id           , type: :string                             },
-            { name: :payment_condition, type: :integer                            },
-            { name: :discount_group   , type: :integer                            },
-            { name: :deliver_conditions, type: :string                            },
-            { name: :deliver_conditions_additions, type: :string                  },
-            { name: :output_media     , type: :integer                            },
-            { name: :account_owner    , type: :string                             },
-            { name: :address_group    , type: :integer                            },
-            { name: :ebay_member      , type: :string                             },
-            { name: :price_group      , type: :integer                            },
-            { name: :currency         , type: :string                             },
-            { name: :agent            , type: :integer                            },
-            { name: :cost_unit        , type: :string                             },
-            { name: :due_to_review    , type: :date                               },
-            { name: :delivery_block   , type: :integer                            },
-            { name: :construction_services_provider , type: :integer              },
-            { name: :account_id_at_customer, type: :string                        },
-            { name: :output_language  , type: :integer                            },
-            { name: :email_cc         , type: :string                             },
-            { name: :phone_2          , type: :string                             },
+            { name: :identifier         , type: :string    , fix: "CMXKND"          },
+            { name: :id                 , type: :integer                            },
+            { name: :company_id         , type: :integer   , default: 1             },
+            { name: :salutation         , type: :string                             },
+            { name: :title              , type: :string                             },
+            { name: :firstname          , type: :string                             },
+            { name: :lastname           , type: :string                             },
+            { name: :company            , type: :string                             },
+            { name: :department         , type: :string                             },
+            { name: :street             , type: :string                             },
+            { name: :zipcode            , type: :string                             },
+            { name: :city               , type: :string                             },
+            { name: :annotation         , type: :string                             },
+            { name: :inactive           , type: :integer                            },
+            { name: :country            , type: :string                             },
+            { name: :phone              , type: :string                             },
+            { name: :fax                , type: :string                             },
+            { name: :email              , type: :string                             },
+            { name: :account_id         , type: :string                             },
+            { name: :blz                , type: :string                             },
+            { name: :iban               , type: :string                             },
+            { name: :bic                , type: :string                             },
+            { name: :bank_name          , type: :string                             },
+            { name: :vat_id             , type: :string                             },
+            { name: :payment_condition  , type: :integer                            },
+            { name: :discount_group     , type: :integer                            },
+            { name: :deliver_conditions , type: :string                             },
+            { name: :deliver_conditions_additions   , type: :string                 },
+            { name: :output_media       , type: :integer                            },
+            { name: :account_owner      , type: :string                             },
+            { name: :address_group      , type: :integer                            },
+            { name: :ebay_member        , type: :string                             },
+            { name: :price_group        , type: :integer                            },
+            { name: :currency           , type: :string                             },
+            { name: :agent              , type: :integer                            },
+            { name: :cost_unit          , type: :string                             },
+            { name: :due_to_review      , type: :date                               },
+            { name: :delivery_block     , type: :integer                            },
+            { name: :construction_services_provider , type: :integer                },
+            { name: :account_id_at_customer         , type: :string                 },
+            { name: :output_language    , type: :integer                            },
+            { name: :email_cc           , type: :string                             },
+            { name: :phone_2            , type: :string                             },
           ]
 
   specify { described_class.specification.should eql spec } 

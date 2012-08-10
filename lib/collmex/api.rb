@@ -382,6 +382,23 @@ module Collmex
       end
     end
 
+    class PaymentConfirmation < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Payment
+      def self.specification
+        [
+            { name: :identifier        , type: :string    , fix: "PAYMENT_CONFIRMATION"          },
+            { name: :customer_order_id , type: :integer                            },
+            { name: :date              , type: :date                               },
+            { name: :amount            , type: :currency                           },
+            { name: :fee               , type: :currency                           },
+            { name: :currency          , type: :string                             },
+            { name: :paypal_email      , type: :string                             },
+            { name: :paypal_transaction_id , type: :string                         },
+        ]
+
+
+      end
+    end
+
     class Cmxknd < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_kunde
       def self.specification
           [
