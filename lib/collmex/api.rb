@@ -532,7 +532,7 @@ module Collmex
             { name: :tax_value_reduced_vat     , type: :currency                  },
             { name: :intra_community_delivery  , type: :currency                  },
             { name: :export                    , type: :currency                  },
-            { name: :account_id_free_vat       , type: :currency                  },
+            { name: :account_id_free_vat       , type: :integer                   },
             { name: :net_amount_free_vat       , type: :currency                  },
             { name: :currency                  , type: :string                    },
             { name: :contra_account            , type: :integer                   },
