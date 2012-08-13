@@ -711,6 +711,34 @@ describe Collmex::Api::InvoiceGet do # http://www.collmex.de/cgi-bin/cgi.exe?100
   specify { subject.to_a.should eql output }
 end
 
+describe Collmex::Api::DeliveryGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferungen
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier       , type: :string    , fix: "DELIVERY_GET"    },
+          { name: :id               , type: :string                             },
+          { name: :company_id       , type: :integer   , default: 1             },
+          { name: :customer_id      , type: :integer                            },
+          { name: :date_start       , type: :date                               },
+          { name: :date_end         , type: :date                               },
+          { name: :sent_only        , type: :integer                            },
+          { name: :return_format    , type: :string                             },
+          { name: :only_changed     , type: :integer                            },
+          { name: :system_name      , type: :string                             },
+          { name: :paperless        , type: :integer                            },
+          { name: :customer_order_id, type: :integer                            },
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1, customer_id: 9999} ) }
+
+  output = ["DELIVERY_GET", "1", 1, 9999, nil, nil, nil, "", nil, "", nil, nil]
+
+  specify { subject.to_a.should eql output }
+end
+
 describe Collmex::Api::Cmxinv do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_rechnungen
   it_behaves_like "Collmex Api Command"
 
@@ -809,30 +837,46 @@ describe Collmex::Api::Cmxinv do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
   specify { subject.to_a.should eql output }
 end
 
-describe Collmex::Api::DeliveryGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferungen
+describe Collmex::Api::Cmxums do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_umsaetze
   it_behaves_like "Collmex Api Command"
 
   spec =
       [
-          { name: :identifier       , type: :string    , fix: "DELIVERY_GET"    },
-          { name: :id               , type: :string                             },
-          { name: :company_id       , type: :integer   , default: 1             },
-          { name: :customer_id      , type: :integer                            },
-          { name: :date_start       , type: :date                               },
-          { name: :date_end         , type: :date                               },
-          { name: :sent_only        , type: :integer                            },
-          { name: :return_format    , type: :string                             },
-          { name: :only_changed     , type: :integer                            },
-          { name: :system_name      , type: :string                             },
-          { name: :paperless        , type: :integer                            },
-          { name: :customer_order_id, type: :integer                            },
+          { name: :identifier                , type: :string    , fix: "CMXUMS" },
+          { name: :customer_id               , type: :integer                   },
+          { name: :company_id                , type: :integer   , default: 1    },
+          { name: :invoice_date              , type: :date                      },
+          { name: :invoice_id                , type: :string                    },
+          { name: :net_amount_full_vat       , type: :currency                  },
+          { name: :tax_value_full_vat        , type: :currency                  },
+          { name: :net_amount_reduced_vat    , type: :currency                  },
+          { name: :tax_value_reduced_vat     , type: :currency                  },
+          { name: :intra_community_delivery  , type: :currency                  },
+          { name: :export                    , type: :currency                  },
+          { name: :account_id_free_vat       , type: :currency                  },
+          { name: :net_amount_free_vat       , type: :currency                  },
+          { name: :currency                  , type: :string                    },
+          { name: :contra_account            , type: :integer                   },
+          { name: :invoice_type              , type: :integer                   },
+          { name: :text                      , type: :string                    },
+          { name: :terms_of_payment          , type: :integer                   },
+          { name: :account_id_full_vat       , type: :integer                   },
+          { name: :account_id_reduced_vat    , type: :integer                   },
+          { name: :reserved1                 , type: :integer                   },
+          { name: :reserved2                 , type: :integer                   },
+          { name: :cancellation              , type: :integer                   },
+          { name: :final_invoice             , type: :string                    },
+          { name: :type                      , type: :integer                   },
+          { name: :system_name               , type: :string                    },
+          { name: :offset_against_invoice_id , type: :string                    },
+          { name: :cost_unit                 , type: :string                    },
       ]
 
   specify { described_class.specification.should eql spec }
 
   subject { described_class.new( {id: 1, customer_id: 9999} ) }
 
-  output = ["DELIVERY_GET", "1", 1, 9999, nil, nil, nil, "", nil, "", nil, nil]
+  output = ["CMXUMS", 9999, 1, nil, "", nil, nil, nil, nil, nil, nil, nil, nil, "", nil, nil, "", nil, nil, nil, nil, nil, nil, "", nil, "", "", ""]
 
   specify { subject.to_a.should eql output }
 end
@@ -951,3 +995,4 @@ describe Collmex::Api::Message do
 
 
 end
+
