@@ -432,6 +432,32 @@ describe Collmex::Api::Accdoc do   # fixme ACCDOC # http://www.collmex.de/cgi-bi
   specify { subject.to_a.should eql output }
 end
 
+describe Collmex::Api::AddressGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Adressen
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier       , type: :string    , fix: "ADDRESS_GET"     },
+          { name: :id               , type: :integer                            },
+          { name: :type             , type: :integer                            },
+          { name: :text             , type: :string                             },
+          { name: :due_to_review    , type: :integer                            },
+          { name: :zipcode          , type: :string                             },
+          { name: :address_group    , type: :integer                            },
+          { name: :changed_only     , type: :integer                            },
+          { name: :system_name      , type: :string                             },
+          { name: :contact_id       , type: :integer                            },
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1} ) }
+
+  output = ["ADDRESS_GET", 1, nil, "", nil, "", nil, nil, "", nil]
+
+  specify { subject.to_a.should eql output }
+end
+
 describe Collmex::Api::InvoicePaymentGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Zahlungen
   it_behaves_like "Collmex Api Command"
 
@@ -579,7 +605,7 @@ describe Collmex::Api::CustomerGet do # http://www.collmex.de/cgi-bin/cgi.exe?10
           { name: :identifier       , type: :string    , fix: "CUSTOMER_GET"    },
           { name: :id               , type: :integer                            },
           { name: :company_id       , type: :integer   , default: 1             },
-          { name: :searchtext       , type: :string                             },
+          { name: :text             , type: :string                             },
           { name: :due_to_review    , type: :integer                            },
           { name: :zip_code         , type: :string                             },
           { name: :address_group    , type: :integer                            },

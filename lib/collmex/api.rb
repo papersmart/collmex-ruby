@@ -245,6 +245,23 @@ module Collmex
       end
     end
 
+    class AddressGet < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Adressen
+      def self.specification
+        [
+            { name: :identifier       , type: :string    , fix: "ADDRESS_GET"     },
+            { name: :id               , type: :integer                            },
+            { name: :type             , type: :integer                            },
+            { name: :text             , type: :string                             },
+            { name: :due_to_review    , type: :integer                            },
+            { name: :zipcode          , type: :string                             },
+            { name: :address_group    , type: :integer                            },
+            { name: :changed_only     , type: :integer                            },
+            { name: :system_name      , type: :string                             },
+            { name: :contact_id       , type: :integer                            },
+        ]
+      end
+    end
+
     class InvoicePaymentGet < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Zahlungen
       def self.specification
         [
@@ -326,7 +343,7 @@ module Collmex
             { name: :identifier       , type: :string    , fix: "CUSTOMER_GET"    },
             { name: :id               , type: :integer                            },
             { name: :company_id       , type: :integer   , default: 1             },
-            { name: :searchtext       , type: :string                             },
+            { name: :text             , type: :string                             },
             { name: :due_to_review    , type: :integer                            },
             { name: :zip_code         , type: :string                             },
             { name: :address_group    , type: :integer                            },
