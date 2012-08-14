@@ -816,9 +816,9 @@ describe Collmex::Api::Cmxinv do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
           { name: :product_id                  , type: :string                             },
           { name: :product_description         , type: :string                             },
           { name: :quantity_unit               , type: :string                             },
-          { name: :order_quantity              , type: :integer                            }, # check N @ API-Doc
+          { name: :order_quantity              , type: :float                              },
           { name: :product_price               , type: :currency                           },
-          { name: :amount_price                , type: :integer                            }, # check N @ API-Doc
+          { name: :amount_price                , type: :float                              },
           { name: :position_discount           , type: :currency                           },
           { name: :position_value              , type: :currency                           },
           { name: :product_type                , type: :integer                            },
@@ -862,8 +862,8 @@ describe Collmex::Api::Cmxums do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
           { name: :terms_of_payment          , type: :integer                   },
           { name: :account_id_full_vat       , type: :integer                   },
           { name: :account_id_reduced_vat    , type: :integer                   },
-          { name: :reserved1                 , type: :integer                   },
-          { name: :reserved2                 , type: :integer                   },
+          { name: :reserved_1                , type: :integer                   },
+          { name: :reserved_2                , type: :integer                   },
           { name: :cancellation              , type: :integer                   },
           { name: :final_invoice             , type: :string                    },
           { name: :type                      , type: :integer                   },
@@ -934,12 +934,72 @@ end
 
 describe Collmex::Api::Cmxknd do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_kunde
 
+  it_behaves_like "Collmex Api Command"
+  spec =
+      [
+          { name: :identifier         , type: :string    , fix: "CMXKND"          },
+          { name: :id                 , type: :integer                            },
+          { name: :company_id         , type: :integer   , default: 1             },
+          { name: :salutation         , type: :string                             },
+          { name: :title              , type: :string                             },
+          { name: :firstname          , type: :string                             },
+          { name: :lastname           , type: :string                             },
+          { name: :company            , type: :string                             },
+          { name: :department         , type: :string                             },
+          { name: :street             , type: :string                             },
+          { name: :zipcode            , type: :string                             },
+          { name: :city               , type: :string                             },
+          { name: :annotation         , type: :string                             },
+          { name: :inactive           , type: :integer                            },
+          { name: :country            , type: :string                             },
+          { name: :phone              , type: :string                             },
+          { name: :fax                , type: :string                             },
+          { name: :email              , type: :string                             },
+          { name: :account_number     , type: :string                             },
+          { name: :bank_account_number, type: :string                             },
+          { name: :iban               , type: :string                             },
+          { name: :bic                , type: :string                             },
+          { name: :bank_name          , type: :string                             },
+          { name: :tax_id             , type: :string                             },
+          { name: :vat_id             , type: :string                             },
+          { name: :payment_condition  , type: :integer                            },
+          { name: :discount_group     , type: :integer                            },
+          { name: :delivery_terms     , type: :string                             },
+          { name: :delivery_terms_additions   , type: :string                     },
+          { name: :output_media       , type: :integer                            },
+          { name: :account_owner      , type: :string                             },
+          { name: :address_group      , type: :integer                            },
+          { name: :ebay_member        , type: :string                             },
+          { name: :price_group        , type: :integer                            },
+          { name: :currency           , type: :string                             },
+          { name: :agent_id           , type: :integer                            },
+          { name: :cost_unit          , type: :string                             },
+          { name: :due_to_review      , type: :date                               },
+          { name: :delivery_block     , type: :integer                            },
+          { name: :construction_services_provider , type: :integer                },
+          { name: :delivery_id_at_customer        , type: :string                 },
+          { name: :output_language    , type: :integer                            },
+          { name: :email_cc           , type: :string                             },
+          { name: :phone_2            , type: :string                             },
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1} ) }
+
+  output = ["CMXKND", 1, 1, "", "", "", "", "", "", "", "", "", "", nil, "", "", "", "", "", "", "", "", "", "", "", nil, nil, "", "", nil, "", nil, "", nil, "", nil, "", nil, nil, nil, "", nil, "", ""]
+
+  specify { subject.to_a.should eql output }
+end
+
+describe Collmex::Api::Cmxadr do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_adressen
+
   it_behaves_like "Collmex Api Command" 
   spec = 
-          [
-            { name: :identifier         , type: :string    , fix: "CMXKND"          },
+      [
+            { name: :identifier         , type: :string    , fix: "CMXADR"          },
             { name: :id                 , type: :integer                            },
-            { name: :company_id         , type: :integer   , default: 1             },
+            { name: :type               , type: :integer                            },
             { name: :salutation         , type: :string                             },
             { name: :title              , type: :string                             },
             { name: :firstname          , type: :string                             },
@@ -962,32 +1022,22 @@ describe Collmex::Api::Cmxknd do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
             { name: :bank_name          , type: :string                             },
             { name: :tax_id             , type: :string                             },
             { name: :vat_id             , type: :string                             },
-            { name: :payment_condition  , type: :integer                            },
-            { name: :discount_group     , type: :integer                            },
-            { name: :delivery_terms     , type: :string                             },
-            { name: :delivery_terms_additions   , type: :string                     },
-            { name: :output_media       , type: :integer                            },
-            { name: :account_owner      , type: :string                             },
-            { name: :address_group      , type: :integer                            },
-            { name: :ebay_member        , type: :string                             },
-            { name: :price_group        , type: :integer                            },
-            { name: :currency           , type: :string                             },
-            { name: :agent_id           , type: :integer                            },
-            { name: :cost_unit          , type: :string                             },
-            { name: :due_to_review      , type: :date                               },
-            { name: :delivery_block     , type: :integer                            },
-            { name: :construction_services_provider , type: :integer                },
-            { name: :delivery_id_at_customer        , type: :string                 },
-            { name: :output_language    , type: :integer                            },
-            { name: :email_cc           , type: :string                             },
+            { name: :reserved           , type: :string                             },
             { name: :phone_2            , type: :string                             },
-          ]
+            { name: :skype_voip         , type: :string                             },
+            { name: :url                , type: :string                             },
+            { name: :account_owner      , type: :string                             },
+            { name: :review_at          , type: :date                               },
+            { name: :address_group      , type: :integer                            },
+            { name: :agent_id           , type: :integer                            },
+            { name: :company_id         , type: :integer   , default: 1             },
+      ]
 
   specify { described_class.specification.should eql spec } 
 
   subject { described_class.new( {id: 1} ) }
 
-  output = ["CMXKND", 1, 1, "", "", "", "", "", "", "", "", "", "", nil, "", "", "", "", "", "", "", "", "", "", "", nil, nil, "", "", nil, "", nil, "", nil, "", nil, "", nil, nil, nil, "", nil, "", ""]
+  output = ["CMXADR", 1, nil, "", "", "", "", "", "", "", "", "", "", nil, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", nil, nil, nil, 1]
 
   specify { subject.to_a.should eql output }
 end
