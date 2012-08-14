@@ -553,6 +553,48 @@ module Collmex
       end
     end
 
+    class Cmxlrn < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_lieferantenrechnung
+      def self.specification
+        [
+            { name: :identifier         , type: :string    , fix: "CMXLRN" },
+            { name: :id                 , type: :integer                   },
+            { name: :company_id         , type: :integer   , default: 1    },
+            { name: :salutation         , type: :string                    },
+            { name: :title              , type: :string                    },
+            { name: :firstname          , type: :string                    },
+            { name: :lastname           , type: :string                    },
+            { name: :company            , type: :string                    },
+            { name: :department         , type: :string                    },
+            { name: :street             , type: :string                    },
+            { name: :zipcode            , type: :string                    },
+            { name: :city               , type: :string                    },
+            { name: :annotation         , type: :string                    },
+            { name: :inactive           , type: :integer                   },
+            { name: :country            , type: :string                    },
+            { name: :phone              , type: :string                    },
+            { name: :fax                , type: :string                    },
+            { name: :email              , type: :string                    },
+            { name: :account_number     , type: :string                    },
+            { name: :bank_account_number, type: :string                    },
+            { name: :iban               , type: :string                    },
+            { name: :bic                , type: :string                    },
+            { name: :bank_name          , type: :string                    },
+            { name: :tax_id             , type: :string                    },
+            { name: :vat_id             , type: :string                    },
+            { name: :payment_condition  , type: :integer                   },
+            { name: :delivery_terms     , type: :string                    },
+            { name: :delivery_terms_additions , type: :string              },
+            { name: :output_media       , type: :integer                   },
+            { name: :account_owner      , type: :string                    },
+            { name: :address_group      , type: :integer                   },
+            { name: :customer_id_at_supplier  , type: :string              },
+            { name: :currency           , type: :string                    },
+            { name: :phone_2            , type: :string                    },
+            { name: :output_language    , type: :integer                   },
+        ]
+      end
+    end
+
     class Cmxknd < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_kunde
       def self.specification
           [
@@ -579,6 +621,7 @@ module Collmex
               { name: :iban               , type: :string                             },
               { name: :bic                , type: :string                             },
               { name: :bank_name          , type: :string                             },
+              { name: :tax_id             , type: :string                             },
               { name: :vat_id             , type: :string                             },
               { name: :payment_condition  , type: :integer                            },
               { name: :discount_group     , type: :integer                            },

@@ -874,9 +874,60 @@ describe Collmex::Api::Cmxums do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
 
   specify { described_class.specification.should eql spec }
 
-  subject { described_class.new( {id: 1, customer_id: 9999} ) }
+  subject { described_class.new( {customer_id: 9999} ) }
 
   output = ["CMXUMS", 9999, 1, nil, "", nil, nil, nil, nil, nil, nil, nil, nil, "", nil, nil, "", nil, nil, nil, nil, nil, nil, "", nil, "", "", ""]
+
+  specify { subject.to_a.should eql output }
+end
+
+describe Collmex::Api::Cmxlrn do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_lieferantenrechnung
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier         , type: :string    , fix: "CMXLRN" },
+          { name: :id                 , type: :integer                   },
+          { name: :company_id         , type: :integer   , default: 1    },
+          { name: :salutation         , type: :string                    },
+          { name: :title              , type: :string                    },
+          { name: :firstname          , type: :string                    },
+          { name: :lastname           , type: :string                    },
+          { name: :company            , type: :string                    },
+          { name: :department         , type: :string                    },
+          { name: :street             , type: :string                    },
+          { name: :zipcode            , type: :string                    },
+          { name: :city               , type: :string                    },
+          { name: :annotation         , type: :string                    },
+          { name: :inactive           , type: :integer                   },
+          { name: :country            , type: :string                    },
+          { name: :phone              , type: :string                    },
+          { name: :fax                , type: :string                    },
+          { name: :email              , type: :string                    },
+          { name: :account_number     , type: :string                    },
+          { name: :bank_account_number, type: :string                    },
+          { name: :iban               , type: :string                    },
+          { name: :bic                , type: :string                    },
+          { name: :bank_name          , type: :string                    },
+          { name: :tax_id             , type: :string                    },
+          { name: :vat_id             , type: :string                    },
+          { name: :payment_condition  , type: :integer                   },
+          { name: :delivery_terms     , type: :string                    },
+          { name: :delivery_terms_additions , type: :string              },
+          { name: :output_media       , type: :integer                   },
+          { name: :account_owner      , type: :string                    },
+          { name: :address_group      , type: :integer                   },
+          { name: :customer_id_at_supplier  , type: :string              },
+          { name: :currency           , type: :string                    },
+          { name: :phone_2            , type: :string                    },
+          { name: :output_language    , type: :integer                   },
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1, supplier_id: 9999} ) }
+
+  output = ["CMXLRN", 1, 1, "", "", "", "", "", "", "", "", "", "", nil, "", "", "", "", "", "", "", "", "", "", "", nil, "", "", nil, "", nil, "", "", "", nil]
 
   specify { subject.to_a.should eql output }
 end
@@ -909,6 +960,7 @@ describe Collmex::Api::Cmxknd do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
             { name: :iban               , type: :string                             },
             { name: :bic                , type: :string                             },
             { name: :bank_name          , type: :string                             },
+            { name: :tax_id             , type: :string                             },
             { name: :vat_id             , type: :string                             },
             { name: :payment_condition  , type: :integer                            },
             { name: :discount_group     , type: :integer                            },
@@ -935,7 +987,7 @@ describe Collmex::Api::Cmxknd do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
 
   subject { described_class.new( {id: 1} ) }
 
-  output = ["CMXKND", 1, 1, "", "", "", "", "", "", "", "", "", "", nil, "", "", "", "", "", "", "", "", "", "", nil, nil, "", "", nil, "", nil, "", nil, "", nil, "", nil, nil, nil, "", nil, "", ""]
+  output = ["CMXKND", 1, 1, "", "", "", "", "", "", "", "", "", "", nil, "", "", "", "", "", "", "", "", "", "", "", nil, nil, "", "", nil, "", nil, "", nil, "", nil, "", nil, nil, nil, "", nil, "", ""]
 
   specify { subject.to_a.should eql output }
 end
