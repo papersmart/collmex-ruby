@@ -207,7 +207,7 @@ module Collmex
             { name: :date_end         , type: :date                               },
             { name: :cancellation     , type: :integer                            },
             { name: :changed_only     , type: :integer                            },
-            { name: :system_name      , type: :string                             },
+            { name: :system_name      , type: :string                             }
         ]
       end
     end
@@ -240,7 +240,7 @@ module Collmex
             { name: :journey_id        , type: :integer                           },
             { name: :belongs_to_id     , type: :integer                           },
             { name: :belongs_to_year   , type: :integer                           },
-            { name: :belongs_to_pos    , type: :integer                           },
+            { name: :belongs_to_pos    , type: :integer                           }
         ]
       end
     end
@@ -257,7 +257,7 @@ module Collmex
             { name: :address_group    , type: :integer                            },
             { name: :changed_only     , type: :integer                            },
             { name: :system_name      , type: :string                             },
-            { name: :contact_id       , type: :integer                            },
+            { name: :contact_id       , type: :integer                            }
         ]
       end
     end
@@ -269,7 +269,7 @@ module Collmex
             { name: :company_id       , type: :integer   , default: 1             },
             { name: :id               , type: :string                             },
             { name: :changed_only     , type: :integer                            },
-            { name: :system_name      , type: :string                             },
+            { name: :system_name      , type: :string                             }
         ]
       end
     end
@@ -284,7 +284,7 @@ module Collmex
             { name: :amount_reduced   , type: :currency                           },
             { name: :business_year    , type: :integer                            },
             { name: :accdoc_id        , type: :integer                            },
-            { name: :accdoc_position  , type: :integer                            },
+            { name: :accdoc_position  , type: :integer                            }
         ]
       end
     end
@@ -299,7 +299,7 @@ module Collmex
             { name: :price_group         , type: :string                          },
             { name: :changed_only        , type: :integer                         },
             { name: :system_name         , type: :string                          },
-            { name: :website_id          , type: :integer                         },
+            { name: :website_id          , type: :integer                         }
         ]
       end
     end
@@ -307,7 +307,7 @@ module Collmex
     class ProductGroupsGet < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Produktgruppen
       def self.specification
         [
-            { name: :identifier          , type: :string    , fix: "PRODUCT_GROUPS_GET"  },
+            { name: :identifier          , type: :string    , fix: "PRODUCT_GROUPS_GET"  }
         ]
       end
     end
@@ -319,7 +319,7 @@ module Collmex
             { name: :company_id       , type: :integer   , default: 1             },
             { name: :product_id       , type: :string                             },
             { name: :changed_only     , type: :integer                            },
-            { name: :system_name      , type: :string                             },
+            { name: :system_name      , type: :string                             }
         ]
       end
     end
@@ -332,7 +332,7 @@ module Collmex
             { name: :company_id         , type: :integer   , default: 1             },
             { name: :amount             , type: :integer                            },
             { name: :quantity_unit      , type: :string                             },
-            { name: :replenishment_time , type: :integer                            },
+            { name: :replenishment_time , type: :integer                            }
         ]
       end
     end
@@ -352,7 +352,7 @@ module Collmex
             { name: :agent_id         , type: :integer                            },
             { name: :only_changed     , type: :integer                            },
             { name: :system_name      , type: :string                             },
-            { name: :inactive         , type: :integer                            },
+            { name: :inactive         , type: :integer                            }
         ]
       end
     end
@@ -369,7 +369,7 @@ module Collmex
             { name: :paperless        , type: :integer                            },
             { name: :return_format    , type: :string                             },
             { name: :only_changed     , type: :integer                            },
-            { name: :system_name      , type: :string                             },
+            { name: :system_name      , type: :string                             }
         ]
       end
     end
@@ -388,7 +388,7 @@ module Collmex
             { name: :only_changed     , type: :integer                            },
             { name: :system_name      , type: :string                             },
             { name: :system_name_only , type: :integer                            },
-            { name: :paperless        , type: :integer                            },
+            { name: :paperless        , type: :integer                            }
         ]
       end
     end
@@ -403,7 +403,7 @@ module Collmex
             { name: :fee               , type: :currency                           },
             { name: :currency          , type: :string                             },
             { name: :paypal_email      , type: :string                             },
-            { name: :paypal_transaction_id , type: :string                         },
+            { name: :paypal_transaction_id , type: :string                         }
         ]
       end
     end
@@ -412,7 +412,7 @@ module Collmex
       def self.specification
         [
             { name: :identifier       , type: :string    , fix: "INVOICE_GET"     },
-            { name: :id               , type: :string                            },
+            { name: :id               , type: :string                             },
             { name: :company_id       , type: :integer   , default: 1             },
             { name: :customer_id      , type: :integer                            },
             { name: :date_start       , type: :date                               },
@@ -422,7 +422,7 @@ module Collmex
             { name: :only_changed     , type: :integer                            },
             { name: :system_name      , type: :string                             },
             { name: :system_name_only , type: :integer                            },
-            { name: :paperless        , type: :integer                            },
+            { name: :paperless        , type: :integer                            }
         ]
       end
     end
@@ -441,7 +441,7 @@ module Collmex
             { name: :only_changed     , type: :integer                            },
             { name: :system_name      , type: :string                             },
             { name: :paperless        , type: :integer                            },
-            { name: :customer_order_id, type: :integer                            },
+            { name: :customer_order_id, type: :integer                            }
         ]
       end
     end
@@ -530,7 +530,7 @@ module Collmex
             { name: :tax_classification          , type: :integer                            },
             { name: :tax_abroad                  , type: :integer                            },
             { name: :customer_order_position     , type: :integer                            },
-            { name: :revenue_element             , type: :integer                            },
+            { name: :revenue_element             , type: :integer                            }
         ]
       end
     end
@@ -565,7 +565,7 @@ module Collmex
             { name: :type                      , type: :integer                   },
             { name: :system_name               , type: :string                    },
             { name: :offset_against_invoice_id , type: :string                    },
-            { name: :cost_unit                 , type: :string                    },
+            { name: :cost_unit                 , type: :string                    }
         ]
       end
     end
@@ -607,7 +607,7 @@ module Collmex
             { name: :customer_id_at_supplier  , type: :string              },
             { name: :currency           , type: :string                    },
             { name: :phone_2            , type: :string                    },
-            { name: :output_language    , type: :integer                   },
+            { name: :output_language    , type: :integer                   }
         ]
       end
     end
@@ -658,7 +658,7 @@ module Collmex
             { name: :delivery_id_at_customer        , type: :string                 },
             { name: :output_language    , type: :integer                            },
             { name: :email_cc           , type: :string                             },
-            { name: :phone_2            , type: :string                             },
+            { name: :phone_2            , type: :string                             }
         ]
       end
     end
@@ -699,7 +699,7 @@ module Collmex
               { name: :review_at          , type: :date                               },
               { name: :address_group      , type: :integer                            },
               { name: :agent_id           , type: :integer                            },
-              { name: :company_id         , type: :integer   , default: 1             },
+              { name: :company_id         , type: :integer   , default: 1             }
           ]
       end
     end
@@ -711,7 +711,7 @@ module Collmex
             { name: :type             , type: :string                             },
             { name: :id               , type: :integer                            },
             { name: :text             , type: :string                             },
-            { name: :line             , type: :integer                            },
+            { name: :line             , type: :integer                            }
           ]
       end
 

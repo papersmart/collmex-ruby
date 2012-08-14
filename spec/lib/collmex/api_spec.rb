@@ -340,11 +340,11 @@ describe Collmex::Api::Login do
   subject { Collmex::Api::Login.new({username: 12, password: 34}) }
   it_behaves_like "Collmex Api Command" 
   spec =  
-          [
-              { name: :identifier,    type: :string,    fix: "LOGIN"   },
-              { name: :username,      type: :integer },
-              { name: :password,      type: :integer }
-          ]
+      [
+          { name: :identifier   , type: :string,    fix: "LOGIN" },
+          { name: :username     , type: :integer                 },
+          { name: :password     , type: :integer                 }
+      ]
 
   specify { described_class.specification.should eql spec } 
 
@@ -357,7 +357,7 @@ describe Collmex::Api::AccdocGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005
 
   spec =
       [
-          { name: :identifier       , type: :string    , fix: "ACCDOC_GET"     },
+          { name: :identifier       , type: :string    , fix: "ACCDOC_GET"      },
           { name: :company_id       , type: :integer   , default: 1             },
           { name: :business_year    , type: :integer                            },
           { name: :id               , type: :integer                            },
@@ -373,10 +373,8 @@ describe Collmex::Api::AccdocGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005
           { name: :date_end         , type: :date                               },
           { name: :cancellation     , type: :integer                            },
           { name: :changed_only     , type: :integer                            },
-          { name: :system_name      , type: :string                             },
+          { name: :system_name      , type: :string                             }
       ]
-
-
 
   specify { described_class.specification.should eql spec }
 
@@ -418,7 +416,7 @@ describe Collmex::Api::Accdoc do   # fixme ACCDOC # http://www.collmex.de/cgi-bi
           { name: :journey_id        , type: :integer                            },
           { name: :belongs_to_id     , type: :integer                            },
           { name: :belongs_to_year   , type: :integer                            },
-          { name: :belongs_to_pos    , type: :integer                            },
+          { name: :belongs_to_pos    , type: :integer                            }
       ]
 
 
@@ -446,7 +444,7 @@ describe Collmex::Api::AddressGet do # http://www.collmex.de/cgi-bin/cgi.exe?100
           { name: :address_group    , type: :integer                            },
           { name: :changed_only     , type: :integer                            },
           { name: :system_name      , type: :string                             },
-          { name: :contact_id       , type: :integer                            },
+          { name: :contact_id       , type: :integer                            }
       ]
 
   specify { described_class.specification.should eql spec }
@@ -467,10 +465,8 @@ describe Collmex::Api::InvoicePaymentGet do # http://www.collmex.de/cgi-bin/cgi.
           { name: :company_id       , type: :integer   , default: 1             },
           { name: :id               , type: :string                             },
           { name: :changed_only     , type: :integer                            },
-          { name: :system_name      , type: :string                             },
+          { name: :system_name      , type: :string                             }
       ]
-
-
 
   specify { described_class.specification.should eql spec }
 
@@ -486,17 +482,15 @@ describe Collmex::Api::InvoicePayment do # http://www.collmex.de/cgi-bin/cgi.exe
 
   spec =
       [
-          { name: :identifier       , type: :string    , fix: "INVOICE_PAYMENT"     },
+          { name: :identifier       , type: :string    , fix: "INVOICE_PAYMENT" },
           { name: :id               , type: :string                             },
           { name: :date             , type: :date                               },
           { name: :amount_paid      , type: :currency                           },
           { name: :amount_reduced   , type: :currency                           },
           { name: :business_year    , type: :integer                            },
           { name: :accdoc_id        , type: :integer                            },
-          { name: :accdoc_position  , type: :integer                            },
+          { name: :accdoc_position  , type: :integer                            }
       ]
-
-
 
   specify { described_class.specification.should eql spec }
 
@@ -519,10 +513,8 @@ describe Collmex::Api::ProductGet do # http://www.collmex.de/cgi-bin/cgi.exe?100
           { name: :price_group         , type: :string                          },
           { name: :changed_only        , type: :integer                         },
           { name: :system_name         , type: :string                          },
-          { name: :website_id          , type: :integer                         },
+          { name: :website_id          , type: :integer                         }
       ]
-
-
 
   specify { described_class.specification.should eql spec }
 
@@ -538,10 +530,8 @@ describe Collmex::Api::ProductGroupsGet do # http://www.collmex.de/cgi-bin/cgi.e
 
   spec =
       [
-          { name: :identifier          , type: :string    , fix: "PRODUCT_GROUPS_GET"     },
+          { name: :identifier          , type: :string    , fix: "PRODUCT_GROUPS_GET"     }
       ]
-
-
 
   specify { described_class.specification.should eql spec }
 
@@ -556,13 +546,11 @@ describe Collmex::Api::StockAvailableGet do # http://www.collmex.de/cgi-bin/cgi.
   spec =
       [
           { name: :identifier       , type: :string    , fix: "STOCK_AVAILABLE_GET" },
-          { name: :company_id       , type: :integer   , default: 1             },
-          { name: :product_id       , type: :string                             },
-          { name: :changed_only     , type: :integer                            },
-          { name: :system_name      , type: :string                             },
+          { name: :company_id       , type: :integer   , default: 1                 },
+          { name: :product_id       , type: :string                                 },
+          { name: :changed_only     , type: :integer                                },
+          { name: :system_name      , type: :string                                 }
       ]
-
-
 
   specify { described_class.specification.should eql spec }
 
@@ -583,10 +571,8 @@ describe Collmex::Api::StockAvailable do # http://www.collmex.de/cgi-bin/cgi.exe
           { name: :company_id         , type: :integer   , default: 1             },
           { name: :amount             , type: :integer                            },
           { name: :quantity_unit      , type: :string                             },
-          { name: :replenishment_time , type: :integer                            },
+          { name: :replenishment_time , type: :integer                            }
       ]
-
-
 
   specify { described_class.specification.should eql spec }
 
@@ -614,10 +600,8 @@ describe Collmex::Api::CustomerGet do # http://www.collmex.de/cgi-bin/cgi.exe?10
           { name: :agent_id         , type: :integer                            },
           { name: :only_changed     , type: :integer                            },
           { name: :system_name      , type: :string                             },
-          { name: :inactive         , type: :integer                            },
+          { name: :inactive         , type: :integer                            }
       ]
-
-
 
   specify { described_class.specification.should eql spec }
 
@@ -642,7 +626,7 @@ describe Collmex::Api::QuotationGet do # http://www.collmex.de/cgi-bin/cgi.exe?1
             { name: :paperless        , type: :integer                            },
             { name: :return_format    , type: :string                             },
             { name: :only_changed     , type: :integer                            },
-            { name: :system_name      , type: :string                             },
+            { name: :system_name      , type: :string                             }
           ]
 
   specify { described_class.specification.should eql spec }
@@ -670,7 +654,7 @@ describe Collmex::Api::SalesOrderGet do # http://www.collmex.de/cgi-bin/cgi.exe?
           { name: :only_changed     , type: :integer                            },
           { name: :system_name      , type: :string                             },
           { name: :system_name_only , type: :integer                            },
-          { name: :paperless        , type: :integer                            },
+          { name: :paperless        , type: :integer                            }
       ]
 
   specify { described_class.specification.should eql spec }
@@ -688,17 +672,15 @@ describe Collmex::Api::PaymentConfirmation do # http://www.collmex.de/cgi-bin/cg
 
   spec =
       [
-          { name: :identifier        , type: :string    , fix: "PAYMENT_CONFIRMATION"          },
-          { name: :customer_order_id , type: :integer                            },
-          { name: :date              , type: :date                               },
-          { name: :amount            , type: :currency                           },
-          { name: :fee               , type: :currency                           },
-          { name: :currency          , type: :string                             },
-          { name: :paypal_email      , type: :string                             },
-          { name: :paypal_transaction_id , type: :string                         },
+          { name: :identifier            , type: :string    , fix: "PAYMENT_CONFIRMATION" },
+          { name: :customer_order_id     , type: :integer                                 },
+          { name: :date                  , type: :date                                    },
+          { name: :amount                , type: :currency                                },
+          { name: :fee                   , type: :currency                                },
+          { name: :currency              , type: :string                                  },
+          { name: :paypal_email          , type: :string                                  },
+          { name: :paypal_transaction_id , type: :string                                  }
       ]
-
-
 
   specify { described_class.specification.should eql spec }
 
@@ -725,7 +707,7 @@ describe Collmex::Api::InvoiceGet do # http://www.collmex.de/cgi-bin/cgi.exe?100
           { name: :only_changed     , type: :integer                            },
           { name: :system_name      , type: :string                             },
           { name: :system_name_only , type: :integer                            },
-          { name: :paperless        , type: :integer                            },
+          { name: :paperless        , type: :integer                            }
       ]
 
   specify { described_class.specification.should eql spec }
@@ -753,7 +735,7 @@ describe Collmex::Api::DeliveryGet do # http://www.collmex.de/cgi-bin/cgi.exe?10
           { name: :only_changed     , type: :integer                            },
           { name: :system_name      , type: :string                             },
           { name: :paperless        , type: :integer                            },
-          { name: :customer_order_id, type: :integer                            },
+          { name: :customer_order_id, type: :integer                            }
       ]
 
   specify { described_class.specification.should eql spec }
@@ -851,7 +833,7 @@ describe Collmex::Api::Cmxinv do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
           { name: :tax_classification          , type: :integer                            },
           { name: :tax_abroad                  , type: :integer                            },
           { name: :customer_order_position     , type: :integer                            },
-          { name: :revenue_element             , type: :integer                            },
+          { name: :revenue_element             , type: :integer                            }
       ]
 
   specify { described_class.specification.should eql spec }
@@ -895,7 +877,7 @@ describe Collmex::Api::Cmxums do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
           { name: :type                      , type: :integer                   },
           { name: :system_name               , type: :string                    },
           { name: :offset_against_invoice_id , type: :string                    },
-          { name: :cost_unit                 , type: :string                    },
+          { name: :cost_unit                 , type: :string                    }
       ]
 
   specify { described_class.specification.should eql spec }
@@ -946,7 +928,7 @@ describe Collmex::Api::Cmxlrn do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
           { name: :customer_id_at_supplier  , type: :string              },
           { name: :currency           , type: :string                    },
           { name: :phone_2            , type: :string                    },
-          { name: :output_language    , type: :integer                   },
+          { name: :output_language    , type: :integer                   }
       ]
 
   specify { described_class.specification.should eql spec }
@@ -1006,7 +988,7 @@ describe Collmex::Api::Cmxknd do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
           { name: :delivery_id_at_customer        , type: :string                 },
           { name: :output_language    , type: :integer                            },
           { name: :email_cc           , type: :string                             },
-          { name: :phone_2            , type: :string                             },
+          { name: :phone_2            , type: :string                             }
       ]
 
   specify { described_class.specification.should eql spec }
@@ -1056,7 +1038,7 @@ describe Collmex::Api::Cmxadr do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
             { name: :review_at          , type: :date                               },
             { name: :address_group      , type: :integer                            },
             { name: :agent_id           , type: :integer                            },
-            { name: :company_id         , type: :integer   , default: 1             },
+            { name: :company_id         , type: :integer   , default: 1             }
       ]
 
   specify { described_class.specification.should eql spec } 
@@ -1078,7 +1060,7 @@ describe Collmex::Api::Message do
             { name: :type             , type: :string                             },
             { name: :id               , type: :integer                            },
             { name: :text             , type: :string                             },
-            { name: :line             , type: :integer                            },
+            { name: :line             , type: :integer                            }
           ]
 
   specify { described_class.specification.should eql spec } 
