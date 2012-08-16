@@ -336,7 +336,7 @@ end
 
 
 
-describe Collmex::Api::Login do
+describe Collmex::Api::Login do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Authentifizierung
   subject { Collmex::Api::Login.new({username: 12, password: 34}) }
   it_behaves_like "Collmex Api Command" 
   spec =  
@@ -1050,7 +1050,7 @@ describe Collmex::Api::Cmxadr do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
   specify { subject.to_a.should eql output }
 end
 
-describe Collmex::Api::Message do 
+describe Collmex::Api::Message do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Rueckmeldungen
 
   it_behaves_like "Collmex Api Command" 
 

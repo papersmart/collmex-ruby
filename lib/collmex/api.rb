@@ -178,7 +178,7 @@ end
 module Collmex
   module Api
 
-    class Login < Line
+    class Login < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Authentifizierung
       def self.specification
         [
             { name: :identifier       , type: :string    , fix: "LOGIN"            },
@@ -704,7 +704,7 @@ module Collmex
       end
     end
 
-    class Message < Line
+    class Message < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Rueckmeldungen
       def self.specification
           [
             { name: :identifier       , type: :string    , fix: "MESSAGE"         },
