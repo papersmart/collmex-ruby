@@ -330,9 +330,24 @@ shared_examples_for "Collmex Api Command" do
 
 end
 
-#describe Collmex::Api::Adrgrp do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_adressgruppen
-  # tbd
-#end
+describe Collmex::Api::Adrgrp do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_adressgruppen
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier  , type: :string  , fix: "ADRGRP" },
+          { name: :id          , type: :integer                 },
+          { name: :description , type: :string                  },
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1} ) }
+
+  output = ["ADRGRP", 1, ""]
+
+  specify { subject.to_a.should eql output }
+end
 
 #describe Collmex::Api::AboGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Periodische_rechnung
   # tbd

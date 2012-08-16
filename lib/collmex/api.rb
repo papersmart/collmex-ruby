@@ -178,6 +178,16 @@ end
 module Collmex
   module Api
 
+    class Adrgrp < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_adressgruppen
+      def self.specification
+        [
+            { name: :identifier  , type: :string  , fix: "ADRGRP" },
+            { name: :id          , type: :integer                 },
+            { name: :description , type: :string                  },
+        ]
+      end
+    end
+
     class Accdoc < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Buchhaltungsbelege
       def self.specification
         [
