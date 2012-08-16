@@ -762,16 +762,13 @@ end
   # tbd
 #end
 
-#describe Collmex::Api::Cmxlif do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_lieferant
-  # tbd
-#end
+describe Collmex::Api::Cmxlif do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_lieferant
 
-describe Collmex::Api::Cmxlrn do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_lieferantenrechnung
   it_behaves_like "Collmex Api Command"
 
   spec =
       [
-          { name: :identifier               , type: :string  , fix: "CMXLRN" },
+          { name: :identifier               , type: :string  , fix: "CMXLIF" },
           { name: :id                       , type: :integer                 },
           { name: :company_id               , type: :integer , default: 1    },
           { name: :salutation               , type: :string                  },
@@ -801,7 +798,7 @@ describe Collmex::Api::Cmxlrn do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
           { name: :delivery_terms_additions , type: :string                  },
           { name: :output_media             , type: :integer                 },
           { name: :account_owner            , type: :string                  },
-          { name: :address_group            , type: :integer                 },
+          { name: :address_group_id         , type: :integer                 },
           { name: :customer_id_at_supplier  , type: :string                  },
           { name: :currency                 , type: :string                  },
           { name: :phone_2                  , type: :string                  },
@@ -810,12 +807,17 @@ describe Collmex::Api::Cmxlrn do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
 
   specify { described_class.specification.should eql spec }
 
-  subject { described_class.new( {id: 1, supplier_id: 9999} ) }
+  subject { described_class.new( {id: 1} ) }
 
-  output = ["CMXLRN", 1, 1, "", "", "", "", "", "", "", "", "", "", nil, "", "", "", "", "", "", "", "", "", "", "", nil, "", "", nil, "", nil, "", "", "", nil]
+  output = ["CMXLIF", 1, 1, "", "", "", "", "", "", "", "", "", "", nil, "", "", "", "", "", "", "", "", "", "", "", nil, "", "", nil, "", nil, "", "", "", nil]
 
   specify { subject.to_a.should eql output }
+
 end
+
+#describe Collmex::Api::Cmxlrn do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_lieferantenrechnung
+  # tbd
+#end
 
 #describe Collmex::Api::Cmxord2 do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_kundenauftraege
   # tbd
@@ -955,6 +957,7 @@ describe Collmex::Api::DeliveryGet do # http://www.collmex.de/cgi-bin/cgi.exe?10
 end
 
 describe Collmex::Api::InvoiceGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Rechnungen
+
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -980,6 +983,7 @@ describe Collmex::Api::InvoiceGet do # http://www.collmex.de/cgi-bin/cgi.exe?100
   output = ["INVOICE_GET", "1", 1, 9999, nil, nil, nil, "", nil, "", nil, nil]
 
   specify { subject.to_a.should eql output }
+
 end
 
 describe Collmex::Api::InvoicePayment do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Zahlungen
@@ -1179,9 +1183,33 @@ end
   # tbd
 #end
 
-#describe Collmex::Api::PurchaseOrderGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferantenauftraege
-  # tbd
-#end
+describe Collmex::Api::PurchaseOrderGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferantenauftraege
+
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier       , type: :string  , fix: "PURCHASE_ORDER_GET" },
+          { name: :id               , type: :string                              },
+          { name: :company_id       , type: :integer , default: 1                },
+          { name: :supplier_id      , type: :integer                             },
+          { name: :product_id       , type: :string                              },
+          { name: :sent_only        , type: :integer                             },
+          { name: :return_format    , type: :string                              },
+          { name: :only_changed     , type: :integer                             },
+          { name: :system_name      , type: :string                              },
+          { name: :paperless        , type: :integer                             }
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1, supplier_id: 9999} ) }
+
+  output = ["PURCHASE_ORDER_GET", "1", 1, 9999, "", nil, "", nil, "", nil]
+
+  specify { subject.to_a.should eql output }
+
+end
 
 describe Collmex::Api::QuotationGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Angebote
 

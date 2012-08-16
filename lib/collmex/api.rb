@@ -484,10 +484,10 @@ module Collmex
       end
     end
 
-    class Cmxlrn < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_lieferantenrechnung
+    class Cmxlif < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_lieferant
       def self.specification
         [
-            { name: :identifier               , type: :string  , fix: "CMXLRN" },
+            { name: :identifier               , type: :string  , fix: "CMXLIF" },
             { name: :id                       , type: :integer                 },
             { name: :company_id               , type: :integer , default: 1    },
             { name: :salutation               , type: :string                  },
@@ -517,7 +517,7 @@ module Collmex
             { name: :delivery_terms_additions , type: :string                  },
             { name: :output_media             , type: :integer                 },
             { name: :account_owner            , type: :string                  },
-            { name: :address_group            , type: :integer                 },
+            { name: :address_group_id         , type: :integer                 },
             { name: :customer_id_at_supplier  , type: :string                  },
             { name: :currency                 , type: :string                  },
             { name: :phone_2                  , type: :string                  },
@@ -724,6 +724,23 @@ module Collmex
       def self.specification
         [
             { name: :identifier , type: :string , fix: "PRODUCT_GROUPS_GET" }
+        ]
+      end
+    end
+
+    class PurchaseOrderGet < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferantenauftraege
+      def self.specification
+        [
+            { name: :identifier       , type: :string  , fix: "PURCHASE_ORDER_GET" },
+            { name: :id               , type: :string                              },
+            { name: :company_id       , type: :integer , default: 1                },
+            { name: :supplier_id      , type: :integer                             },
+            { name: :product_id       , type: :string                              },
+            { name: :sent_only        , type: :integer                             },
+            { name: :return_format    , type: :string                              },
+            { name: :only_changed     , type: :integer                             },
+            { name: :system_name      , type: :string                              },
+            { name: :paperless        , type: :integer                             }
         ]
       end
     end
