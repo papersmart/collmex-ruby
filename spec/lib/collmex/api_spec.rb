@@ -349,9 +349,31 @@ describe Collmex::Api::Adrgrp do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
   specify { subject.to_a.should eql output }
 end
 
-#describe Collmex::Api::AboGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Periodische_rechnung
-  # tbd
-#end
+describe Collmex::Api::AboGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Periodische_rechnung
+
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier         , type: :string  , fix: "ABO_GET" },
+          { name: :customer_id        , type: :integer                  },
+          { name: :company_id         , type: :integer , default: 1     },
+          { name: :product_id         , type: :string                   },
+          { name: :next_invoice_from  , type: :date                     },
+          { name: :next_invoice_to    , type: :date                     },
+          { name: :only_valid         , type: :integer                  },
+          { name: :only_changed       , type: :integer                  },
+          { name: :system_name        , type: :string                   },
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {customer_id: 9999} ) }
+
+  output = ["ABO_GET", 9999, 1, "", nil, nil, nil, nil, ""]
+
+  specify { subject.to_a.should eql output }
+end
 
 describe Collmex::Api::Accdoc do   # fixme ACCDOC # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Buchhaltungsbelege
 

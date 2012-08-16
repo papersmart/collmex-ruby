@@ -188,6 +188,22 @@ module Collmex
       end
     end
 
+    class AboGet < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Periodische_rechnung
+      def self.specification
+        [
+            { name: :identifier         , type: :string  , fix: "ABO_GET" },
+            { name: :customer_id        , type: :integer                  },
+            { name: :company_id         , type: :integer , default: 1     },
+            { name: :product_id         , type: :string                   },
+            { name: :next_invoice_from  , type: :date                     },
+            { name: :next_invoice_to    , type: :date                     },
+            { name: :only_valid         , type: :integer                  },
+            { name: :only_changed       , type: :integer                  },
+            { name: :system_name        , type: :string                   },
+        ]
+      end
+    end
+
     class Accdoc < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Buchhaltungsbelege
       def self.specification
         [
