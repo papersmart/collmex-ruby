@@ -331,13 +331,14 @@ shared_examples_for "Collmex Api Command" do
 end
 
 describe Collmex::Api::Adrgrp do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_adressgruppen
+
   it_behaves_like "Collmex Api Command"
 
   spec =
       [
           { name: :identifier  , type: :string  , fix: "ADRGRP" },
           { name: :id          , type: :integer                 },
-          { name: :description , type: :string                  },
+          { name: :description , type: :string                  }
       ]
 
   specify { described_class.specification.should eql spec }
@@ -347,6 +348,7 @@ describe Collmex::Api::Adrgrp do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
   output = ["ADRGRP", 1, ""]
 
   specify { subject.to_a.should eql output }
+
 end
 
 describe Collmex::Api::AboGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Periodische_rechnung
@@ -363,7 +365,7 @@ describe Collmex::Api::AboGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
           { name: :next_invoice_to    , type: :date                     },
           { name: :only_valid         , type: :integer                  },
           { name: :only_changed       , type: :integer                  },
-          { name: :system_name        , type: :string                   },
+          { name: :system_name        , type: :string                   }
       ]
 
   specify { described_class.specification.should eql spec }
@@ -373,6 +375,7 @@ describe Collmex::Api::AboGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
   output = ["ABO_GET", 9999, 1, "", nil, nil, nil, nil, ""]
 
   specify { subject.to_a.should eql output }
+
 end
 
 describe Collmex::Api::Accdoc do   # fixme ACCDOC # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Buchhaltungsbelege
@@ -416,9 +419,11 @@ describe Collmex::Api::Accdoc do   # fixme ACCDOC # http://www.collmex.de/cgi-bi
   output = ["ACCDOC", 1, nil, 1, nil, nil, "", nil, nil, "", nil, nil, 9999, "", nil, "", nil, "", nil, "", "", nil, nil, nil, nil, nil]
 
   specify { subject.to_a.should eql output }
+
 end
 
 describe Collmex::Api::AccdocGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Buchhaltungsbelege
+
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -449,9 +454,11 @@ describe Collmex::Api::AccdocGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005
   output = ["ACCDOC_GET", 1, nil, 1, nil, nil, 9999, nil, nil, nil, nil, "", nil, nil, nil, nil, ""]
 
   specify { subject.to_a.should eql output }
+
 end
 
 describe Collmex::Api::AddressGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Adressen
+
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -475,14 +482,16 @@ describe Collmex::Api::AddressGet do # http://www.collmex.de/cgi-bin/cgi.exe?100
   output = ["ADDRESS_GET", 1, nil, "", nil, "", nil, nil, "", nil]
 
   specify { subject.to_a.should eql output }
+
 end
 
 describe Collmex::Api::AddressGroupsGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Adressgruppen
+
   it_behaves_like "Collmex Api Command"
 
   spec =
       [
-          { name: :identifier , type: :string , fix: "ADDRESS_GROUPS_GET" },
+          { name: :identifier , type: :string , fix: "ADDRESS_GROUPS_GET" }
       ]
 
   specify { described_class.specification.should eql spec }
@@ -490,15 +499,40 @@ describe Collmex::Api::AddressGroupsGet do # http://www.collmex.de/cgi-bin/cgi.e
   output = ["ADDRESS_GROUPS_GET"]
 
   specify { subject.to_a.should eql output }
+
 end
 
 #describe Collmex::Api::BillOfMaterialGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Stuecklisten
   # tbd
 #end
 
-#describe Collmex::Api::Cmxabo do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_periodische_rechnung
-  # tbd
-#end
+describe Collmex::Api::Cmxabo do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_periodische_rechnung
+
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier          , type: :string  , fix: "ABO_GET" },
+          { name: :customer_id         , type: :integer                  },
+          { name: :company_id          , type: :integer , default: 1     },
+          { name: :valid_from          , type: :date                     },
+          { name: :valid_to            , type: :date                     },
+          { name: :product_id          , type: :string                   },
+          { name: :product_description , type: :string                   },
+          { name: :customized_price    , type: :currency                 },
+          { name: :interval            , type: :integer                  },
+          { name: :next_invoice        , type: :date                     }
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {customer_id: 9999} ) }
+
+  output = ["ABO_GET", 9999, 1, nil, nil, "", "", nil, nil, nil]
+
+  specify { subject.to_a.should eql output }
+
+end
 
 #describe Collmex::Api::Cmxact do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_taetigkeiten
   # tbd
@@ -1265,3 +1299,4 @@ end
 #describe Collmex::Api::VendorGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferanten
   # tbd
 #end
+

@@ -183,7 +183,7 @@ module Collmex
         [
             { name: :identifier  , type: :string  , fix: "ADRGRP" },
             { name: :id          , type: :integer                 },
-            { name: :description , type: :string                  },
+            { name: :description , type: :string                  }
         ]
       end
     end
@@ -199,7 +199,7 @@ module Collmex
             { name: :next_invoice_to    , type: :date                     },
             { name: :only_valid         , type: :integer                  },
             { name: :only_changed       , type: :integer                  },
-            { name: :system_name        , type: :string                   },
+            { name: :system_name        , type: :string                   }
         ]
       end
     end
@@ -281,7 +281,24 @@ module Collmex
     class AddressGroupsGet < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Adressgruppen
       def self.specification
         [
-            { name: :identifier , type: :string , fix: "ADDRESS_GROUPS_GET" },
+            { name: :identifier , type: :string , fix: "ADDRESS_GROUPS_GET" }
+        ]
+      end
+    end
+
+    class Cmxabo < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_periodische_rechnung
+      def self.specification
+        [
+            { name: :identifier          , type: :string  , fix: "ABO_GET" },
+            { name: :customer_id         , type: :integer                  },
+            { name: :company_id          , type: :integer , default: 1     },
+            { name: :valid_from          , type: :date                     },
+            { name: :valid_to            , type: :date                     },
+            { name: :product_id          , type: :string                   },
+            { name: :product_description , type: :string                   },
+            { name: :customized_price    , type: :currency                 },
+            { name: :interval            , type: :integer                  },
+            { name: :next_invoice        , type: :date                     }
         ]
       end
     end
