@@ -477,9 +477,20 @@ describe Collmex::Api::AddressGet do # http://www.collmex.de/cgi-bin/cgi.exe?100
   specify { subject.to_a.should eql output }
 end
 
-#describe Collmex::Api::AddressGroupsGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Adressgruppen
-  # tbd
-#end
+describe Collmex::Api::AddressGroupsGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Adressgruppen
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier , type: :string , fix: "ADDRESS_GROUPS_GET" },
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  output = ["ADDRESS_GROUPS_GET"]
+
+  specify { subject.to_a.should eql output }
+end
 
 #describe Collmex::Api::BillOfMaterialGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Stuecklisten
   # tbd

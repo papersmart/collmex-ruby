@@ -278,6 +278,14 @@ module Collmex
       end
     end
 
+    class AddressGroupsGet < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Adressgruppen
+      def self.specification
+        [
+            { name: :identifier , type: :string , fix: "ADDRESS_GROUPS_GET" },
+        ]
+      end
+    end
+
     class Cmxadr < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_adressen
       def self.specification
         [
