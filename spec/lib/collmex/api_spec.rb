@@ -330,25 +330,54 @@ shared_examples_for "Collmex Api Command" do
 
 end
 
-describe Collmex::Api::Line do
-  it_behaves_like "Collmex Api Command" 
-end
+#describe Collmex::Api::Adrgrp do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_adressgruppen
+  # tbd
+#end
 
+#describe Collmex::Api::AboGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Periodische_rechnung
+  # tbd
+#end
 
+describe Collmex::Api::Accdoc do   # fixme ACCDOC # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Buchhaltungsbelege
 
-describe Collmex::Api::Login do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Authentifizierung
-  subject { Collmex::Api::Login.new({username: 12, password: 34}) }
-  it_behaves_like "Collmex Api Command" 
-  spec =  
+  it_behaves_like "Collmex Api Command"
+
+  spec =
       [
-          { name: :identifier   , type: :string,    fix: "LOGIN" },
-          { name: :username     , type: :integer                 },
-          { name: :password     , type: :integer                 }
+          { name: :identifier        , type: :string  , fix: "ACCDOC" },
+          { name: :company_id        , type: :integer , default: 1    },
+          { name: :business_year     , type: :integer                 },
+          { name: :id                , type: :integer                 },
+          { name: :date              , type: :date                    },
+          { name: :accounted_date    , type: :date                    },
+          { name: :test              , type: :string                  },
+          { name: :position_id       , type: :integer                 },
+          { name: :account_id        , type: :integer                 },
+          { name: :account_name      , type: :string                  },
+          { name: :should_have       , type: :integer                 },
+          { name: :amount            , type: :currency                },
+          { name: :customer_id       , type: :integer                 },
+          { name: :customer_name     , type: :string                  },
+          { name: :provider_id       , type: :integer                 },
+          { name: :provider_name     , type: :string                  },
+          { name: :asset_id          , type: :integer                 },
+          { name: :asset_name        , type: :string                  },
+          { name: :canceled_accdoc   , type: :integer                 },
+          { name: :cost_center       , type: :string                  },
+          { name: :invoice_id        , type: :string                  },
+          { name: :customer_order_id , type: :integer                 },
+          { name: :journey_id        , type: :integer                 },
+          { name: :belongs_to_id     , type: :integer                 },
+          { name: :belongs_to_year   , type: :integer                 },
+          { name: :belongs_to_pos    , type: :integer                 }
       ]
 
-  specify { described_class.specification.should eql spec } 
+  specify { described_class.specification.should eql spec }
 
-  output = ["LOGIN", 12, 34]
+  subject { described_class.new( {id: 1, customer_id: 9999} ) }
+
+  output = ["ACCDOC", 1, nil, 1, nil, nil, "", nil, nil, "", nil, nil, 9999, "", nil, "", nil, "", nil, "", "", nil, nil, nil, nil, nil]
+
   specify { subject.to_a.should eql output }
 end
 
@@ -357,23 +386,23 @@ describe Collmex::Api::AccdocGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005
 
   spec =
       [
-          { name: :identifier       , type: :string    , fix: "ACCDOC_GET"      },
-          { name: :company_id       , type: :integer   , default: 1             },
-          { name: :business_year    , type: :integer                            },
-          { name: :id               , type: :integer                            },
-          { name: :account_id       , type: :integer                            },
-          { name: :cost_unit        , type: :integer                            },
-          { name: :customer_id      , type: :integer                            },
-          { name: :provider_id      , type: :integer                            },
-          { name: :asset_id         , type: :integer                            },
-          { name: :invoice_id       , type: :integer                            },
-          { name: :journey_id       , type: :integer                            },
-          { name: :text             , type: :string                             },
-          { name: :date_start       , type: :date                               },
-          { name: :date_end         , type: :date                               },
-          { name: :cancellation     , type: :integer                            },
-          { name: :changed_only     , type: :integer                            },
-          { name: :system_name      , type: :string                             }
+          { name: :identifier    , type: :string  , fix: "ACCDOC_GET" },
+          { name: :company_id    , type: :integer , default: 1        },
+          { name: :business_year , type: :integer                     },
+          { name: :id            , type: :integer                     },
+          { name: :account_id    , type: :integer                     },
+          { name: :cost_unit     , type: :integer                     },
+          { name: :customer_id   , type: :integer                     },
+          { name: :provider_id   , type: :integer                     },
+          { name: :asset_id      , type: :integer                     },
+          { name: :invoice_id    , type: :integer                     },
+          { name: :journey_id    , type: :integer                     },
+          { name: :text          , type: :string                      },
+          { name: :date_start    , type: :date                        },
+          { name: :date_end      , type: :date                        },
+          { name: :cancellation  , type: :integer                     },
+          { name: :changed_only  , type: :integer                     },
+          { name: :system_name   , type: :string                      }
       ]
 
   specify { described_class.specification.should eql spec }
@@ -385,66 +414,21 @@ describe Collmex::Api::AccdocGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005
   specify { subject.to_a.should eql output }
 end
 
-describe Collmex::Api::Accdoc do   # fixme ACCDOC # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Buchhaltungsbelege
-
-  it_behaves_like "Collmex Api Command"
-
-  spec =
-      [
-          { name: :identifier        , type: :string    , fix: "ACCDOC"          },
-          { name: :company_id        , type: :integer   , default: 1             },
-          { name: :business_year     , type: :integer                            },
-          { name: :id                , type: :integer                            },
-          { name: :date              , type: :date                               },
-          { name: :accounted_date    , type: :date                               },
-          { name: :test              , type: :string                             },
-          { name: :position_id       , type: :integer                            },
-          { name: :account_id        , type: :integer                            },
-          { name: :account_name      , type: :string                             },
-          { name: :should_have       , type: :integer                            },
-          { name: :amount            , type: :currency                           },
-          { name: :customer_id       , type: :integer                            },
-          { name: :customer_name     , type: :string                             },
-          { name: :provider_id       , type: :integer                            },
-          { name: :provider_name     , type: :string                             },
-          { name: :asset_id          , type: :integer                            },
-          { name: :asset_name        , type: :string                             },
-          { name: :canceled_accdoc   , type: :integer                            },
-          { name: :cost_center       , type: :string                             },
-          { name: :invoice_id        , type: :string                             },
-          { name: :customer_order_id , type: :integer                            },
-          { name: :journey_id        , type: :integer                            },
-          { name: :belongs_to_id     , type: :integer                            },
-          { name: :belongs_to_year   , type: :integer                            },
-          { name: :belongs_to_pos    , type: :integer                            }
-      ]
-
-
-
-  specify { described_class.specification.should eql spec }
-
-  subject { described_class.new( {id: 1, customer_id: 9999} ) }
-
-  output = ["ACCDOC", 1, nil, 1, nil, nil, "", nil, nil, "", nil, nil, 9999, "", nil, "", nil, "", nil, "", "", nil, nil, nil, nil, nil]
-
-  specify { subject.to_a.should eql output }
-end
-
 describe Collmex::Api::AddressGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Adressen
   it_behaves_like "Collmex Api Command"
 
   spec =
       [
-          { name: :identifier       , type: :string    , fix: "ADDRESS_GET"     },
-          { name: :id               , type: :integer                            },
-          { name: :type             , type: :integer                            },
-          { name: :text             , type: :string                             },
-          { name: :due_to_review    , type: :integer                            },
-          { name: :zipcode          , type: :string                             },
-          { name: :address_group    , type: :integer                            },
-          { name: :changed_only     , type: :integer                            },
-          { name: :system_name      , type: :string                             },
-          { name: :contact_id       , type: :integer                            }
+          { name: :identifier    , type: :string  , fix: "ADDRESS_GET" },
+          { name: :id            , type: :integer                      },
+          { name: :type          , type: :integer                      },
+          { name: :text          , type: :string                       },
+          { name: :due_to_review , type: :integer                      },
+          { name: :zipcode       , type: :string                       },
+          { name: :address_group , type: :integer                      },
+          { name: :changed_only  , type: :integer                      },
+          { name: :system_name   , type: :string                       },
+          { name: :contact_id    , type: :integer                      }
       ]
 
   specify { described_class.specification.should eql spec }
@@ -456,23 +440,462 @@ describe Collmex::Api::AddressGet do # http://www.collmex.de/cgi-bin/cgi.exe?100
   specify { subject.to_a.should eql output }
 end
 
-describe Collmex::Api::InvoicePaymentGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Zahlungen
-  it_behaves_like "Collmex Api Command"
+#describe Collmex::Api::AddressGroupsGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Adressgruppen
+  # tbd
+#end
 
+#describe Collmex::Api::BillOfMaterialGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Stuecklisten
+  # tbd
+#end
+
+#describe Collmex::Api::Cmxabo do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_periodische_rechnung
+  # tbd
+#end
+
+#describe Collmex::Api::Cmxact do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_taetigkeiten
+  # tbd
+#end
+
+describe Collmex::Api::Cmxadr do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_adressen
+
+  it_behaves_like "Collmex Api Command"
   spec =
       [
-          { name: :identifier       , type: :string    , fix: "INVOICE_PAYMENT_GET"     },
-          { name: :company_id       , type: :integer   , default: 1             },
-          { name: :id               , type: :string                             },
-          { name: :changed_only     , type: :integer                            },
-          { name: :system_name      , type: :string                             }
+          { name: :identifier          , type: :string  , fix: "CMXADR" },
+          { name: :id                  , type: :integer                 },
+          { name: :type                , type: :integer                 },
+          { name: :salutation          , type: :string                  },
+          { name: :title               , type: :string                  },
+          { name: :firstname           , type: :string                  },
+          { name: :lastname            , type: :string                  },
+          { name: :company             , type: :string                  },
+          { name: :department          , type: :string                  },
+          { name: :street              , type: :string                  },
+          { name: :zipcode             , type: :string                  },
+          { name: :city                , type: :string                  },
+          { name: :annotation          , type: :string                  },
+          { name: :inactive            , type: :integer                 },
+          { name: :country             , type: :string                  },
+          { name: :phone               , type: :string                  },
+          { name: :fax                 , type: :string                  },
+          { name: :email               , type: :string                  },
+          { name: :account_number      , type: :string                  },
+          { name: :bank_account_number , type: :string                  },
+          { name: :iban                , type: :string                  },
+          { name: :bic                 , type: :string                  },
+          { name: :bank_name           , type: :string                  },
+          { name: :tax_id              , type: :string                  },
+          { name: :vat_id              , type: :string                  },
+          { name: :reserved            , type: :string                  },
+          { name: :phone_2             , type: :string                  },
+          { name: :skype_voip          , type: :string                  },
+          { name: :url                 , type: :string                  },
+          { name: :account_owner       , type: :string                  },
+          { name: :review_at           , type: :date                    },
+          { name: :address_group       , type: :integer                 },
+          { name: :agent_id            , type: :integer                 },
+          { name: :company_id          , type: :integer , default: 1    }
       ]
 
   specify { described_class.specification.should eql spec }
 
   subject { described_class.new( {id: 1} ) }
 
-  output = ["INVOICE_PAYMENT_GET", 1, "1", nil, ""]
+  output = ["CMXADR", 1, nil, "", "", "", "", "", "", "", "", "", "", nil, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", nil, nil, nil, 1]
+
+  specify { subject.to_a.should eql output }
+end
+
+#describe Collmex::Api::Cmxasp do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_anspr
+  # tbd
+#end
+
+#describe Collmex::Api::Cmxbom do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Stuecklisten
+  # tbd
+#end
+
+#describe Collmex::Api::Cmxepf do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_abw
+  # tbd
+#end
+
+describe Collmex::Api::Cmxinv do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_rechnungen
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier                         , type: :string  , fix: "CMXINV" },
+          { name: :id                                 , type: :integer                 },
+          { name: :position_id                        , type: :integer                 },
+          { name: :type                               , type: :integer                 },
+          { name: :company_id                         , type: :integer , default: 1    },
+          { name: :customer_order_id                  , type: :integer                 },
+          { name: :customer_id                        , type: :integer                 },
+          { name: :customer_salutation                , type: :string                  },
+          { name: :customer_title                     , type: :string                  },
+          { name: :customer_firstname                 , type: :string                  },
+          { name: :customer_lastname                  , type: :string                  },
+          { name: :customer_company                   , type: :string                  },
+          { name: :customer_department                , type: :string                  },
+          { name: :customer_street                    , type: :string                  },
+          { name: :customer_zipcode                   , type: :string                  },
+          { name: :customer_city                      , type: :string                  },
+          { name: :customer_country                   , type: :string                  },
+          { name: :customer_phone                     , type: :string                  },
+          { name: :customer_phone_2                   , type: :string                  },
+          { name: :customer_fax                       , type: :string                  },
+          { name: :customer_email                     , type: :string                  },
+          { name: :customer_account_number            , type: :string                  },
+          { name: :customer_bank_account_number       , type: :string                  },
+          { name: :customer_alternative_account_owner , type: :string                  },
+          { name: :customer_iban                      , type: :string                  },
+          { name: :customer_bic                       , type: :string                  },
+          { name: :customer_bank_name                 , type: :string                  },
+          { name: :customer_vat_id                    , type: :string                  },
+          { name: :reserved                           , type: :integer                 },
+          { name: :date                               , type: :date                    },
+          { name: :price_date                         , type: :date                    },
+          { name: :terms_of_payment                   , type: :integer                 },
+          { name: :currency                           , type: :string                  },
+          { name: :price_group                        , type: :integer                 },
+          { name: :discount_group                     , type: :integer                 },
+          { name: :discount_final                     , type: :integer                 },
+          { name: :discount_reason                    , type: :string                  },
+          { name: :text                               , type: :string                  },
+          { name: :text_conclusion                    , type: :string                  },
+          { name: :internal_memo                      , type: :string                  },
+          { name: :deleted                            , type: :integer                 },
+          { name: :language                           , type: :integer                 },
+          { name: :operator_id                        , type: :integer                 },
+          { name: :agent_id                           , type: :integer                 },
+          { name: :system_name                        , type: :string                  },
+          { name: :status                             , type: :integer                 },
+          { name: :discount_final_2                   , type: :currency                },
+          { name: :discount_reason_2                  , type: :string                  },
+          { name: :delivery_type                      , type: :integer                 },
+          { name: :delivery_costs                     , type: :currency                },
+          { name: :cod_fee                            , type: :currency                },
+          { name: :supply_and_service_date            , type: :date                    },
+          { name: :delivery_terms                     , type: :string                  },
+          { name: :delivery_terms_additions           , type: :string                  },
+          { name: :delivery_address_salutation        , type: :string                  },
+          { name: :delivery_address_title             , type: :string                  },
+          { name: :delivery_address_firstname         , type: :string                  },
+          { name: :delivery_address_lastname          , type: :string                  },
+          { name: :delivery_address_company           , type: :string                  },
+          { name: :delivery_address_department        , type: :string                  },
+          { name: :delivery_address_street            , type: :string                  },
+          { name: :delivery_address_zipcode           , type: :string                  },
+          { name: :delivery_address_city              , type: :string                  },
+          { name: :delivery_address_country           , type: :string                  },
+          { name: :delivery_address_phone             , type: :string                  },
+          { name: :delivery_address_phone_2           , type: :string                  },
+          { name: :delivery_address_fax               , type: :string                  },
+          { name: :delivery_address_email             , type: :string                  },
+          { name: :item_category                      , type: :integer                 },
+          { name: :product_id                         , type: :string                  },
+          { name: :product_description                , type: :string                  },
+          { name: :quantity_unit                      , type: :string                  },
+          { name: :order_quantity                     , type: :float                   },
+          { name: :product_price                      , type: :currency                },
+          { name: :amount_price                       , type: :float                   },
+          { name: :position_discount                  , type: :currency                },
+          { name: :position_value                     , type: :currency                },
+          { name: :product_type                       , type: :integer                 },
+          { name: :tax_classification                 , type: :integer                 },
+          { name: :tax_abroad                         , type: :integer                 },
+          { name: :customer_order_position            , type: :integer                 },
+          { name: :revenue_element                    , type: :integer                 }
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1, customer_id: 9999} ) }
+
+  output = ["CMXINV", 1, nil, nil, 1, nil, 9999, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", nil, nil, nil, nil, "", nil, nil, nil, "", "", "", "", nil, nil, nil, nil, "", nil, nil, "", nil, nil, nil, nil, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", nil, "", "", "", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+
+  specify { subject.to_a.should eql output }
+end
+
+describe Collmex::Api::Cmxknd do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_kunde
+
+  it_behaves_like "Collmex Api Command"
+  spec =
+      [
+          { name: :identifier                     , type: :string  , fix: "CMXKND" },
+          { name: :id                             , type: :integer                 },
+          { name: :company_id                     , type: :integer , default: 1    },
+          { name: :salutation                     , type: :string                  },
+          { name: :title                          , type: :string                  },
+          { name: :firstname                      , type: :string                  },
+          { name: :lastname                       , type: :string                  },
+          { name: :company                        , type: :string                  },
+          { name: :department                     , type: :string                  },
+          { name: :street                         , type: :string                  },
+          { name: :zipcode                        , type: :string                  },
+          { name: :city                           , type: :string                  },
+          { name: :annotation                     , type: :string                  },
+          { name: :inactive                       , type: :integer                 },
+          { name: :country                        , type: :string                  },
+          { name: :phone                          , type: :string                  },
+          { name: :fax                            , type: :string                  },
+          { name: :email                          , type: :string                  },
+          { name: :account_number                 , type: :string                  },
+          { name: :bank_account_number            , type: :string                  },
+          { name: :iban                           , type: :string                  },
+          { name: :bic                            , type: :string                  },
+          { name: :bank_name                      , type: :string                  },
+          { name: :tax_id                         , type: :string                  },
+          { name: :vat_id                         , type: :string                  },
+          { name: :payment_condition              , type: :integer                 },
+          { name: :discount_group                 , type: :integer                 },
+          { name: :delivery_terms                 , type: :string                  },
+          { name: :delivery_terms_additions       , type: :string                  },
+          { name: :output_media                   , type: :integer                 },
+          { name: :account_owner                  , type: :string                  },
+          { name: :address_group                  , type: :integer                 },
+          { name: :ebay_member                    , type: :string                  },
+          { name: :price_group                    , type: :integer                 },
+          { name: :currency                       , type: :string                  },
+          { name: :agent_id                       , type: :integer                 },
+          { name: :cost_unit                      , type: :string                  },
+          { name: :due_to_review                  , type: :date                    },
+          { name: :delivery_block                 , type: :integer                 },
+          { name: :construction_services_provider , type: :integer                 },
+          { name: :delivery_id_at_customer        , type: :string                  },
+          { name: :output_language                , type: :integer                 },
+          { name: :email_cc                       , type: :string                  },
+          { name: :phone_2                        , type: :string                  }
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1} ) }
+
+  output = ["CMXKND", 1, 1, "", "", "", "", "", "", "", "", "", "", nil, "", "", "", "", "", "", "", "", "", "", "", nil, nil, "", "", nil, "", nil, "", nil, "", nil, "", nil, nil, nil, "", nil, "", ""]
+
+  specify { subject.to_a.should eql output }
+end
+
+#describe Collmex::Api::Cmxknt do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_kontakte
+  # tbd
+#end
+
+#describe Collmex::Api::Cmxlif do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_lieferant
+  # tbd
+#end
+
+describe Collmex::Api::Cmxlrn do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_lieferantenrechnung
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier               , type: :string  , fix: "CMXLRN" },
+          { name: :id                       , type: :integer                 },
+          { name: :company_id               , type: :integer , default: 1    },
+          { name: :salutation               , type: :string                  },
+          { name: :title                    , type: :string                  },
+          { name: :firstname                , type: :string                  },
+          { name: :lastname                 , type: :string                  },
+          { name: :company                  , type: :string                  },
+          { name: :department               , type: :string                  },
+          { name: :street                   , type: :string                  },
+          { name: :zipcode                  , type: :string                  },
+          { name: :city                     , type: :string                  },
+          { name: :annotation               , type: :string                  },
+          { name: :inactive                 , type: :integer                 },
+          { name: :country                  , type: :string                  },
+          { name: :phone                    , type: :string                  },
+          { name: :fax                      , type: :string                  },
+          { name: :email                    , type: :string                  },
+          { name: :account_number           , type: :string                  },
+          { name: :bank_account_number      , type: :string                  },
+          { name: :iban                     , type: :string                  },
+          { name: :bic                      , type: :string                  },
+          { name: :bank_name                , type: :string                  },
+          { name: :tax_id                   , type: :string                  },
+          { name: :vat_id                   , type: :string                  },
+          { name: :payment_condition        , type: :integer                 },
+          { name: :delivery_terms           , type: :string                  },
+          { name: :delivery_terms_additions , type: :string                  },
+          { name: :output_media             , type: :integer                 },
+          { name: :account_owner            , type: :string                  },
+          { name: :address_group            , type: :integer                 },
+          { name: :customer_id_at_supplier  , type: :string                  },
+          { name: :currency                 , type: :string                  },
+          { name: :phone_2                  , type: :string                  },
+          { name: :output_language          , type: :integer                 }
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1, supplier_id: 9999} ) }
+
+  output = ["CMXLRN", 1, 1, "", "", "", "", "", "", "", "", "", "", nil, "", "", "", "", "", "", "", "", "", "", "", nil, "", "", nil, "", nil, "", "", "", nil]
+
+  specify { subject.to_a.should eql output }
+end
+
+#describe Collmex::Api::Cmxord2 do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_kundenauftraege
+  # tbd
+#end
+
+#describe Collmex::Api::Cmxpod do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_produktionsauftraege
+  # tbd
+#end
+
+#describe Collmex::Api::Cmxprd do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_produkt
+  # tbd
+#end
+
+#describe Collmex::Api::Cmxpri do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_preise
+  # tbd
+#end
+
+#describe Collmex::Api::Cmxprj do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_Projekte
+  # tbd
+#end
+
+#describe Collmex::Api::Cmxprl do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_lohn
+  # tbd
+#end
+
+#describe Collmex::Api::Cmxqtn do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_angebote
+  # tbd
+#end
+
+#describe Collmex::Api::Cmxstk do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_bestand
+  # tbd
+#end
+
+describe Collmex::Api::Cmxums do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_umsaetze
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier                , type: :string   , fix: "CMXUMS" },
+          { name: :customer_id               , type: :integer                  },
+          { name: :company_id                , type: :integer  , default: 1    },
+          { name: :invoice_date              , type: :date                     },
+          { name: :invoice_id                , type: :string                   },
+          { name: :net_amount_full_vat       , type: :currency                 },
+          { name: :tax_value_full_vat        , type: :currency                 },
+          { name: :net_amount_reduced_vat    , type: :currency                 },
+          { name: :tax_value_reduced_vat     , type: :currency                 },
+          { name: :intra_community_delivery  , type: :currency                 },
+          { name: :export                    , type: :currency                 },
+          { name: :account_id_no_vat         , type: :integer                  },
+          { name: :net_amount_no_vat         , type: :currency                 },
+          { name: :currency                  , type: :string                   },
+          { name: :contra_account            , type: :integer                  },
+          { name: :invoice_type              , type: :integer                  },
+          { name: :text                      , type: :string                   },
+          { name: :terms_of_payment          , type: :integer                  },
+          { name: :account_id_full_vat       , type: :integer                  },
+          { name: :account_id_reduced_vat    , type: :integer                  },
+          { name: :reserved_1                , type: :integer                  },
+          { name: :reserved_2                , type: :integer                  },
+          { name: :cancellation              , type: :integer                  },
+          { name: :final_invoice             , type: :string                   },
+          { name: :type                      , type: :integer                  },
+          { name: :system_name               , type: :string                   },
+          { name: :offset_against_invoice_id , type: :string                   },
+          { name: :cost_unit                 , type: :string                   }
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {customer_id: 9999} ) }
+
+  output = ["CMXUMS", 9999, 1, nil, "", nil, nil, nil, nil, nil, nil, nil, nil, "", nil, nil, "", nil, nil, nil, nil, nil, nil, "", nil, "", "", ""]
+
+  specify { subject.to_a.should eql output }
+end
+
+#describe Collmex::Api::CreateDueDeliveries do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Faellige_Lieferungen
+  # tbd
+#end
+
+describe Collmex::Api::CustomerGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Kunden
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier     , type: :string  , fix: "CUSTOMER_GET" },
+          { name: :id             , type: :integer                       },
+          { name: :company_id     , type: :integer , default: 1          },
+          { name: :text           , type: :string                        },
+          { name: :due_to_review  , type: :integer                       },
+          { name: :zip_code       , type: :string                        },
+          { name: :address_group  , type: :integer                       },
+          { name: :price_group    , type: :integer                       },
+          { name: :discount_group , type: :integer                       },
+          { name: :agent_id       , type: :integer                       },
+          { name: :only_changed   , type: :integer                       },
+          { name: :system_name    , type: :string                        },
+          { name: :inactive       , type: :integer                       }
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1} ) }
+
+  output = ["CUSTOMER_GET", 1, 1, "", nil, "", nil, nil, nil, nil, nil, "", nil]
+
+  specify { subject.to_a.should eql output }
+end
+
+describe Collmex::Api::DeliveryGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferungen
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier        , type: :string  , fix: "DELIVERY_GET" },
+          { name: :id                , type: :string                        },
+          { name: :company_id        , type: :integer , default: 1          },
+          { name: :customer_id       , type: :integer                       },
+          { name: :date_start        , type: :date                          },
+          { name: :date_end          , type: :date                          },
+          { name: :sent_only         , type: :integer                       },
+          { name: :return_format     , type: :string                        },
+          { name: :only_changed      , type: :integer                       },
+          { name: :system_name       , type: :string                        },
+          { name: :paperless         , type: :integer                       },
+          { name: :customer_order_id , type: :integer                       }
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1, customer_id: 9999} ) }
+
+  output = ["DELIVERY_GET", "1", 1, 9999, nil, nil, nil, "", nil, "", nil, nil]
+
+  specify { subject.to_a.should eql output }
+end
+
+describe Collmex::Api::InvoiceGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Rechnungen
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier       , type: :string  , fix: "INVOICE_GET" },
+          { name: :id               , type: :string                       },
+          { name: :company_id       , type: :integer , default: 1         },
+          { name: :customer_id      , type: :integer                      },
+          { name: :date_start       , type: :date                         },
+          { name: :date_end         , type: :date                         },
+          { name: :sent_only        , type: :integer                      },
+          { name: :return_format    , type: :string                       },
+          { name: :only_changed     , type: :integer                      },
+          { name: :system_name      , type: :string                       },
+          { name: :system_name_only , type: :integer                      },
+          { name: :paperless        , type: :integer                      }
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1, customer_id: 9999} ) }
+
+  output = ["INVOICE_GET", "1", 1, 9999, nil, nil, nil, "", nil, "", nil, nil]
 
   specify { subject.to_a.should eql output }
 end
@@ -482,14 +905,14 @@ describe Collmex::Api::InvoicePayment do # http://www.collmex.de/cgi-bin/cgi.exe
 
   spec =
       [
-          { name: :identifier       , type: :string    , fix: "INVOICE_PAYMENT" },
-          { name: :id               , type: :string                             },
-          { name: :date             , type: :date                               },
-          { name: :amount_paid      , type: :currency                           },
-          { name: :amount_reduced   , type: :currency                           },
-          { name: :business_year    , type: :integer                            },
-          { name: :accdoc_id        , type: :integer                            },
-          { name: :accdoc_position  , type: :integer                            }
+          { name: :identifier      , type: :string   , fix: "INVOICE_PAYMENT" },
+          { name: :id              , type: :string                            },
+          { name: :date            , type: :date                              },
+          { name: :amount_paid     , type: :currency                          },
+          { name: :amount_reduced  , type: :currency                          },
+          { name: :business_year   , type: :integer                           },
+          { name: :accdoc_id       , type: :integer                           },
+          { name: :accdoc_position , type: :integer                           }
       ]
 
   specify { described_class.specification.should eql spec }
@@ -501,19 +924,145 @@ describe Collmex::Api::InvoicePayment do # http://www.collmex.de/cgi-bin/cgi.exe
   specify { subject.to_a.should eql output }
 end
 
+describe Collmex::Api::InvoicePaymentGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Zahlungen
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier   , type: :string  , fix: "INVOICE_PAYMENT_GET" },
+          { name: :company_id   , type: :integer , default: 1                 },
+          { name: :id           , type: :string                               },
+          { name: :changed_only , type: :integer                              },
+          { name: :system_name  , type: :string                               }
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1} ) }
+
+  output = ["INVOICE_PAYMENT_GET", 1, "1", nil, ""]
+
+  specify { subject.to_a.should eql output }
+end
+
+describe Collmex::Api::Line do
+  it_behaves_like "Collmex Api Command" 
+end
+
+describe Collmex::Api::Login do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Authentifizierung
+  subject { Collmex::Api::Login.new({username: 12, password: 34}) }
+  it_behaves_like "Collmex Api Command" 
+  spec =  
+      [
+          { name: :identifier , type: :string  , fix: "LOGIN" },
+          { name: :username   , type: :integer                },
+          { name: :password   , type: :integer                }
+      ]
+
+  specify { described_class.specification.should eql spec } 
+
+  output = ["LOGIN", 12, 34]
+  specify { subject.to_a.should eql output }
+end
+
+describe Collmex::Api::Message do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Rueckmeldungen
+
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier , type: :string  , fix: "MESSAGE" },
+          { name: :type       , type: :string                   },
+          { name: :id         , type: :integer                  },
+          { name: :text       , type: :string                   },
+          { name: :line       , type: :integer                  }
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new(  ) }
+
+  output = ["MESSAGE", "", nil, "", nil]
+
+  specify { subject.to_a.should eql output }
+
+  context "success" do
+    subject { described_class.new(type: "S") }
+    specify do
+      subject.success?.should eql true
+      subject.result.should eql :success
+    end
+  end
+
+  context "warning" do
+    subject { described_class.new(type: "W") }
+    specify do
+      subject.success?.should eql false
+      subject.result.should eql :warning
+    end
+  end
+
+  context "error" do
+    subject { described_class.new(type: "E") }
+    specify do
+      subject.success?.should eql false
+      subject.result.should eql :error
+    end
+  end
+
+  context "undefined" do
+    subject { described_class.new() }
+    specify do
+      subject.success?.should eql false
+      subject.result.should eql :undefined
+    end
+  end
+
+
+end
+
+describe Collmex::Api::PaymentConfirmation do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Payment
+
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier            , type: :string   , fix: "PAYMENT_CONFIRMATION" },
+          { name: :customer_order_id     , type: :integer                                },
+          { name: :date                  , type: :date                                   },
+          { name: :amount                , type: :currency                               },
+          { name: :fee                   , type: :currency                               },
+          { name: :currency              , type: :string                                 },
+          { name: :paypal_email          , type: :string                                 },
+          { name: :paypal_transaction_id , type: :string                                 }
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {customer_order_id: 1} ) }
+
+  output = ["PAYMENT_CONFIRMATION", 1, nil, nil, nil, "", "", ""]
+
+  specify { subject.to_a.should eql output }
+end
+
+#describe Collmex::Api::Prdgrp do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_produktgruppen
+  # tbd
+#end
+
 describe Collmex::Api::ProductGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Produkte
   it_behaves_like "Collmex Api Command"
 
   spec =
       [
-          { name: :identifier          , type: :string    , fix: "PRODUCT_GET"  },
-          { name: :company_id          , type: :integer   , default: 1          },
-          { name: :id                  , type: :string                          },
-          { name: :group               , type: :integer                         },
-          { name: :price_group         , type: :string                          },
-          { name: :changed_only        , type: :integer                         },
-          { name: :system_name         , type: :string                          },
-          { name: :website_id          , type: :integer                         }
+          { name: :identifier   , type: :string  , fix: "PRODUCT_GET" },
+          { name: :company_id   , type: :integer , default: 1         },
+          { name: :id           , type: :string                       },
+          { name: :group        , type: :integer                      },
+          { name: :price_group  , type: :string                       },
+          { name: :changed_only , type: :integer                      },
+          { name: :system_name  , type: :string                       },
+          { name: :website_id   , type: :integer                      }
       ]
 
   specify { described_class.specification.should eql spec }
@@ -530,7 +1079,7 @@ describe Collmex::Api::ProductGroupsGet do # http://www.collmex.de/cgi-bin/cgi.e
 
   spec =
       [
-          { name: :identifier          , type: :string    , fix: "PRODUCT_GROUPS_GET"     }
+          { name: :identifier , type: :string , fix: "PRODUCT_GROUPS_GET" }
       ]
 
   specify { described_class.specification.should eql spec }
@@ -540,94 +1089,34 @@ describe Collmex::Api::ProductGroupsGet do # http://www.collmex.de/cgi-bin/cgi.e
   specify { subject.to_a.should eql output }
 end
 
-describe Collmex::Api::StockAvailableGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Verfuegbarkeit
-  it_behaves_like "Collmex Api Command"
+#describe Collmex::Api::ProductionOrderGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Produktionsauftraege
+  # tbd
+#end
 
-  spec =
-      [
-          { name: :identifier       , type: :string    , fix: "STOCK_AVAILABLE_GET" },
-          { name: :company_id       , type: :integer   , default: 1                 },
-          { name: :product_id       , type: :string                                 },
-          { name: :changed_only     , type: :integer                                },
-          { name: :system_name      , type: :string                                 }
-      ]
+#describe Collmex::Api::ProjectGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Projekte
+  # tbd
+#end
 
-  specify { described_class.specification.should eql spec }
-
-  subject { described_class.new( {product_id: 1} ) }
-
-  output = ["STOCK_AVAILABLE_GET", 1, "1", nil, ""]
-
-  specify { subject.to_a.should eql output }
-end
-
-describe Collmex::Api::StockAvailable do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Verfuegbarkeit
-  it_behaves_like "Collmex Api Command"
-
-  spec =
-      [
-          { name: :identifier         , type: :string    , fix: "STOCK_AVAILABLE" },
-          { name: :product_id         , type: :string                             },
-          { name: :company_id         , type: :integer   , default: 1             },
-          { name: :amount             , type: :integer                            },
-          { name: :quantity_unit      , type: :string                             },
-          { name: :replenishment_time , type: :integer                            }
-      ]
-
-  specify { described_class.specification.should eql spec }
-
-  subject { described_class.new( {product_id: 1} ) }
-
-  output = ["STOCK_AVAILABLE", "1", 1, nil, "", nil]
-
-  specify { subject.to_a.should eql output }
-end
-
-describe Collmex::Api::CustomerGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Kunden
-  it_behaves_like "Collmex Api Command"
-
-  spec =
-      [
-          { name: :identifier       , type: :string    , fix: "CUSTOMER_GET"    },
-          { name: :id               , type: :integer                            },
-          { name: :company_id       , type: :integer   , default: 1             },
-          { name: :text             , type: :string                             },
-          { name: :due_to_review    , type: :integer                            },
-          { name: :zip_code         , type: :string                             },
-          { name: :address_group    , type: :integer                            },
-          { name: :price_group      , type: :integer                            },
-          { name: :discount_group   , type: :integer                            },
-          { name: :agent_id         , type: :integer                            },
-          { name: :only_changed     , type: :integer                            },
-          { name: :system_name      , type: :string                             },
-          { name: :inactive         , type: :integer                            }
-      ]
-
-  specify { described_class.specification.should eql spec }
-
-  subject { described_class.new( {id: 1} ) }
-
-  output = ["CUSTOMER_GET", 1, 1, "", nil, "", nil, nil, nil, nil, nil, "", nil]
-
-  specify { subject.to_a.should eql output }
-end
+#describe Collmex::Api::PurchaseOrderGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferantenauftraege
+  # tbd
+#end
 
 describe Collmex::Api::QuotationGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Angebote
   it_behaves_like "Collmex Api Command"
 
-  spec = 
-          [
-            { name: :identifier       , type: :string    , fix: "QUOTATION_GET"   },
-            { name: :id               , type: :string                             },
-            { name: :company_id       , type: :integer   , default: 1             },
-            { name: :customer_id      , type: :integer                            },
-            { name: :date_start       , type: :date                               },
-            { name: :date_end         , type: :date                               },
-            { name: :paperless        , type: :integer                            },
-            { name: :return_format    , type: :string                             },
-            { name: :only_changed     , type: :integer                            },
-            { name: :system_name      , type: :string                             }
-          ]
+  spec =
+      [
+          { name: :identifier    , type: :string  , fix: "QUOTATION_GET" },
+          { name: :id            , type: :string                         },
+          { name: :company_id    , type: :integer , default: 1           },
+          { name: :customer_id   , type: :integer                        },
+          { name: :date_start    , type: :date                           },
+          { name: :date_end      , type: :date                           },
+          { name: :paperless     , type: :integer                        },
+          { name: :return_format , type: :string                         },
+          { name: :only_changed  , type: :integer                        },
+          { name: :system_name   , type: :string                         }
+      ]
 
   specify { described_class.specification.should eql spec }
 
@@ -643,18 +1132,18 @@ describe Collmex::Api::SalesOrderGet do # http://www.collmex.de/cgi-bin/cgi.exe?
 
   spec =
       [
-          { name: :identifier       , type: :string    , fix: "SALES_ORDER_GET" },
-          { name: :id               , type: :string                             },
-          { name: :company_id       , type: :integer   , default: 1             },
-          { name: :customer_id      , type: :integer                            },
-          { name: :date_start       , type: :date                               },
-          { name: :date_end         , type: :date                               },
-          { name: :id_at_customer   , type: :string                             },
-          { name: :return_format    , type: :string                             },
-          { name: :only_changed     , type: :integer                            },
-          { name: :system_name      , type: :string                             },
-          { name: :system_name_only , type: :integer                            },
-          { name: :paperless        , type: :integer                            }
+          { name: :identifier       , type: :string  , fix: "SALES_ORDER_GET" },
+          { name: :id               , type: :string                           },
+          { name: :company_id       , type: :integer , default: 1             },
+          { name: :customer_id      , type: :integer                          },
+          { name: :date_start       , type: :date                             },
+          { name: :date_end         , type: :date                             },
+          { name: :id_at_customer   , type: :string                           },
+          { name: :return_format    , type: :string                           },
+          { name: :only_changed     , type: :integer                          },
+          { name: :system_name      , type: :string                           },
+          { name: :system_name_only , type: :integer                          },
+          { name: :paperless        , type: :integer                          }
       ]
 
   specify { described_class.specification.should eql spec }
@@ -666,443 +1155,65 @@ describe Collmex::Api::SalesOrderGet do # http://www.collmex.de/cgi-bin/cgi.exe?
   specify { subject.to_a.should eql output }
 end
 
-describe Collmex::Api::PaymentConfirmation do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Payment
+#describe Collmex::Api::SearchEngineProductsGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Suchmaschinen
+  # tbd
+#end
 
+describe Collmex::Api::StockAvailable do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Verfuegbarkeit
   it_behaves_like "Collmex Api Command"
 
   spec =
       [
-          { name: :identifier            , type: :string    , fix: "PAYMENT_CONFIRMATION" },
-          { name: :customer_order_id     , type: :integer                                 },
-          { name: :date                  , type: :date                                    },
-          { name: :amount                , type: :currency                                },
-          { name: :fee                   , type: :currency                                },
-          { name: :currency              , type: :string                                  },
-          { name: :paypal_email          , type: :string                                  },
-          { name: :paypal_transaction_id , type: :string                                  }
+          { name: :identifier         , type: :string  , fix: "STOCK_AVAILABLE" },
+          { name: :product_id         , type: :string                           },
+          { name: :company_id         , type: :integer , default: 1             },
+          { name: :amount             , type: :integer                          },
+          { name: :quantity_unit      , type: :string                           },
+          { name: :replenishment_time , type: :integer                          }
       ]
 
   specify { described_class.specification.should eql spec }
 
-  subject { described_class.new( {customer_order_id: 1} ) }
+  subject { described_class.new( {product_id: 1} ) }
 
-  output = ["PAYMENT_CONFIRMATION", 1, nil, nil, nil, "", "", ""]
+  output = ["STOCK_AVAILABLE", "1", 1, nil, "", nil]
 
   specify { subject.to_a.should eql output }
 end
 
-describe Collmex::Api::InvoiceGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Rechnungen
+describe Collmex::Api::StockAvailableGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Verfuegbarkeit
   it_behaves_like "Collmex Api Command"
 
   spec =
       [
-          { name: :identifier       , type: :string    , fix: "INVOICE_GET"     },
-          { name: :id               , type: :string                             },
-          { name: :company_id       , type: :integer   , default: 1             },
-          { name: :customer_id      , type: :integer                            },
-          { name: :date_start       , type: :date                               },
-          { name: :date_end         , type: :date                               },
-          { name: :sent_only        , type: :integer                            },
-          { name: :return_format    , type: :string                             },
-          { name: :only_changed     , type: :integer                            },
-          { name: :system_name      , type: :string                             },
-          { name: :system_name_only , type: :integer                            },
-          { name: :paperless        , type: :integer                            }
+          { name: :identifier   , type: :string  , fix: "STOCK_AVAILABLE_GET" },
+          { name: :company_id   , type: :integer , default: 1                 },
+          { name: :product_id   , type: :string                               },
+          { name: :changed_only , type: :integer                              },
+          { name: :system_name  , type: :string                               }
       ]
 
   specify { described_class.specification.should eql spec }
 
-  subject { described_class.new( {id: 1, customer_id: 9999} ) }
+  subject { described_class.new( {product_id: 1} ) }
 
-  output = ["INVOICE_GET", "1", 1, 9999, nil, nil, nil, "", nil, "", nil, nil]
-
-  specify { subject.to_a.should eql output }
-end
-
-describe Collmex::Api::DeliveryGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferungen
-  it_behaves_like "Collmex Api Command"
-
-  spec =
-      [
-          { name: :identifier       , type: :string    , fix: "DELIVERY_GET"    },
-          { name: :id               , type: :string                             },
-          { name: :company_id       , type: :integer   , default: 1             },
-          { name: :customer_id      , type: :integer                            },
-          { name: :date_start       , type: :date                               },
-          { name: :date_end         , type: :date                               },
-          { name: :sent_only        , type: :integer                            },
-          { name: :return_format    , type: :string                             },
-          { name: :only_changed     , type: :integer                            },
-          { name: :system_name      , type: :string                             },
-          { name: :paperless        , type: :integer                            },
-          { name: :customer_order_id, type: :integer                            }
-      ]
-
-  specify { described_class.specification.should eql spec }
-
-  subject { described_class.new( {id: 1, customer_id: 9999} ) }
-
-  output = ["DELIVERY_GET", "1", 1, 9999, nil, nil, nil, "", nil, "", nil, nil]
+  output = ["STOCK_AVAILABLE_GET", 1, "1", nil, ""]
 
   specify { subject.to_a.should eql output }
 end
 
-describe Collmex::Api::Cmxinv do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_rechnungen
-  it_behaves_like "Collmex Api Command"
+#describe Collmex::Api::StockChange do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Bestandsaenderungen
+  # tbd
+#end
 
-  spec =
-      [
-          { name: :identifier                  , type: :string    , fix: "CMXINV"          },
-          { name: :id                          , type: :integer                            },
-          { name: :position_id                 , type: :integer                            },
-          { name: :type                        , type: :integer                            },
-          { name: :company_id                  , type: :integer   , default: 1             },
-          { name: :customer_order_id           , type: :integer                            },
-          { name: :customer_id                 , type: :integer                            },
-          { name: :customer_salutation         , type: :string                             },
-          { name: :customer_title              , type: :string                             },
-          { name: :customer_firstname          , type: :string                             },
-          { name: :customer_lastname           , type: :string                             },
-          { name: :customer_company            , type: :string                             },
-          { name: :customer_department         , type: :string                             },
-          { name: :customer_street             , type: :string                             },
-          { name: :customer_zipcode            , type: :string                             },
-          { name: :customer_city               , type: :string                             },
-          { name: :customer_country            , type: :string                             },
-          { name: :customer_phone              , type: :string                             },
-          { name: :customer_phone_2            , type: :string                             },
-          { name: :customer_fax                , type: :string                             },
-          { name: :customer_email              , type: :string                             },
-          { name: :customer_account_number     , type: :string                             },
-          { name: :customer_bank_account_number       , type: :string                      },
-          { name: :customer_alternative_account_owner , type: :string                      },
-          { name: :customer_iban               , type: :string                             },
-          { name: :customer_bic                , type: :string                             },
-          { name: :customer_bank_name          , type: :string                             },
-          { name: :customer_vat_id             , type: :string                             },
-          { name: :reserved                    , type: :integer                            },
-          { name: :date                        , type: :date                               },
-          { name: :price_date                  , type: :date                               },
-          { name: :terms_of_payment            , type: :integer                            },
-          { name: :currency                    , type: :string                             },
-          { name: :price_group                 , type: :integer                            },
-          { name: :discount_group              , type: :integer                            },
-          { name: :discount_final              , type: :integer                            },
-          { name: :discount_reason             , type: :string                             },
-          { name: :text                        , type: :string                             },
-          { name: :text_conclusion             , type: :string                             },
-          { name: :internal_memo               , type: :string                             },
-          { name: :deleted                     , type: :integer                            },
-          { name: :language                    , type: :integer                            },
-          { name: :operator_id                 , type: :integer                            },
-          { name: :agent_id                    , type: :integer                            },
-          { name: :system_name                 , type: :string                             },
-          { name: :status                      , type: :integer                            },
-          { name: :discount_final_2            , type: :currency                           },
-          { name: :discount_reason_2           , type: :string                             },
-          { name: :delivery_type               , type: :integer                            },
-          { name: :delivery_costs              , type: :currency                           },
-          { name: :cod_fee                     , type: :currency                           },
-          { name: :supply_and_service_date     , type: :date                               },
-          { name: :delivery_terms              , type: :string                             },
-          { name: :delivery_terms_additions    , type: :string                             },
-          { name: :delivery_address_salutation , type: :string                             },
-          { name: :delivery_address_title      , type: :string                             },
-          { name: :delivery_address_firstname  , type: :string                             },
-          { name: :delivery_address_lastname   , type: :string                             },
-          { name: :delivery_address_company    , type: :string                             },
-          { name: :delivery_address_department , type: :string                             },
-          { name: :delivery_address_street     , type: :string                             },
-          { name: :delivery_address_zipcode    , type: :string                             },
-          { name: :delivery_address_city       , type: :string                             },
-          { name: :delivery_address_country    , type: :string                             },
-          { name: :delivery_address_phone      , type: :string                             },
-          { name: :delivery_address_phone_2    , type: :string                             },
-          { name: :delivery_address_fax        , type: :string                             },
-          { name: :delivery_address_email      , type: :string                             },
-          { name: :item_category               , type: :integer                            },
-          { name: :product_id                  , type: :string                             },
-          { name: :product_description         , type: :string                             },
-          { name: :quantity_unit               , type: :string                             },
-          { name: :order_quantity              , type: :float                              },
-          { name: :product_price               , type: :currency                           },
-          { name: :amount_price                , type: :float                              },
-          { name: :position_discount           , type: :currency                           },
-          { name: :position_value              , type: :currency                           },
-          { name: :product_type                , type: :integer                            },
-          { name: :tax_classification          , type: :integer                            },
-          { name: :tax_abroad                  , type: :integer                            },
-          { name: :customer_order_position     , type: :integer                            },
-          { name: :revenue_element             , type: :integer                            }
-      ]
+#describe Collmex::Api::StockChangeGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Bestandsaenderungen
+  # tbd
+#end
 
-  specify { described_class.specification.should eql spec }
+#describe Collmex::Api::TrackingNumber do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_sendungsnummer
+  # tbd
+#end
 
-  subject { described_class.new( {id: 1, customer_id: 9999} ) }
-
-  output = ["CMXINV", 1, nil, nil, 1, nil, 9999, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", nil, nil, nil, nil, "", nil, nil, nil, "", "", "", "", nil, nil, nil, nil, "", nil, nil, "", nil, nil, nil, nil, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", nil, "", "", "", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
-
-  specify { subject.to_a.should eql output }
-end
-
-describe Collmex::Api::Cmxums do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_umsaetze
-  it_behaves_like "Collmex Api Command"
-
-  spec =
-      [
-          { name: :identifier                , type: :string    , fix: "CMXUMS" },
-          { name: :customer_id               , type: :integer                   },
-          { name: :company_id                , type: :integer   , default: 1    },
-          { name: :invoice_date              , type: :date                      },
-          { name: :invoice_id                , type: :string                    },
-          { name: :net_amount_full_vat       , type: :currency                  },
-          { name: :tax_value_full_vat        , type: :currency                  },
-          { name: :net_amount_reduced_vat    , type: :currency                  },
-          { name: :tax_value_reduced_vat     , type: :currency                  },
-          { name: :intra_community_delivery  , type: :currency                  },
-          { name: :export                    , type: :currency                  },
-          { name: :account_id_no_vat         , type: :integer                   },
-          { name: :net_amount_no_vat         , type: :currency                  },
-          { name: :currency                  , type: :string                    },
-          { name: :contra_account            , type: :integer                   },
-          { name: :invoice_type              , type: :integer                   },
-          { name: :text                      , type: :string                    },
-          { name: :terms_of_payment          , type: :integer                   },
-          { name: :account_id_full_vat       , type: :integer                   },
-          { name: :account_id_reduced_vat    , type: :integer                   },
-          { name: :reserved_1                , type: :integer                   },
-          { name: :reserved_2                , type: :integer                   },
-          { name: :cancellation              , type: :integer                   },
-          { name: :final_invoice             , type: :string                    },
-          { name: :type                      , type: :integer                   },
-          { name: :system_name               , type: :string                    },
-          { name: :offset_against_invoice_id , type: :string                    },
-          { name: :cost_unit                 , type: :string                    }
-      ]
-
-  specify { described_class.specification.should eql spec }
-
-  subject { described_class.new( {customer_id: 9999} ) }
-
-  output = ["CMXUMS", 9999, 1, nil, "", nil, nil, nil, nil, nil, nil, nil, nil, "", nil, nil, "", nil, nil, nil, nil, nil, nil, "", nil, "", "", ""]
-
-  specify { subject.to_a.should eql output }
-end
-
-describe Collmex::Api::Cmxlrn do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_lieferantenrechnung
-  it_behaves_like "Collmex Api Command"
-
-  spec =
-      [
-          { name: :identifier         , type: :string    , fix: "CMXLRN" },
-          { name: :id                 , type: :integer                   },
-          { name: :company_id         , type: :integer   , default: 1    },
-          { name: :salutation         , type: :string                    },
-          { name: :title              , type: :string                    },
-          { name: :firstname          , type: :string                    },
-          { name: :lastname           , type: :string                    },
-          { name: :company            , type: :string                    },
-          { name: :department         , type: :string                    },
-          { name: :street             , type: :string                    },
-          { name: :zipcode            , type: :string                    },
-          { name: :city               , type: :string                    },
-          { name: :annotation         , type: :string                    },
-          { name: :inactive           , type: :integer                   },
-          { name: :country            , type: :string                    },
-          { name: :phone              , type: :string                    },
-          { name: :fax                , type: :string                    },
-          { name: :email              , type: :string                    },
-          { name: :account_number     , type: :string                    },
-          { name: :bank_account_number, type: :string                    },
-          { name: :iban               , type: :string                    },
-          { name: :bic                , type: :string                    },
-          { name: :bank_name          , type: :string                    },
-          { name: :tax_id             , type: :string                    },
-          { name: :vat_id             , type: :string                    },
-          { name: :payment_condition  , type: :integer                   },
-          { name: :delivery_terms     , type: :string                    },
-          { name: :delivery_terms_additions , type: :string              },
-          { name: :output_media       , type: :integer                   },
-          { name: :account_owner      , type: :string                    },
-          { name: :address_group      , type: :integer                   },
-          { name: :customer_id_at_supplier  , type: :string              },
-          { name: :currency           , type: :string                    },
-          { name: :phone_2            , type: :string                    },
-          { name: :output_language    , type: :integer                   }
-      ]
-
-  specify { described_class.specification.should eql spec }
-
-  subject { described_class.new( {id: 1, supplier_id: 9999} ) }
-
-  output = ["CMXLRN", 1, 1, "", "", "", "", "", "", "", "", "", "", nil, "", "", "", "", "", "", "", "", "", "", "", nil, "", "", nil, "", nil, "", "", "", nil]
-
-  specify { subject.to_a.should eql output }
-end
-
-describe Collmex::Api::Cmxknd do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_kunde
-
-  it_behaves_like "Collmex Api Command"
-  spec =
-      [
-          { name: :identifier         , type: :string    , fix: "CMXKND"          },
-          { name: :id                 , type: :integer                            },
-          { name: :company_id         , type: :integer   , default: 1             },
-          { name: :salutation         , type: :string                             },
-          { name: :title              , type: :string                             },
-          { name: :firstname          , type: :string                             },
-          { name: :lastname           , type: :string                             },
-          { name: :company            , type: :string                             },
-          { name: :department         , type: :string                             },
-          { name: :street             , type: :string                             },
-          { name: :zipcode            , type: :string                             },
-          { name: :city               , type: :string                             },
-          { name: :annotation         , type: :string                             },
-          { name: :inactive           , type: :integer                            },
-          { name: :country            , type: :string                             },
-          { name: :phone              , type: :string                             },
-          { name: :fax                , type: :string                             },
-          { name: :email              , type: :string                             },
-          { name: :account_number     , type: :string                             },
-          { name: :bank_account_number, type: :string                             },
-          { name: :iban               , type: :string                             },
-          { name: :bic                , type: :string                             },
-          { name: :bank_name          , type: :string                             },
-          { name: :tax_id             , type: :string                             },
-          { name: :vat_id             , type: :string                             },
-          { name: :payment_condition  , type: :integer                            },
-          { name: :discount_group     , type: :integer                            },
-          { name: :delivery_terms     , type: :string                             },
-          { name: :delivery_terms_additions   , type: :string                     },
-          { name: :output_media       , type: :integer                            },
-          { name: :account_owner      , type: :string                             },
-          { name: :address_group      , type: :integer                            },
-          { name: :ebay_member        , type: :string                             },
-          { name: :price_group        , type: :integer                            },
-          { name: :currency           , type: :string                             },
-          { name: :agent_id           , type: :integer                            },
-          { name: :cost_unit          , type: :string                             },
-          { name: :due_to_review      , type: :date                               },
-          { name: :delivery_block     , type: :integer                            },
-          { name: :construction_services_provider , type: :integer                },
-          { name: :delivery_id_at_customer        , type: :string                 },
-          { name: :output_language    , type: :integer                            },
-          { name: :email_cc           , type: :string                             },
-          { name: :phone_2            , type: :string                             }
-      ]
-
-  specify { described_class.specification.should eql spec }
-
-  subject { described_class.new( {id: 1} ) }
-
-  output = ["CMXKND", 1, 1, "", "", "", "", "", "", "", "", "", "", nil, "", "", "", "", "", "", "", "", "", "", "", nil, nil, "", "", nil, "", nil, "", nil, "", nil, "", nil, nil, nil, "", nil, "", ""]
-
-  specify { subject.to_a.should eql output }
-end
-
-describe Collmex::Api::Cmxadr do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_adressen
-
-  it_behaves_like "Collmex Api Command" 
-  spec = 
-      [
-            { name: :identifier         , type: :string    , fix: "CMXADR"          },
-            { name: :id                 , type: :integer                            },
-            { name: :type               , type: :integer                            },
-            { name: :salutation         , type: :string                             },
-            { name: :title              , type: :string                             },
-            { name: :firstname          , type: :string                             },
-            { name: :lastname           , type: :string                             },
-            { name: :company            , type: :string                             },
-            { name: :department         , type: :string                             },
-            { name: :street             , type: :string                             },
-            { name: :zipcode            , type: :string                             },
-            { name: :city               , type: :string                             },
-            { name: :annotation         , type: :string                             },
-            { name: :inactive           , type: :integer                            },
-            { name: :country            , type: :string                             },
-            { name: :phone              , type: :string                             },
-            { name: :fax                , type: :string                             },
-            { name: :email              , type: :string                             },
-            { name: :account_number     , type: :string                             },
-            { name: :bank_account_number, type: :string                             },
-            { name: :iban               , type: :string                             },
-            { name: :bic                , type: :string                             },
-            { name: :bank_name          , type: :string                             },
-            { name: :tax_id             , type: :string                             },
-            { name: :vat_id             , type: :string                             },
-            { name: :reserved           , type: :string                             },
-            { name: :phone_2            , type: :string                             },
-            { name: :skype_voip         , type: :string                             },
-            { name: :url                , type: :string                             },
-            { name: :account_owner      , type: :string                             },
-            { name: :review_at          , type: :date                               },
-            { name: :address_group      , type: :integer                            },
-            { name: :agent_id           , type: :integer                            },
-            { name: :company_id         , type: :integer   , default: 1             }
-      ]
-
-  specify { described_class.specification.should eql spec } 
-
-  subject { described_class.new( {id: 1} ) }
-
-  output = ["CMXADR", 1, nil, "", "", "", "", "", "", "", "", "", "", nil, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", nil, nil, nil, 1]
-
-  specify { subject.to_a.should eql output }
-end
-
-describe Collmex::Api::Message do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Rueckmeldungen
-
-  it_behaves_like "Collmex Api Command" 
-
-  spec = 
-          [
-            { name: :identifier       , type: :string    , fix: "MESSAGE"         },
-            { name: :type             , type: :string                             },
-            { name: :id               , type: :integer                            },
-            { name: :text             , type: :string                             },
-            { name: :line             , type: :integer                            }
-          ]
-
-  specify { described_class.specification.should eql spec } 
-
-  subject { described_class.new(  ) }
-
-  output = ["MESSAGE", "", nil, "", nil]
-
-  specify { subject.to_a.should eql output }
-  
-  context "success" do
-    subject { described_class.new(type: "S") }
-    specify do 
-      subject.success?.should eql true 
-      subject.result.should eql :success 
-    end
-  end
-
-  context "warning" do
-    subject { described_class.new(type: "W") }
-    specify do 
-      subject.success?.should eql false
-      subject.result.should eql :warning
-    end
-  end
-
-  context "error" do
-    subject { described_class.new(type: "E") }
-    specify do 
-      subject.success?.should eql false
-      subject.result.should eql :error
-    end
-  end
-
-  context "undefined" do
-    subject { described_class.new() }
-    specify do 
-      subject.success?.should eql false
-      subject.result.should eql :undefined
-    end
-  end
-
-
-end
-
+#describe Collmex::Api::VendorGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferanten
+  # tbd
+#end
