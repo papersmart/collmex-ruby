@@ -1,11 +1,11 @@
 require "spec_helper"
 
 sample_spec = [  
-          { name: :identifyer,    type: :string,     fix: "BLA"                },
-          { name: :b,             type: :currency },
-          { name: :c,             type: :float },
-          { name: :d,             type: :integer },
-          { name: :e,             type: :date },
+          { name: :identifyer , type: :string   , fix: "BLA" },
+          { name: :b          , type: :currency              },
+          { name: :c          , type: :float                 },
+          { name: :d          , type: :integer               },
+          { name: :e          , type: :date                  },
 ]
 
 empty_hash = { identifyer: "BLA", b: nil, c: nil, d: nil, e: nil }
