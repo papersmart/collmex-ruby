@@ -731,16 +731,16 @@ module Collmex
     class PurchaseOrderGet < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferantenauftraege
       def self.specification
         [
-            { name: :identifier       , type: :string  , fix: "PURCHASE_ORDER_GET" },
-            { name: :id               , type: :string                              },
-            { name: :company_id       , type: :integer , default: 1                },
-            { name: :supplier_id      , type: :integer                             },
-            { name: :product_id       , type: :string                              },
-            { name: :sent_only        , type: :integer                             },
-            { name: :return_format    , type: :string                              },
-            { name: :only_changed     , type: :integer                             },
-            { name: :system_name      , type: :string                              },
-            { name: :paperless        , type: :integer                             }
+            { name: :identifier    , type: :string  , fix: "PURCHASE_ORDER_GET" },
+            { name: :id            , type: :string                              },
+            { name: :company_id    , type: :integer , default: 1                },
+            { name: :supplier_id   , type: :integer                             },
+            { name: :product_id    , type: :string                              },
+            { name: :sent_only     , type: :integer                             },
+            { name: :return_format , type: :string                              },
+            { name: :only_changed  , type: :integer                             },
+            { name: :system_name   , type: :string                              },
+            { name: :paperless     , type: :integer                             }
         ]
       end
     end
