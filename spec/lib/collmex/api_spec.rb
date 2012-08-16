@@ -534,7 +534,7 @@ describe Collmex::Api::Cmxabo do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
 
 end
 
-#describe Collmex::Api::Cmxact do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_taetigkeiten
+#describe Collmex::Api::Cmxact do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_taetigkeiten
   # tbd
 #end
 
@@ -588,15 +588,15 @@ describe Collmex::Api::Cmxadr do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
   specify { subject.to_a.should eql output }
 end
 
-#describe Collmex::Api::Cmxasp do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_anspr
+#describe Collmex::Api::Cmxasp do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_anspr
   # tbd
 #end
 
-#describe Collmex::Api::Cmxbom do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Stuecklisten
+#describe Collmex::Api::Cmxbom do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Stuecklisten
   # tbd
 #end
 
-#describe Collmex::Api::Cmxepf do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_abw
+#describe Collmex::Api::Cmxepf do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_abw
   # tbd
 #end
 
@@ -758,11 +758,11 @@ describe Collmex::Api::Cmxknd do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
   specify { subject.to_a.should eql output }
 end
 
-#describe Collmex::Api::Cmxknt do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_kontakte
+#describe Collmex::Api::Cmxknt do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_kontakte
   # tbd
 #end
 
-#describe Collmex::Api::Cmxlif do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_lieferant
+#describe Collmex::Api::Cmxlif do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_lieferant
   # tbd
 #end
 
@@ -817,35 +817,35 @@ describe Collmex::Api::Cmxlrn do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
   specify { subject.to_a.should eql output }
 end
 
-#describe Collmex::Api::Cmxord2 do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_kundenauftraege
+#describe Collmex::Api::Cmxord2 do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_kundenauftraege
   # tbd
 #end
 
-#describe Collmex::Api::Cmxpod do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_produktionsauftraege
+#describe Collmex::Api::Cmxpod do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_produktionsauftraege
   # tbd
 #end
 
-#describe Collmex::Api::Cmxprd do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_produkt
+#describe Collmex::Api::Cmxprd do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_produkt
   # tbd
 #end
 
-#describe Collmex::Api::Cmxpri do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_preise
+#describe Collmex::Api::Cmxpri do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_preise
   # tbd
 #end
 
-#describe Collmex::Api::Cmxprj do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_Projekte
+#describe Collmex::Api::Cmxprj do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_Projekte
   # tbd
 #end
 
-#describe Collmex::Api::Cmxprl do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_lohn
+#describe Collmex::Api::Cmxprl do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_lohn
   # tbd
 #end
 
-#describe Collmex::Api::Cmxqtn do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_angebote
+#describe Collmex::Api::Cmxqtn do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_angebote
   # tbd
 #end
 
-#describe Collmex::Api::Cmxstk do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_bestand
+#describe Collmex::Api::Cmxstk do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_bestand
   # tbd
 #end
 
@@ -893,7 +893,7 @@ describe Collmex::Api::Cmxums do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
   specify { subject.to_a.should eql output }
 end
 
-#describe Collmex::Api::CreateDueDeliveries do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Faellige_Lieferungen
+#describe Collmex::Api::CreateDueDeliveries do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Faellige_Lieferungen
   # tbd
 #end
 
@@ -1128,7 +1128,7 @@ describe Collmex::Api::PaymentConfirmation do # http://www.collmex.de/cgi-bin/cg
   specify { subject.to_a.should eql output }
 end
 
-#describe Collmex::Api::Prdgrp do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_produktgruppen
+#describe Collmex::Api::Prdgrp do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_produktgruppen
   # tbd
 #end
 
@@ -1171,19 +1171,20 @@ describe Collmex::Api::ProductGroupsGet do # http://www.collmex.de/cgi-bin/cgi.e
   specify { subject.to_a.should eql output }
 end
 
-#describe Collmex::Api::ProductionOrderGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Produktionsauftraege
+#describe Collmex::Api::ProductionOrderGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Produktionsauftraege
   # tbd
 #end
 
-#describe Collmex::Api::ProjectGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Projekte
+#describe Collmex::Api::ProjectGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Projekte
   # tbd
 #end
 
-#describe Collmex::Api::PurchaseOrderGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferantenauftraege
+#describe Collmex::Api::PurchaseOrderGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferantenauftraege
   # tbd
 #end
 
 describe Collmex::Api::QuotationGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Angebote
+
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -1207,9 +1208,11 @@ describe Collmex::Api::QuotationGet do # http://www.collmex.de/cgi-bin/cgi.exe?1
   output = ["QUOTATION_GET", "1", 1, 9999, nil, nil, nil, "", nil, ""]
 
   specify { subject.to_a.should eql output }
+
 end
 
 describe Collmex::Api::SalesOrderGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Kundenauftraege
+
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -1235,13 +1238,32 @@ describe Collmex::Api::SalesOrderGet do # http://www.collmex.de/cgi-bin/cgi.exe?
   output = ["SALES_ORDER_GET", "1", 1, 9999, nil, nil, "", "", nil, "", nil, nil]
 
   specify { subject.to_a.should eql output }
+
 end
 
-#describe Collmex::Api::SearchEngineProductsGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Suchmaschinen
-  # tbd
-#end
+describe Collmex::Api::SearchEngineProductsGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Suchmaschinen
+
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier    , type: :string  , fix: "SEARCH_ENGINE_PRODUCTS_GET" },
+          { name: :website_id    , type: :integer                                     },
+          { name: :return_format , type: :integer                                     }
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1, customer_id: 9999} ) }
+
+  output = ["SEARCH_ENGINE_PRODUCTS_GET", nil, nil]
+
+  specify { subject.to_a.should eql output }
+
+end
 
 describe Collmex::Api::StockAvailable do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Verfuegbarkeit
+
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -1261,9 +1283,11 @@ describe Collmex::Api::StockAvailable do # http://www.collmex.de/cgi-bin/cgi.exe
   output = ["STOCK_AVAILABLE", "1", 1, nil, "", nil]
 
   specify { subject.to_a.should eql output }
+
 end
 
 describe Collmex::Api::StockAvailableGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Verfuegbarkeit
+
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -1282,6 +1306,7 @@ describe Collmex::Api::StockAvailableGet do # http://www.collmex.de/cgi-bin/cgi.
   output = ["STOCK_AVAILABLE_GET", 1, "1", nil, ""]
 
   specify { subject.to_a.should eql output }
+
 end
 
 #describe Collmex::Api::StockChange do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Bestandsaenderungen

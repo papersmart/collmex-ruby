@@ -764,6 +764,16 @@ module Collmex
       end
     end
 
+    class SearchEngineProductsGet < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Suchmaschinen
+      def self.specification
+        [
+            { name: :identifier    , type: :string  , fix: "SEARCH_ENGINE_PRODUCTS_GET" },
+            { name: :website_id    , type: :integer                                     },
+            { name: :return_format , type: :integer                                     }
+        ]
+      end
+    end
+
     class StockAvailable < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Verfuegbarkeit
       def self.specification
         [
