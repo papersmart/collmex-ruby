@@ -331,7 +331,6 @@ shared_examples_for "Collmex Api Command" do
 end
 
 describe Collmex::Api::Adrgrp do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_adressgruppen
-
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -348,11 +347,9 @@ describe Collmex::Api::Adrgrp do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
   output = ["ADRGRP", 1, ""]
 
   specify { subject.to_a.should eql output }
-
 end
 
 describe Collmex::Api::AboGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Periodische_rechnung
-
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -375,11 +372,9 @@ describe Collmex::Api::AboGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
   output = ["ABO_GET", 9999, 1, "", nil, nil, nil, nil, ""]
 
   specify { subject.to_a.should eql output }
-
 end
 
 describe Collmex::Api::Accdoc do   # fixme ACCDOC # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Buchhaltungsbelege
-
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -419,11 +414,9 @@ describe Collmex::Api::Accdoc do   # fixme ACCDOC # http://www.collmex.de/cgi-bi
   output = ["ACCDOC", 1, nil, 1, nil, nil, "", nil, nil, "", nil, nil, 9999, "", nil, "", nil, "", nil, "", "", nil, nil, nil, nil, nil]
 
   specify { subject.to_a.should eql output }
-
 end
 
 describe Collmex::Api::AccdocGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Buchhaltungsbelege
-
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -454,11 +447,9 @@ describe Collmex::Api::AccdocGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005
   output = ["ACCDOC_GET", 1, nil, 1, nil, nil, 9999, nil, nil, nil, nil, "", nil, nil, nil, nil, ""]
 
   specify { subject.to_a.should eql output }
-
 end
 
 describe Collmex::Api::AddressGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Adressen
-
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -482,11 +473,9 @@ describe Collmex::Api::AddressGet do # http://www.collmex.de/cgi-bin/cgi.exe?100
   output = ["ADDRESS_GET", 1, nil, "", nil, "", nil, nil, "", nil]
 
   specify { subject.to_a.should eql output }
-
 end
 
 describe Collmex::Api::AddressGroupsGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Adressgruppen
-
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -499,15 +488,13 @@ describe Collmex::Api::AddressGroupsGet do # http://www.collmex.de/cgi-bin/cgi.e
   output = ["ADDRESS_GROUPS_GET"]
 
   specify { subject.to_a.should eql output }
-
 end
 
-#describe Collmex::Api::BillOfMaterialGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Stuecklisten
+#describe Collmex::Api::BillOfMaterialGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Stuecklisten
   # tbd
 #end
 
 describe Collmex::Api::Cmxabo do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_periodische_rechnung
-
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -531,7 +518,6 @@ describe Collmex::Api::Cmxabo do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
   output = ["ABO_GET", 9999, 1, nil, nil, "", "", nil, nil, nil]
 
   specify { subject.to_a.should eql output }
-
 end
 
 #describe Collmex::Api::Cmxact do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_taetigkeiten
@@ -539,7 +525,6 @@ end
 #end
 
 describe Collmex::Api::Cmxadr do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_adressen
-
   it_behaves_like "Collmex Api Command"
   spec =
       [
@@ -601,7 +586,6 @@ end
 #end
 
 describe Collmex::Api::Cmxinv do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_rechnungen
-
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -697,11 +681,9 @@ describe Collmex::Api::Cmxinv do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
   output = ["CMXINV", 1, nil, nil, 1, nil, 9999, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", nil, nil, nil, nil, "", nil, nil, nil, "", "", "", "", nil, nil, nil, nil, "", nil, nil, "", nil, nil, nil, nil, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", nil, "", "", "", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
 
   specify { subject.to_a.should eql output }
-
 end
 
 describe Collmex::Api::Cmxknd do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_kunde
-
   it_behaves_like "Collmex Api Command"
   spec =
       [
@@ -765,7 +747,6 @@ end
 #end
 
 describe Collmex::Api::Cmxlif do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_lieferant
-
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -814,7 +795,6 @@ describe Collmex::Api::Cmxlif do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
   output = ["CMXLIF", 1, 1, "", "", "", "", "", "", "", "", "", "", nil, "", "", "", "", "", "", "", "", "", "", "", nil, "", "", nil, "", nil, "", "", "", nil]
 
   specify { subject.to_a.should eql output }
-
 end
 
 #describe Collmex::Api::Cmxlrn do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_lieferantenrechnung
@@ -833,9 +813,28 @@ end
   # tbd
 #end
 
-#describe Collmex::Api::Cmxpri do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_preise
-  # tbd
-#end
+describe Collmex::Api::Cmxpri do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_preise
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier     , type: :string  , fix: "CMXPRI" },
+          { name: :product_id     , type: :string                  },
+          { name: :company_id     , type: :integer , default: 1    },
+          { name: :price_group_id , type: :integer                 },
+          { name: :valid_from     , type: :date                    },
+          { name: :valid_to       , type: :date                    },
+          { name: :product_price  , type: :currency                }
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {product_id: 9999} ) }
+
+  output = ["CMXPRI", "9999", 1, nil, nil, nil, nil]
+
+  specify { subject.to_a.should eql output }
+end
 
 #describe Collmex::Api::Cmxprj do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_Projekte
   # tbd
@@ -846,7 +845,6 @@ end
 #end
 
 describe Collmex::Api::Cmxqtn do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_angebote
-
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -941,7 +939,6 @@ describe Collmex::Api::Cmxqtn do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
   output = ["CMXQTN", 1, nil, nil, 1, 9999, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", nil, nil, nil, nil, "", nil, nil, nil, "", "", "", "", nil, nil, nil, nil, nil, nil, "", "", "", nil, nil, nil, nil, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", nil, "", "", "", nil, nil, nil, nil, nil, nil, nil, nil, nil]
 
   specify { subject.to_a.should eql output }
-
 end
 
 #describe Collmex::Api::Cmxstk do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_bestand
@@ -1054,7 +1051,6 @@ describe Collmex::Api::DeliveryGet do # http://www.collmex.de/cgi-bin/cgi.exe?10
 end
 
 describe Collmex::Api::InvoiceGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Rechnungen
-
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -1080,7 +1076,6 @@ describe Collmex::Api::InvoiceGet do # http://www.collmex.de/cgi-bin/cgi.exe?100
   output = ["INVOICE_GET", "1", 1, 9999, nil, nil, nil, "", nil, "", nil, nil]
 
   specify { subject.to_a.should eql output }
-
 end
 
 describe Collmex::Api::InvoicePayment do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Zahlungen
@@ -1149,7 +1144,6 @@ describe Collmex::Api::Login do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,h
 end
 
 describe Collmex::Api::Message do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Rueckmeldungen
-
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -1200,12 +1194,9 @@ describe Collmex::Api::Message do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1
       subject.result.should eql :undefined
     end
   end
-
-
 end
 
 describe Collmex::Api::PaymentConfirmation do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Payment
-
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -1281,7 +1272,6 @@ end
 #end
 
 describe Collmex::Api::PurchaseOrderGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferantenauftraege
-
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -1305,11 +1295,9 @@ describe Collmex::Api::PurchaseOrderGet do # http://www.collmex.de/cgi-bin/cgi.e
   output = ["PURCHASE_ORDER_GET", "1", 1, 9999, "", nil, "", nil, "", nil]
 
   specify { subject.to_a.should eql output }
-
 end
 
 describe Collmex::Api::QuotationGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Angebote
-
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -1333,11 +1321,9 @@ describe Collmex::Api::QuotationGet do # http://www.collmex.de/cgi-bin/cgi.exe?1
   output = ["QUOTATION_GET", "1", 1, 9999, nil, nil, nil, "", nil, ""]
 
   specify { subject.to_a.should eql output }
-
 end
 
 describe Collmex::Api::SalesOrderGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Kundenauftraege
-
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -1363,11 +1349,9 @@ describe Collmex::Api::SalesOrderGet do # http://www.collmex.de/cgi-bin/cgi.exe?
   output = ["SALES_ORDER_GET", "1", 1, 9999, nil, nil, "", "", nil, "", nil, nil]
 
   specify { subject.to_a.should eql output }
-
 end
 
 describe Collmex::Api::SearchEngineProductsGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Suchmaschinen
-
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -1384,11 +1368,9 @@ describe Collmex::Api::SearchEngineProductsGet do # http://www.collmex.de/cgi-bi
   output = ["SEARCH_ENGINE_PRODUCTS_GET", nil, nil]
 
   specify { subject.to_a.should eql output }
-
 end
 
 describe Collmex::Api::StockAvailable do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Verfuegbarkeit
-
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -1408,11 +1390,9 @@ describe Collmex::Api::StockAvailable do # http://www.collmex.de/cgi-bin/cgi.exe
   output = ["STOCK_AVAILABLE", "1", 1, nil, "", nil]
 
   specify { subject.to_a.should eql output }
-
 end
 
 describe Collmex::Api::StockAvailableGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Verfuegbarkeit
-
   it_behaves_like "Collmex Api Command"
 
   spec =
@@ -1431,7 +1411,6 @@ describe Collmex::Api::StockAvailableGet do # http://www.collmex.de/cgi-bin/cgi.
   output = ["STOCK_AVAILABLE_GET", 1, "1", nil, ""]
 
   specify { subject.to_a.should eql output }
-
 end
 
 #describe Collmex::Api::StockChange do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Bestandsaenderungen

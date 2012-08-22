@@ -526,6 +526,20 @@ module Collmex
       end
     end
 
+    class Cmxpri < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_preise
+      def self.specification
+        [
+            { name: :identifier     , type: :string  , fix: "CMXPRI" },
+            { name: :product_id     , type: :string                  },
+            { name: :company_id     , type: :integer , default: 1    },
+            { name: :price_group_id , type: :integer                 },
+            { name: :valid_from     , type: :date                    },
+            { name: :valid_to       , type: :date                    },
+            { name: :product_price  , type: :currency                }
+        ]
+      end
+    end
+
     class Cmxqtn < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_angebote
       def self.specification
         [
