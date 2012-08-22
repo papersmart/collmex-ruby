@@ -344,6 +344,35 @@ module Collmex
       end
     end
 
+    class Cmxasp < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_anspr
+      def self.specification
+        [
+            { name: :identifier    , type: :string  , fix: "CMXASP" },
+            { name: :id            , type: :integer                 },
+            { name: :type          , type: :integer                 },
+            { name: :salutation    , type: :string                  },
+            { name: :title         , type: :string                  },
+            { name: :firstname     , type: :string                  },
+            { name: :lastname      , type: :string                  },
+            { name: :company       , type: :string                  },
+            { name: :department    , type: :string                  },
+            { name: :street        , type: :string                  },
+            { name: :zipcode       , type: :string                  },
+            { name: :city          , type: :string                  },
+            { name: :country       , type: :string                  },
+            { name: :phone         , type: :string                  },
+            { name: :phone_2       , type: :string                  },
+            { name: :fax           , type: :string                  },
+            { name: :skype_voip    , type: :string                  },
+            { name: :email         , type: :string                  },
+            { name: :annotation    , type: :string                  },
+            { name: :url           , type: :string                  },
+            { name: :no_mailings   , type: :integer                 },
+            { name: :address_group , type: :integer                 },
+        ]
+      end
+    end
+
     class Cmxinv < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_rechnungen
       def self.specification
         [
