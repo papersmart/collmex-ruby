@@ -836,7 +836,7 @@ describe Collmex::Api::Cmxpri do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
   specify { subject.to_a.should eql output }
 end
 
-#describe Collmex::Api::Cmxprj do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_Projekte
+#describe Collmex::Api::Cmxprj do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Projekte
   # tbd
 #end
 
@@ -1267,9 +1267,25 @@ end
   # tbd
 #end
 
-#describe Collmex::Api::ProjectGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Projekte
-  # tbd
-#end
+describe Collmex::Api::ProjectGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Projekte
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier  , type: :string  , fix: "PROJECT_GET " },
+          { name: :id          , type: :integer                       },
+          { name: :company_id  , type: :integer , default: 1          },
+          { name: :customer_id , type: :integer                       }
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1} ) }
+
+  output = ["PROJECT_GET ", 1, 1, nil]
+
+  specify { subject.to_a.should eql output }
+end
 
 describe Collmex::Api::PurchaseOrderGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferantenauftraege
   it_behaves_like "Collmex Api Command"

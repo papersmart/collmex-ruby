@@ -830,6 +830,17 @@ module Collmex
       end
     end
 
+    class ProjectGet < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Projekte
+      def self.specification
+        [
+            { name: :identifier  , type: :string  , fix: "PROJECT_GET " },
+            { name: :id          , type: :integer                       },
+            { name: :company_id  , type: :integer , default: 1          },
+            { name: :customer_id , type: :integer                       }
+        ]
+      end
+    end
+
     class PurchaseOrderGet < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferantenauftraege
       def self.specification
         [
