@@ -614,9 +614,44 @@ end
   # tbd
 #end
 
-#describe Collmex::Api::Cmxepf do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_abw
-  # tbd
-#end
+describe Collmex::Api::Cmxepf do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_abw
+  it_behaves_like "Collmex Api Command"
+  spec =
+      [
+          { name: :identifier    , type: :string  , fix: "CMXEPF" },
+          { name: :customer_id   , type: :integer                 },
+          { name: :company_id    , type: :integer , default: 1    },
+          { name: :document_type , type: :integer                 },
+          { name: :output_media  , type: :integer                 },
+          { name: :salutation    , type: :string                  },
+          { name: :title         , type: :string                  },
+          { name: :firstname     , type: :string                  },
+          { name: :lastname      , type: :string                  },
+          { name: :company       , type: :string                  },
+          { name: :department    , type: :string                  },
+          { name: :street        , type: :string                  },
+          { name: :zipcode       , type: :string                  },
+          { name: :city          , type: :string                  },
+          { name: :country       , type: :string                  },
+          { name: :phone         , type: :string                  },
+          { name: :phone_2       , type: :string                  },
+          { name: :fax           , type: :string                  },
+          { name: :skype_voip    , type: :string                  },
+          { name: :email         , type: :string                  },
+          { name: :annotation    , type: :string                  },
+          { name: :url           , type: :string                  },
+          { name: :no_mailings   , type: :integer                 },
+          { name: :address_group , type: :integer                 }
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1} ) }
+
+  output = ["CMXEPF", nil, 1, nil, nil, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", nil, nil]
+
+  specify { subject.to_a.should eql output }
+end
 
 describe Collmex::Api::Cmxinv do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_rechnungen
   it_behaves_like "Collmex Api Command"
