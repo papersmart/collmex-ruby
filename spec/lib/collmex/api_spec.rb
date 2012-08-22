@@ -1429,19 +1429,34 @@ describe Collmex::Api::StockAvailableGet do # http://www.collmex.de/cgi-bin/cgi.
   specify { subject.to_a.should eql output }
 end
 
-#describe Collmex::Api::StockChange do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Bestandsaenderungen
+#describe Collmex::Api::StockChange do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Bestandsaenderungen
   # tbd
 #end
 
-#describe Collmex::Api::StockChangeGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Bestandsaenderungen
+#describe Collmex::Api::StockChangeGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Bestandsaenderungen
   # tbd
 #end
 
-#describe Collmex::Api::TrackingNumber do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_sendungsnummer
-  # tbd
-#end
+describe Collmex::Api::TrackingNumber do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_sendungsnummer
+  it_behaves_like "Collmex Api Command"
 
-#describe Collmex::Api::VendorGet do   # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferanten
+  spec =
+      [
+          { name: :identifier   , type: :string  , fix: "TRACKING_NUMBER" },
+          { name: :deliveryy_id , type: :integer                          },
+          { name: :id           , type: :string                           }
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1} ) }
+
+  output = ["TRACKING_NUMBER", nil, "1"]
+
+  specify { subject.to_a.should eql output }
+end
+
+#describe Collmex::Api::VendorGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferanten
   # tbd
 #end
 

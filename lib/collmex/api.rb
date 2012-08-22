@@ -929,5 +929,15 @@ module Collmex
       end
     end
 
+    class TrackingNumber < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_sendungsnummer
+      def self.specification
+        [
+            { name: :identifier   , type: :string  , fix: "TRACKING_NUMBER" },
+            { name: :deliveryy_id , type: :integer                          },
+            { name: :id           , type: :string                           }
+        ]
+      end
+    end
+
   end
 end
