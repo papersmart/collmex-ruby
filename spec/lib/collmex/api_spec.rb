@@ -1442,9 +1442,9 @@ describe Collmex::Api::TrackingNumber do # http://www.collmex.de/cgi-bin/cgi.exe
 
   spec =
       [
-          { name: :identifier   , type: :string  , fix: "TRACKING_NUMBER" },
-          { name: :deliveryy_id , type: :integer                          },
-          { name: :id           , type: :string                           }
+          { name: :identifier  , type: :string  , fix: "TRACKING_NUMBER" },
+          { name: :delivery_id , type: :integer                          },
+          { name: :id          , type: :string                           }
       ]
 
   specify { described_class.specification.should eql spec }
@@ -1456,7 +1456,28 @@ describe Collmex::Api::TrackingNumber do # http://www.collmex.de/cgi-bin/cgi.exe
   specify { subject.to_a.should eql output }
 end
 
-#describe Collmex::Api::VendorGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferanten
-  # tbd
-#end
+describe Collmex::Api::VendorGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferanten
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier    , type: :string  , fix: "VENDOR_GET" },
+          { name: :delivery_id   , type: :integer                     },
+          { name: :company_id    , type: :integer , default: 1        },
+          { name: :text          , type: :string                      },
+          { name: :due_to_review , type: :integer                     },
+          { name: :zip_code      , type: :string                      },
+          { name: :only_changed  , type: :integer                     },
+          { name: :system_name   , type: :string                      }
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {delivery_id: 1} ) }
+
+  output = ["VENDOR_GET", 1, 1, "", nil, "", nil, ""]
+
+  specify { subject.to_a.should eql output }
+
+end
 

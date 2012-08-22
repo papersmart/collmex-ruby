@@ -932,9 +932,24 @@ module Collmex
     class TrackingNumber < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_sendungsnummer
       def self.specification
         [
-            { name: :identifier   , type: :string  , fix: "TRACKING_NUMBER" },
-            { name: :deliveryy_id , type: :integer                          },
-            { name: :id           , type: :string                           }
+            { name: :identifier  , type: :string  , fix: "TRACKING_NUMBER" },
+            { name: :delivery_id , type: :integer                          },
+            { name: :id          , type: :string                           }
+        ]
+      end
+    end
+
+    class VendorGet < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferanten
+      def self.specification
+        [
+            { name: :identifier    , type: :string  , fix: "VENDOR_GET" },
+            { name: :delivery_id   , type: :integer                     },
+            { name: :company_id    , type: :integer , default: 1        },
+            { name: :text          , type: :string                      },
+            { name: :due_to_review , type: :integer                     },
+            { name: :zip_code      , type: :string                      },
+            { name: :only_changed  , type: :integer                     },
+            { name: :system_name   , type: :string                      }
         ]
       end
     end
