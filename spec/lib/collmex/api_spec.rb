@@ -1,14 +1,14 @@
 require "spec_helper"
 
 sample_spec = [  
-          { name: :identifyer , type: :string   , fix: "BLA" },
+          { name: :identifier , type: :string   , fix: "BLA" },
           { name: :b          , type: :currency              },
           { name: :c          , type: :float                 },
           { name: :d          , type: :integer               },
           { name: :e          , type: :date                  },
 ]
 
-empty_hash = { identifyer: "BLA", b: nil, c: nil, d: nil, e: nil }
+empty_hash = { identifier: "BLA", b: nil, c: nil, d: nil, e: nil }
 
 empty_array = ["BLA", nil, nil, nil, nil]
 
@@ -188,7 +188,7 @@ shared_examples_for "Collmex Api Command" do
       currency  = 200
       date      = Date.parse("12.10.1985")
 
-      output = { identifyer: string, b: currency, c: float, d: integer, e: Date.parse("12.10.1985") }
+      output = { identifier: string, b: currency, c: float, d: integer, e: Date.parse("12.10.1985") }
 
       described_class.stub(:specification).and_return(sample_spec)
       Collmex::Api.stub(:parse_field).with(anything(),:string).and_return string
