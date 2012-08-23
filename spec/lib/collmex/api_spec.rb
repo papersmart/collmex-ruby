@@ -1288,9 +1288,25 @@ describe Collmex::Api::PaymentConfirmation do # http://www.collmex.de/cgi-bin/cg
   specify { subject.to_a.should eql output }
 end
 
-#describe Collmex::Api::Prdgrp do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_produktgruppen
-  # tbd
-#end
+describe Collmex::Api::Prdgrp do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_produktgruppen
+  it_behaves_like "Collmex Api Command"
+
+  spec =
+      [
+          { name: :identifier               , type: :string  , fix: "PRDGRP" },
+          { name: :id                       , type: :integer                 },
+          { name: :description              , type: :string                  },
+          { name: :generic_product_group_id , type: :integer                 }
+      ]
+
+  specify { described_class.specification.should eql spec }
+
+  subject { described_class.new( {id: 1} ) }
+
+  output = ["PRDGRP", 1, "", nil]
+
+  specify { subject.to_a.should eql output }
+end
 
 describe Collmex::Api::ProductGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Produkte
   it_behaves_like "Collmex Api Command"

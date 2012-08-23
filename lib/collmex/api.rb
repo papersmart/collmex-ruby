@@ -867,6 +867,17 @@ module Collmex
       end
     end
 
+    class Prdgrp < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_produktgruppen
+      def self.specification
+        [
+            { name: :identifier               , type: :string  , fix: "PRDGRP" },
+            { name: :id                       , type: :integer                 },
+            { name: :description              , type: :string                  },
+            { name: :generic_product_group_id , type: :integer                 }
+        ]
+      end
+    end
+
     class ProductGet < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Produkte
       def self.specification
         [
