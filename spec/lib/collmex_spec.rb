@@ -14,7 +14,7 @@ end
 
 describe "CollmexIntegration" do
 
-  before(:each) do 
+  before(:each) do
     Collmex.setup_login_data({username: 8866413, password: 2291502, customer_id: 104156})
   end
 
@@ -34,7 +34,7 @@ describe "CollmexIntegration" do
       request.execute
     end
 
-      
+
   end
 
   it "should work with the block form" do
@@ -49,9 +49,6 @@ describe "CollmexIntegration" do
     end
 
     #ap request.response
-
     request.response.last.success?.should eql true
   end
 end
-
-

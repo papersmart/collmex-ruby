@@ -9,4 +9,5 @@ group :development, :test do
   gem 'webmock'
   gem 'vcr'
   gem "rake"
+  gem "pry"
 end
