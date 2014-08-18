@@ -3,19 +3,20 @@ require 'yaml'
 require 'collmex'
 require "vcr"
 
-
-
 describe Collmex do
   it {should respond_to :username}
   it {should respond_to :password}
   it {should respond_to :customer_id}
 end
 
-
 describe "CollmexIntegration" do
 
-  before(:each) do 
-    Collmex.setup_login_data({username: 3422944, password: 1069024, customer_id: 119454})
+  before(:each) do
+    Collmex.setup_login_data({username: 8866413, password: 2291502, customer_id: 104156})
+  end
+
+  after(:each) do
+   # Collmex.setup_login_data
   end
 
   it "should work with the long form" do
@@ -33,15 +34,17 @@ describe "CollmexIntegration" do
 
   it "should work with the block form" do
 
-    request = Collmex::Request.run do
-      enqueue :customer_get, id: 9999
+   # ap  Collmex::Api::AccdocGet.new("ASDASD;2;2")
+
+    request = ""
+    VCR.use_cassette('standard_request2') do
+      request = Collmex::Request.run do
+        enqueue :customer_get, id: 9999
+      end
     end
-    
+
     VCR.use_cassette('standard_request') do
       request.response.last.success?.should eql true
     end
-
   end
 end
-
-

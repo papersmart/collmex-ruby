@@ -1,0 +1,43 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://www.collmex.de/cgi-bin/cgi.exe?104156,0,data_exchange
+    body:
+      encoding: UTF-8
+      string: |
+        LOGIN;8866413;2291502
+        CUSTOMER_GET;"";1;"";"";"";"";"";"";"";"";"";""
+        ACCDOC_GET;1;"";"";"";"";"";"";"";"";"";"";;;"";"";""
+        ACCDOC_GET;1;"";"";"";"";"";"";"";"";"";"";;;"";"";""
+    headers:
+      Content-Type:
+      - text/csv
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: Orl Korrect
+    headers:
+      Content-Type:
+      - text/csv
+      Server:
+      - Microsoft-IIS/8.0
+      Date:
+      - Mon, 18 Aug 2014 16:58:31 GMT
+      Connection:
+      - close
+      Content-Length:
+      - '41'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        TUVTU0FHRTtFOzIwMDAwNDtVbmf8bHRpZ2UgS3VuZGVubnVtbWVyDQo=
+    http_version: 
+  recorded_at: Mon, 18 Aug 2014 16:58:37 GMT
+recorded_with: VCR 2.9.2
