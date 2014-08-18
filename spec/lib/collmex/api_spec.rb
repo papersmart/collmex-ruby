@@ -21,22 +21,22 @@ describe Collmex::Api do
   describe ".is_a_collmex_api_line_obj?" do
     it "should fail for an array" do
       a = Array.new
-      described_class.is_a_collmex_api_line_obj?(a).should be_false
+      expect(described_class.is_a_collmex_api_line_obj?(a)).to be_falsey
     end
 
     it "should succeed for a Collmex::Api Object" do
       b = Collmex::Api::AccdocGet.new()
-      described_class.is_a_collmex_api_line_obj?(b).should be_true
+      expect(described_class.is_a_collmex_api_line_obj?(b)).to be_truthy
     end
   end
 
   describe ".line_class_exists?" do
     it "should be true for a existing class" do
-      Collmex::Api.line_class_exists?("Line").should be true
+      expect(Collmex::Api.line_class_exists?("Line")).to be true
     end
 
     it "should be false for a non existant class" do
-      Collmex::Api.line_class_exists?("asdasdasdasdaaBla").should be false
+      expect(Collmex::Api.line_class_exists?("asdasdasdasdaaBla")).to be false
     end
   end
 
@@ -72,7 +72,7 @@ describe Collmex::Api do
     ]
     tests.each do |test|
       it "should represent #{test[:type]} \"#{test[:input].inspect}\" as \"#{test[:outcome]}\"" do
-        described_class.stringify(test[:input],test[:type]).should === test[:outcome]
+        expect(described_class.stringify(test[:input],test[:type])).to be === test[:outcome]
       end
     end
   end
@@ -82,13 +82,13 @@ describe Collmex::Api do
       context "as an array" do
         it "should instanciate an api line object" do
           line = Collmex::Api::Login.new([12,34]).to_a
-          described_class.parse_line(line).should be_a Collmex::Api::Line
+          expect(described_class.parse_line(line)).to be_a Collmex::Api::Line
         end
       end
       context "as n csv string" do
         it "should instanciate an api line object" do
           line = Collmex::Api::Login.new([12,34]).to_csv
-          described_class.parse_line(line).should be_a Collmex::Api::Line
+          expect(described_class.parse_line(line)).to be_a Collmex::Api::Line
         end
       end
     end
@@ -96,7 +96,7 @@ describe Collmex::Api do
     context "when given an invalid line" do
       it "should throw an error" do
         line = ["OMG", 2,3,4,5,6]
-        lambda { described_class.parse_line(line) }.should raise_error 'Could not find a Collmex::Api::Line class for "Omg" ("OMG")'
+        expect { described_class.parse_line(line) }.to raise_error 'Could not find a Collmex::Api::Line class for "Omg" ("OMG")'
       end
     end
   end
@@ -172,7 +172,7 @@ describe Collmex::Api do
             ]
     tests.each_with_index do |t,i|
       it "should parse #{t[:type]} value for \"#{t[:input]}\"" do
-        described_class.parse_field( t[:input], t[:type]).should === t[:outcome]
+        expect(described_class.parse_field( t[:input], t[:type])).to be === t[:outcome]
       end
     end
   end
@@ -191,12 +191,12 @@ shared_examples_for "Collmex Api Command" do
 
       output = { identifier: string, b: currency, c: float, d: integer, e: Date.parse("12.10.1985") }
 
-      described_class.stub(:specification).and_return(sample_spec)
-      Collmex::Api.stub(:parse_field).with(anything(),:string).and_return string
-      Collmex::Api.stub(:parse_field).with(anything(),:float).and_return float
-      Collmex::Api.stub(:parse_field).with(anything(),:integer).and_return integer
-      Collmex::Api.stub(:parse_field).with(anything(),:currency).and_return currency
-      Collmex::Api.stub(:parse_field).with(anything(),:date).and_return date
+      allow(described_class).to receive(:specification).and_return(sample_spec)
+      allow(Collmex::Api).to receive(:parse_field).with(anything(),:string).and_return string
+      allow(Collmex::Api).to receive(:parse_field).with(anything(),:float).and_return float
+      allow(Collmex::Api).to receive(:parse_field).with(anything(),:integer).and_return integer
+      allow(Collmex::Api).to receive(:parse_field).with(anything(),:currency).and_return currency
+      allow(Collmex::Api).to receive(:parse_field).with(anything(),:date).and_return date
 
       tests = [
                   [1,2,3,4],
@@ -212,7 +212,7 @@ shared_examples_for "Collmex Api Command" do
       ]
 
       tests.each do |testdata|
-        described_class.hashify(testdata).should eql output
+        expect(described_class.hashify(testdata)).to eql output
       end
     end
 
@@ -224,8 +224,8 @@ shared_examples_for "Collmex Api Command" do
                         { name: :d,       type: :float,       default: 2.99 },
                     ]
       sample_default_outcome = {a: "fixvalue", b: 899, c: 10, d: 2.99}
-      described_class.stub(:specification).and_return sample_default_spec
-      described_class.hashify([]).should eql sample_default_outcome
+      allow(described_class).to receive(:specification).and_return sample_default_spec
+      expect(described_class.hashify([])).to eql sample_default_outcome
     end
 
     it "should overwrite default values when data is given" do
@@ -236,8 +236,8 @@ shared_examples_for "Collmex Api Command" do
                         { name: :d,       type: :float,       default: 2.99 },
                     ]
       sample_default_outcome = {a: "asd", b: 12, c: 1, d: 1.0}
-      described_class.stub(:specification).and_return sample_default_spec
-      described_class.hashify({a: "asd", b: 12, c: 1, d: 1}).should eql sample_default_outcome
+      allow(described_class).to receive(:specification).and_return sample_default_spec
+      expect(described_class.hashify({a: "asd", b: 12, c: 1, d: 1})).to eql sample_default_outcome
     end
 
     it "should ignore given values for fix-value-fields" do
@@ -248,47 +248,47 @@ shared_examples_for "Collmex Api Command" do
                         { name: :d,       type: :float,       fix: 2.99 },
                     ]
       sample_fix_outcome = {a: "fixvalue", b: 899, c: 10, d: 2.99}
-      described_class.stub(:specification).and_return sample_fix_spec
-      described_class.hashify([]).should eql sample_fix_outcome
+      allow(described_class).to receive(:specification).and_return sample_fix_spec
+      expect(described_class.hashify([])).to eql sample_fix_outcome
     end
   end
 
   describe ".default_hash" do
     it "should hold a specification" do
-      described_class.stub(:specification).and_return([])
-      described_class.default_hash.should eql({})
+      allow(described_class).to receive(:specification).and_return([])
+      expect(described_class.default_hash).to eql({})
 
-      described_class.stub(:specification).and_return(sample_spec)
-      described_class.default_hash.should eql(empty_hash)
+      allow(described_class).to receive(:specification).and_return(sample_spec)
+      expect(described_class.default_hash).to eql(empty_hash)
     end
   end
 
   subject { described_class.new }
 
-  it { should respond_to :to_csv }
-  it { should respond_to :to_a }
-  it { should respond_to :to_s }
-  it { should respond_to :to_h }
+  it { is_expected.to respond_to :to_csv }
+  it { is_expected.to respond_to :to_a }
+  it { is_expected.to respond_to :to_s }
+  it { is_expected.to respond_to :to_h }
 
   describe "#initialize" do
     it "should raise an error if the specification is empty and the class is not Collmex::Api::Line" do
-      described_class.stub(:specification).and_return({})
+      allow(described_class).to receive(:specification).and_return({})
       if described_class.name == "Collmex::Api::Line"
-        lambda { described_class.new }.should_not raise_error
+        expect { described_class.new }.not_to raise_error
       else
-        lambda { described_class.new }.should raise_error "#{described_class.name} has no specification"
+        expect { described_class.new }.to raise_error "#{described_class.name} has no specification"
       end
     end
 
     it "should set the instance_variable hash" do
-      subject.instance_variable_get(:@hash).should be_a Hash
+      expect(subject.instance_variable_get(:@hash)).to be_a Hash
     end
 
     context "no params given" do
       it "should build the specified but empty hash" do
-        described_class.stub(:default_hash).and_return(empty_hash)
+        allow(described_class).to receive(:default_hash).and_return(empty_hash)
         line = described_class.new
-        line.to_h.should eql(empty_hash)
+        expect(line.to_h).to eql(empty_hash)
       end
     end
 
@@ -297,19 +297,19 @@ shared_examples_for "Collmex Api Command" do
         input = { a: "bla" }
         output = empty_hash.merge(input)
 
-        described_class.stub(:default_hash).and_return(empty_hash)
-        described_class.stub(:hashify).and_return(output)
+        allow(described_class).to receive(:default_hash).and_return(empty_hash)
+        allow(described_class).to receive(:hashify).and_return(output)
         line = described_class.new(input)
-        line.to_h.should eql (output)
+        expect(line.to_h).to eql (output)
       end
     end
   end
 
   describe "#to_csv" do
     it "should represent the request as csv" do
-      described_class.stub(:specification).and_return(sample_spec)
+      allow(described_class).to receive(:specification).and_return(sample_spec)
       subject.instance_variable_set(:@hash, described_class.hashify(filled_array))
-      subject.to_csv.should eql filled_csv
+      expect(subject.to_csv).to eql filled_csv
     end
   end
 
@@ -317,14 +317,14 @@ shared_examples_for "Collmex Api Command" do
     it "should return the hash" do
       h = { first: 1, second: 2 }
       subject.instance_variable_set(:@hash, h)
-      subject.to_h.should eql h
+      expect(subject.to_h).to eql h
     end
   end
 
   describe "#to_a" do
     it "should return the empty_hash translated to an array" do
-      described_class.stub(:specification).and_return(sample_spec)
-      subject.to_a.should eql empty_array
+      allow(described_class).to receive(:specification).and_return(sample_spec)
+      expect(subject.to_a).to eql empty_array
     end
   end
 end
@@ -340,13 +340,13 @@ describe Collmex::Api::Adrgrp do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
           { name: :description , type: :string                  }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1} ) }
 
   output = ["ADRGRP", 1, ""]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::AboGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Periodische_rechnung
@@ -365,13 +365,13 @@ describe Collmex::Api::AboGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
           { name: :system_name        , type: :string                   }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {customer_id: 9999} ) }
 
   output = ["ABO_GET", 9999, 1, "", nil, nil, nil, nil, ""]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::Accdoc do   # fixme ACCDOC # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Buchhaltungsbelege
@@ -407,13 +407,13 @@ describe Collmex::Api::Accdoc do   # fixme ACCDOC # http://www.collmex.de/cgi-bi
           { name: :belongs_to_pos    , type: :integer                 }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1, customer_id: 9999} ) }
 
   output = ["ACCDOC", 1, nil, 1, nil, nil, "", nil, nil, "", nil, nil, 9999, "", nil, "", nil, "", nil, "", "", nil, nil, nil, nil, nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::AccdocGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Buchhaltungsbelege
@@ -440,13 +440,13 @@ describe Collmex::Api::AccdocGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005
           { name: :system_name   , type: :string                      }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1, customer_id: 9999} ) }
 
   output = ["ACCDOC_GET", 1, nil, 1, nil, nil, 9999, nil, nil, nil, nil, "", nil, nil, nil, nil, ""]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::AddressGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Adressen
@@ -466,13 +466,13 @@ describe Collmex::Api::AddressGet do # http://www.collmex.de/cgi-bin/cgi.exe?100
           { name: :contact_id       , type: :integer                      }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1} ) }
 
   output = ["ADDRESS_GET", 1, nil, "", nil, "", nil, nil, "", nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::AddressGroupsGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Adressgruppen
@@ -483,11 +483,11 @@ describe Collmex::Api::AddressGroupsGet do # http://www.collmex.de/cgi-bin/cgi.e
           { name: :identifier , type: :string , fix: "ADDRESS_GROUPS_GET" }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   output = ["ADDRESS_GROUPS_GET"]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 #describe Collmex::Api::BillOfMaterialGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Stuecklisten
@@ -511,13 +511,13 @@ describe Collmex::Api::Cmxabo do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
           { name: :next_invoice        , type: :date                     }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {customer_id: 9999} ) }
 
   output = ["ABO_GET", 9999, 1, nil, nil, "", "", nil, nil, nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 #describe Collmex::Api::Cmxact do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_taetigkeiten
@@ -564,13 +564,13 @@ describe Collmex::Api::Cmxadr do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
           { name: :company_id          , type: :integer , default: 1    }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1} ) }
 
   output = ["ACCBAL_GET", 1, Date.today.year, nil, nil, nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 
@@ -654,13 +654,13 @@ describe Collmex::Api::Cmxasp do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
           { name: :address_group_id , type: :integer                 }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1} ) }
 
   output = ["CMXASP", 1, nil, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", nil, nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 #describe Collmex::Api::Cmxbom do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Stuecklisten
@@ -697,13 +697,13 @@ describe Collmex::Api::Cmxepf do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
           { name: :address_group_id , type: :integer                 }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1} ) }
 
   output = ["CMXEPF", nil, 1, nil, nil, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", nil, nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::Cmxinv do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_rechnungen
@@ -795,13 +795,13 @@ describe Collmex::Api::Cmxinv do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
           { name: :revenue_element                    , type: :integer                 }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1, customer_id: 9999} ) }
 
   output = ["CMXINV", 1, nil, nil, 1, nil, 9999, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", nil, nil, nil, nil, "", nil, nil, nil, "", "", "", "", nil, nil, nil, nil, "", nil, nil, "", nil, nil, nil, nil, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", nil, "", "", "", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::Cmxknd do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_kunde
@@ -854,13 +854,13 @@ describe Collmex::Api::Cmxknd do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
           { name: :phone_2                        , type: :string                  }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1} ) }
 
   output = ["CMXKND", 1, 1, "", "", "", "", "", "", "", "", "", "", nil, "", "", "", "", "", "", "", "", "", "", "", nil, nil, "", "", nil, "", nil, "", nil, "", nil, "", nil, nil, nil, "", nil, "", ""]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 #describe Collmex::Api::Cmxknt do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_kontakte
@@ -909,13 +909,13 @@ describe Collmex::Api::Cmxlif do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
           { name: :output_language          , type: :integer                 }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1} ) }
 
   output = ["CMXLIF", 1, 1, "", "", "", "", "", "", "", "", "", "", nil, "", "", "", "", "", "", "", "", "", "", "", nil, "", "", nil, "", nil, "", "", "", nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 #describe Collmex::Api::Cmxlrn do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_lieferantenrechnung
@@ -948,13 +948,13 @@ describe Collmex::Api::Cmxpri do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
           { name: :product_price  , type: :currency                }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {product_id: 9999} ) }
 
   output = ["CMXPRI", "9999", 1, nil, nil, nil, nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 #describe Collmex::Api::Cmxprj do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Projekte
@@ -1053,13 +1053,13 @@ describe Collmex::Api::Cmxqtn do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
           { name: :revenue_element                    , type: :integer                 }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1, customer_id: 9999} ) }
 
   output = ["CMXQTN", 1, nil, nil, 1, 9999, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", nil, nil, nil, nil, "", nil, nil, nil, "", "", "", "", nil, nil, nil, nil, nil, nil, "", "", "", nil, nil, nil, nil, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", nil, "", "", "", nil, nil, nil, nil, nil, nil, nil, nil, nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 #describe Collmex::Api::Cmxstk do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_bestand
@@ -1101,13 +1101,13 @@ describe Collmex::Api::Cmxums do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
           { name: :cost_unit                 , type: :string                   }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {customer_id: 9999} ) }
 
   output = ["CMXUMS", 9999, 1, nil, "", nil, nil, nil, nil, nil, nil, nil, nil, "", nil, nil, "", nil, nil, nil, nil, nil, nil, "", nil, "", "", ""]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 #describe Collmex::Api::CreateDueDeliveries do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Faellige_Lieferungen
@@ -1134,13 +1134,13 @@ describe Collmex::Api::CustomerGet do # http://www.collmex.de/cgi-bin/cgi.exe?10
           { name: :inactive          , type: :integer                       }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1} ) }
 
   output = ["CUSTOMER_GET", 1, 1, "", nil, "", nil, nil, nil, nil, nil, "", nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::DeliveryGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferungen
@@ -1162,13 +1162,13 @@ describe Collmex::Api::DeliveryGet do # http://www.collmex.de/cgi-bin/cgi.exe?10
           { name: :customer_order_id , type: :integer                       }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1, customer_id: 9999} ) }
 
   output = ["DELIVERY_GET", "1", 1, 9999, nil, nil, nil, "", nil, "", nil, nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::InvoiceGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Rechnungen
@@ -1190,13 +1190,13 @@ describe Collmex::Api::InvoiceGet do # http://www.collmex.de/cgi-bin/cgi.exe?100
           { name: :paperless        , type: :integer                      }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1, customer_id: 9999} ) }
 
   output = ["INVOICE_GET", "1", 1, 9999, nil, nil, nil, "", nil, "", nil, nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::InvoicePayment do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Zahlungen
@@ -1214,14 +1214,14 @@ describe Collmex::Api::InvoicePayment do # http://www.collmex.de/cgi-bin/cgi.exe
           { name: :accdoc_position , type: :integer                           }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1} ) }
 
   output = ["CMXKND", nil, 1, "", "", "", "", "", "", "", "", "", "", nil, "", "", "", "", "", "", "", "", "", "", "", nil, nil, "", "", nil, "", nil, "", nil, "", nil, "", nil, nil, nil, "", nil, "", ""]
   output = ["INVOICE_PAYMENT", "1", nil, nil, nil, nil, nil, nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::InvoicePaymentGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Zahlungen
@@ -1236,13 +1236,13 @@ describe Collmex::Api::InvoicePaymentGet do # http://www.collmex.de/cgi-bin/cgi.
           { name: :system_name  , type: :string                               }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1} ) }
 
   output = ["INVOICE_PAYMENT_GET", 1, "1", nil, ""]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::Line do
@@ -1259,10 +1259,10 @@ describe Collmex::Api::Login do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,h
           { name: :password   , type: :integer                }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   output = ["LOGIN", 12, 34]
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::Message do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Rueckmeldungen
@@ -1277,43 +1277,43 @@ describe Collmex::Api::Message do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1
           { name: :line       , type: :integer                  }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new(  ) }
 
   output = ["MESSAGE", "", nil, "", nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 
   context "success" do
     subject { described_class.new(type: "S") }
     specify do
-      subject.success?.should eql true
-      subject.result.should eql :success
+      expect(subject.success?).to eql true
+      expect(subject.result).to eql :success
     end
   end
 
   context "warning" do
     subject { described_class.new(type: "W") }
     specify do
-      subject.success?.should eql false
-      subject.result.should eql :warning
+      expect(subject.success?).to eql false
+      expect(subject.result).to eql :warning
     end
   end
 
   context "error" do
     subject { described_class.new(type: "E") }
     specify do
-      subject.success?.should eql false
-      subject.result.should eql :error
+      expect(subject.success?).to eql false
+      expect(subject.result).to eql :error
     end
   end
 
   context "undefined" do
     subject { described_class.new() }
     specify do
-      subject.success?.should eql false
-      subject.result.should eql :undefined
+      expect(subject.success?).to eql false
+      expect(subject.result).to eql :undefined
     end
   end
 end
@@ -1333,13 +1333,13 @@ describe Collmex::Api::PaymentConfirmation do # http://www.collmex.de/cgi-bin/cg
           { name: :paypal_transaction_id , type: :string                                 }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {customer_order_id: 1} ) }
 
   output = ["PAYMENT_CONFIRMATION", 1, nil, nil, nil, "", "", ""]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::Prdgrp do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_produktgruppen
@@ -1353,14 +1353,14 @@ describe Collmex::Api::Prdgrp do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,
           { name: :generic_product_group_id , type: :integer                 }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
 
   subject { described_class.new( {id: 1} ) }
 
   output = ["PRDGRP", 1, "", nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::ProductGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Produkte
@@ -1378,13 +1378,13 @@ describe Collmex::Api::ProductGet do # http://www.collmex.de/cgi-bin/cgi.exe?100
           { name: :website_id      , type: :integer                      }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1} ) }
 
   output = ["PRODUCT_GET", 1, "1", nil, "", nil, "", nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::ProductGroupsGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Produktgruppen
@@ -1396,11 +1396,11 @@ describe Collmex::Api::ProductGroupsGet do # http://www.collmex.de/cgi-bin/cgi.e
       ]
 
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   output = ["PRODUCT_GROUPS_GET"]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 #describe Collmex::Api::ProductionOrderGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Produktionsauftraege
@@ -1418,13 +1418,13 @@ describe Collmex::Api::ProjectGet do # http://www.collmex.de/cgi-bin/cgi.exe?100
           { name: :customer_id , type: :integer                       }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1} ) }
 
   output = ["PROJECT_GET ", 1, 1, nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::PurchaseOrderGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferantenauftraege
@@ -1444,13 +1444,13 @@ describe Collmex::Api::PurchaseOrderGet do # http://www.collmex.de/cgi-bin/cgi.e
           { name: :paperless     , type: :integer                             }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1, supplier_id: 9999} ) }
 
   output = ["PURCHASE_ORDER_GET", "1", 1, 9999, "", nil, "", nil, "", nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::QuotationGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Angebote
@@ -1470,13 +1470,13 @@ describe Collmex::Api::QuotationGet do # http://www.collmex.de/cgi-bin/cgi.exe?1
           { name: :system_name   , type: :string                         }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1, customer_id: 9999} ) }
 
   output = ["QUOTATION_GET", "1", 1, 9999, nil, nil, nil, "", nil, ""]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::SalesOrderGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Kundenauftraege
@@ -1498,13 +1498,13 @@ describe Collmex::Api::SalesOrderGet do # http://www.collmex.de/cgi-bin/cgi.exe?
           { name: :paperless        , type: :integer                          }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1, customer_id: 9999} ) }
 
   output = ["SALES_ORDER_GET", "1", 1, 9999, nil, nil, "", "", nil, "", nil, nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::SearchEngineProductsGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Suchmaschinen
@@ -1517,13 +1517,13 @@ describe Collmex::Api::SearchEngineProductsGet do # http://www.collmex.de/cgi-bi
           { name: :return_format , type: :integer                                     }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1, customer_id: 9999} ) }
 
   output = ["SEARCH_ENGINE_PRODUCTS_GET", nil, nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::StockAvailable do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Verfuegbarkeit
@@ -1539,13 +1539,13 @@ describe Collmex::Api::StockAvailable do # http://www.collmex.de/cgi-bin/cgi.exe
           { name: :replenishment_time , type: :integer                          }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {product_id: 1} ) }
 
   output = ["STOCK_AVAILABLE", "1", 1, nil, "", nil]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::StockAvailableGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Verfuegbarkeit
@@ -1560,13 +1560,13 @@ describe Collmex::Api::StockAvailableGet do # http://www.collmex.de/cgi-bin/cgi.
           { name: :system_name  , type: :string                               }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {product_id: 1} ) }
 
   output = ["STOCK_AVAILABLE_GET", 1, "1", nil, ""]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 #describe Collmex::Api::StockChange do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Bestandsaenderungen
@@ -1587,12 +1587,12 @@ describe Collmex::Api::TrackingNumber do # http://www.collmex.de/cgi-bin/cgi.exe
           { name: :id          , type: :string                           }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {id: 1} ) }
   output = ["TRACKING_NUMBER", nil, "1"]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 end
 
 describe Collmex::Api::VendorGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,api_Lieferanten
@@ -1610,12 +1610,12 @@ describe Collmex::Api::VendorGet do # http://www.collmex.de/cgi-bin/cgi.exe?1005
           { name: :system_name   , type: :string                      }
       ]
 
-  specify { described_class.specification.should eql spec }
+  specify { expect(described_class.specification).to eql spec }
 
   subject { described_class.new( {delivery_id: 1} ) }
 
   output = ["VENDOR_GET", 1, 1, "", nil, "", nil, ""]
 
-  specify { subject.to_a.should eql output }
+  specify { expect(subject.to_a).to eql output }
 
 end
