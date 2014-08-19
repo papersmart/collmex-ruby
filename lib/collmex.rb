@@ -1,7 +1,8 @@
+require 'dotenv'
+Dotenv.load
+
 module Collmex
-
   class << self
-
     attr_accessor :username, :password, :customer_id
 
     def setup_login_data(logindata)
@@ -21,11 +22,8 @@ module Collmex
         :col_sep => ";"
       }
     end
-
   end
 end
 
 require 'collmex/api'
 require 'collmex/request'
-
-

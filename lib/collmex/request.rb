@@ -3,16 +3,14 @@ require "uri"
 
 module Collmex
   class Request
-    attr_accessor :commands, :http
-    attr_accessor :debug
+    attr_accessor :commands, :http, :debug
 
     def self.run(&block)
-      Request.new.tap do |request|
-        request.instance_eval &block if block_given?
+      new.tap do |request|
+        request.instance_eval(&block) if block_given?
         request.execute
       end
     end
-
 
     def self.classify(term)
       term.to_s.split("_").collect(&:capitalize).join
@@ -33,7 +31,7 @@ module Collmex
       @raw_response = {}
 
       if Collmex.username.nil? || Collmex.password.nil? || Collmex.customer_id.nil?
-        raise "No credentials for collmex given"
+        fail "No credentials for collmex given"
       else
         add_command Collmex::Api::Login.new({username: Collmex.username, password: Collmex.password})
       end
@@ -75,14 +73,14 @@ module Collmex
       @http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
       # http://www.collmex.de/faq.html#zeichensatz_import
-      encoded_body = payload.encode("ISO8859-1", undef: :replace) # Do not blow up on undefined characters in ISO8859-1
+      encoded_body = payload.encode("ISO-8859-1", undef: :replace) # Do not blow up on undefined characters in ISO8859-1
       response = @http.request_post(Collmex::Request.uri.request_uri, encoded_body, Collmex::Request.header_attributes)
-      response.body.force_encoding("ISO8859-1") if response.body.encoding.to_s == "ASCII-8BIT"
+      response.body.force_encoding("ISO-8859-1") if response.body.encoding.to_s == "ASCII-8BIT"
 
       @raw_response[:string] = response.body.encode("UTF-8")
 
       begin
-        @raw_response[:array]  = CSV.parse(@raw_response[:string], Collmex.csv_opts)
+        @raw_response[:array] = CSV.parse(@raw_response[:string], Collmex.csv_opts)
       rescue => e
         STDERR.puts "CSV.parse failed with string: #{@raw_response[:string]}" if self.debug
         raise e

@@ -1,7 +1,9 @@
 require "rspec"
 require "awesome_print"
 require "vcr"
-require 'coveralls'
+require "coveralls"
+require "pry"
+
 Coveralls.wear!
 
 RSpec.configure do |config|
@@ -10,11 +12,15 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.treat_symbols_as_metadata_keys_with_true_values = true
 
-  config.before(:each) do
-    Collmex.setup_login_data({username: "8866413", password: "2291502", customer_id: "104156"})
+  config.before do
+    Collmex.setup_login_data(
+      username:    ENV["COLLMEX_USER"],
+      password:    ENV["COLLMEX_PASSWORD"],
+      customer_id: ENV["COLLMEX_CUSTOMER_ID"]
+    )
   end
 
-  config.after(:each) do
+  config.after do
     Collmex.reset_login_data
   end
 end
