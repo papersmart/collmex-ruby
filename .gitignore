@@ -3,3 +3,8 @@
 README.html
 Gemfile.lock
 coverage
+.idea*
+fixtures/vcr_cassettes/*
+README.html
+collmex-ruby-*.gem
+.env
