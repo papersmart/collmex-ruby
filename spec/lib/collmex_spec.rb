@@ -3,12 +3,6 @@ require 'yaml'
 require 'collmex'
 require "vcr"
 
-describe Collmex do
-  it { is_expected.to respond_to :username    }
-  it { is_expected.to respond_to :password    }
-  it { is_expected.to respond_to :customer_id }
-end
-
 describe "CollmexIntegration" do
   it "works with the long form" do
     request = Collmex::Request.new

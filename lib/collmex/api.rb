@@ -23,7 +23,7 @@ module Collmex
         else
           fail "Could not find a Collmex::Api::Line class for \"#{identifier}\""
         end
-      elsif line.is_a?(String) && parsed_line = CSV.parse_line(line, Collmex.csv_opts)
+      elsif line.is_a?(String) && parsed_line = CSV.parse_line(line, Collmex.config.csv_options)
         identifier = parsed_line.first.split("_").map{ |s| s.downcase.capitalize }.join
         if self.line_class_exists?(identifier)
           Collmex::Api.const_get(identifier).new(parsed_line)
@@ -126,7 +126,7 @@ module Collmex
               hash[field_spec[:name]] = Collmex::Api.parse_field(data[field_spec[:name]], field_spec[:type])
             end
           end
-        elsif data.is_a?(String) && parsed = CSV.parse_line(data,Collmex.csv_opts)
+        elsif data.is_a?(String) && parsed = CSV.parse_line(data, Collmex.config.csv_options)
           fields_spec.each_with_index do |field_spec, index|
             if !data[index].nil? && !field_spec.has_key?(:fix)
               hash[field_spec[:name]] = Collmex::Api.parse_field(parsed[index], field_spec[:type])
@@ -166,7 +166,7 @@ module Collmex
         self.class.specification.each do |spec|
           array << Collmex::Api.stringify(@hash[spec[:name]], spec[:type])
         end
-        CSV.generate_line(array, Collmex.csv_opts)
+        CSV.generate_line(array, Collmex.config.csv_options)
       end
 
       def to_h

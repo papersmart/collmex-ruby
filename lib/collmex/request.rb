@@ -26,14 +26,18 @@ module Collmex
       end
     end
 
-    def initialize
+    def initialize(config = Collmex.config)
       @commands     = []
       @raw_response = {}
+      @config       = config
 
-      if Collmex.username.nil? || Collmex.password.nil? || Collmex.customer_id.nil?
-        fail "No credentials for collmex given"
+      if @config.user.nil? || @config.password.nil? || @config.customer_id.nil?
+        fail "No credentials for Collmex given."
       else
-        add_command Collmex::Api::Login.new({username: Collmex.username, password: Collmex.password})
+        add_command Collmex::Api::Login.new(
+          username: @config.user,
+          password: @config.password
+        )
       end
     end
 
@@ -42,8 +46,9 @@ module Collmex
       cmd
     end
 
-    def self.uri
-      URI.parse "https://www.collmex.de/cgi-bin/cgi.exe\?#{Collmex.customer_id},0,data_exchange"
+    def self.uri(customer_id = Collmex.config.customer_id)
+      fail "No customer id given." unless customer_id
+      URI.parse("https://www.collmex.de/cgi-bin/cgi.exe\?#{customer_id},0,data_exchange")
     end
 
     def self.header_attributes
@@ -80,7 +85,7 @@ module Collmex
       @raw_response[:string] = response.body.encode("UTF-8")
 
       begin
-        @raw_response[:array] = CSV.parse(@raw_response[:string], Collmex.csv_opts)
+        @raw_response[:array] = CSV.parse(@raw_response[:string], Collmex.config.csv_options)
       rescue => e
         STDERR.puts "CSV.parse failed with string: #{@raw_response[:string]}" if self.debug
         raise e

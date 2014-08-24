@@ -1,27 +1,15 @@
-require 'dotenv'
+require "dotenv"
 Dotenv.load
 
 module Collmex
-  class << self
-    attr_accessor :username, :password, :customer_id
+  autoload :Configuration, "collmex/configuration"
 
-    def setup_login_data(logindata)
-      Collmex.username    = logindata[:username]
-      Collmex.password    = logindata[:password]
-      Collmex.customer_id = logindata[:customer_id]
-    end
+  def self.config
+    Configuration.instance
+  end
 
-    def reset_login_data
-      Collmex.username    = nil
-      Collmex.password    = nil
-      Collmex.customer_id = nil
-    end
-
-    def csv_opts
-      {
-        :col_sep => ";"
-      }
-    end
+  def self.configure
+    yield config
   end
 end
 
