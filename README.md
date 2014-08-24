@@ -1,6 +1,6 @@
 # Collmex-Ruby
 
-A Ruby lib for speaking with the german accounting software collmex.
+A  Ruby lib for speaking with the german accounting software collmex.
 
 ## Add it to your project
 
