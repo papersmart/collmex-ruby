@@ -2,7 +2,7 @@ class Collmex::Api::Accdoc < Collmex::Api::Line
 
   def self.specification
     [
-      { name: :identifyer       , type: :string    , fix: "ACCDOC"          },
+      { name: :identifier       , type: :string    , fix: "ACCDOC"          },
       { name: :company_id       , type: :integer   , default: 1             },
       { name: :business_year    , type: :integer                            },
       { name: :id               , type: :integer                            },

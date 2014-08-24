@@ -31,7 +31,7 @@ module Collmex
           fail "Could not find a Collmex::Api::Line class for \"#{identifier}\""
         end
       else
-        fail "Could not find a Collmex::Api::Line class for \"#{identifyer}\" (\"#{line.first}\")"
+        fail "Could not find a Collmex::Api::Line class for \"#{identifier}\" (\"#{line.first}\")"
       end
     end
 

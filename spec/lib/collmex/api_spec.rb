@@ -565,7 +565,7 @@ describe Collmex::Api::AccbalGet do
   it_behaves_like "Collmex Api Command"
 
   spec = [
-    { name: :identifyer,             type: :string,  fix: "ACCBAL_GET"        },
+    { name: :identifier,             type: :string,  fix: "ACCBAL_GET"        },
     { name: :company_id,             type: :integer, default: 1               },
     { name: :fiscal_year,            type: :integer, default: Date.today.year },
     { name: :date_to,                type: :date                              },

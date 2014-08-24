@@ -1,7 +1,7 @@
 class Collmex::Api::Message < Collmex::Api::Line
   def self.specification
     [
-      { name: :identifyer       , type: :string    , fix: "MESSAGE"         },
+      { name: :identifier       , type: :string    , fix: "MESSAGE"         },
       { name: :type             , type: :string                             },
       { name: :id               , type: :integer                            },
       { name: :text             , type: :string                             },

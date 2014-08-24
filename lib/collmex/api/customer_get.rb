@@ -1,7 +1,7 @@
 class Collmex::Api::CustomerGet < Collmex::Api::Line
   def self.specification
     [
-      { name: :identifyer       , type: :string    , fix: "CUSTOMER_GET"    },
+      { name: :identifier       , type: :string    , fix: "CUSTOMER_GET"    },
       { name: :id               , type: :integer                            },
       { name: :company_id       , type: :integer   , default: 1             },
       { name: :searchtext       , type: :string                             },

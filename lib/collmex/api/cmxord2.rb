@@ -1,7 +1,7 @@
 class Collmex::Api::Cmxord2 < Collmex::Api::Line
   def self.specification
     [
-      {name: :identifyer, type: :string,   fix: "CMXORD-2"},
+      {name: :identifier, type: :string,   fix: "CMXORD-2"},
       {name: :order_id, type: :integer},
       {name: :position, type: :integer},
       {name: :order, type: :integer}, # Should be left blank

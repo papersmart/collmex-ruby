@@ -1,7 +1,7 @@
 class Collmex::Api::SalesOrderGet < Collmex::Api::Line
   def self.specification
     [
-      {name: :identifyer,             type: :string, fix: "SALES_ORDER_GET"},
+      {name: :identifier,             type: :string, fix: "SALES_ORDER_GET"},
       {name: :order_id,               type: :string},
       {name: :company_id,             type: :integer},
       {name: :customer_id,            type: :integer},
