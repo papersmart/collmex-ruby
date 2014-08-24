@@ -16,10 +16,10 @@ In your code (in a rails-projekt you might create a config/initializers/collmex.
 
 ```ruby
 Collmex.configure do |config|
-  user         = ENV["COLLMEX_USER"]
-  password     = ENV["COLLMEX_PASSWORD"]
-  customer_id  = ENV["COLLMEX_CUSTOMER_ID"]
-  csv_options  = { col_sep: ";" }
+  config.user         = ENV["COLLMEX_USER"]
+  config.password     = ENV["COLLMEX_PASSWORD"]
+  config.customer_id  = ENV["COLLMEX_CUSTOMER_ID"]
+  config.csv_options  = { col_sep: ";" }
 end
 ```
 
