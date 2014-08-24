@@ -1,11 +1,14 @@
+require "simplecov"
+SimpleCov.start
+
 require "rspec"
 require "awesome_print"
 require "vcr"
-require "coveralls"
 require "pry"
+require "ostruct"
 require "collmex"
 
-Coveralls.wear!
+#Coveralls.wear!
 
 RSpec.configure do |config|
   config.color = true
