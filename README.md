@@ -1,6 +1,6 @@
 # Collmex-Ruby
 
-A  Ruby lib for speaking with the german accounting software collmex.
+A Ruby lib for speaking with the german accounting software collmex.
 
 ## Add it to your project
 
@@ -12,10 +12,15 @@ gem "collmex-ruby", require: "collmex"
 
 ## Configuration
 
-In your code (in a rails-projekt you might create a config/initializers/collmex-ruby.rb) you can setup your credentials:
+In your code (in a rails-projekt you might create a config/initializers/collmex.rb) you can setup your credentials - the defaults are shown below so you don't need to do anything if that fits your needs:
 
 ```ruby
-Collmex.setup_login_data( username: "123456", password: "123456", customer_id: "123456" )
+Collmex.configure do |config|
+  user         = ENV["COLLMEX_USER"]
+  password     = ENV["COLLMEX_PASSWORD"]
+  customer_id  = ENV["COLLMEX_CUSTOMER_ID"]
+  csv_options  = { col_sep: ";" }
+end
 ```
 
 ## Use it
