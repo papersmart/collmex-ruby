@@ -2,6 +2,7 @@ require "simplecov"
 SimpleCov.start
 
 require "rspec"
+require "rspec/its"
 require "awesome_print"
 require "vcr"
 require "pry"
@@ -9,6 +10,8 @@ require "ostruct"
 require "collmex"
 
 #Coveralls.wear!
+
+Dir[File.expand_path("../support/**/*.rb", __FILE__)].each { |f| require f }
 
 RSpec.configure do |config|
   config.color = true

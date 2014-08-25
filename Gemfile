@@ -9,6 +9,7 @@ group :development, :test do
   gem "rake"
   #gem 'coveralls', require: false
   gem 'rspec'
+  gem 'rspec-its'
   gem "awesome_print"
   gem 'webmock'
   gem 'vcr'

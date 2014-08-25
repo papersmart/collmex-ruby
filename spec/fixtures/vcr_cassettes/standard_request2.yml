@@ -2,11 +2,11 @@
 http_interactions:
 - request:
     method: post
-    uri: https://www.collmex.de/cgi-bin/cgi.exe?123421,0,data_exchange
+    uri: https://www.collmex.de/cgi-bin/cgi.exe?104156,0,data_exchange
     body:
       encoding: ISO-8859-1
       string: |
-        LOGIN;5329304;2305054
+        LOGIN;8866413;2291502
         CUSTOMER_GET;9999;1;"";"";"";"";"";"";"";"";"";""
     headers:
       Content-Type:
@@ -20,28 +20,22 @@ http_interactions:
   response:
     status:
       code: 200
-      message: OK
+      message: Orl Korrect
     headers:
-      Content-Length:
-      - '312'
       Content-Type:
-      - text/plain; name="193537_12432_res.tmp"
+      - text/csv
       Server:
       - Microsoft-IIS/8.0
-      Content-Disposition:
-      - inline; filename="193537_12432_res.tmp"
       Date:
-      - Tue, 19 Aug 2014 17:35:36 GMT
+      - Mon, 25 Aug 2014 11:46:35 GMT
+      Connection:
+      - close
+      Content-Length:
+      - '41'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        Q01YS05EOzk5OTk7MSBQYXBlcnNtYXJ0IEdtYkg7Ozs7O0FsbGdlbWVpbmVy
-        IEdlc2No5GZ0c3BhcnRuZXI7Ozs7OzswO0RFOzs7Ozs7Ozs7OzswIDMwIFRh
-        Z2Ugb2huZSBBYnp1ZzswIDs7OzEgRS1NYWlsOzs7OzAgU3RhbmRhcmQ7RVVS
-        OzA7OzswOzA7OzAgRGV1dHNjaDs7Ozk5OTk7OzANCk1FU1NBR0U7UzsyMDgw
-        MTM7Q1VTVE9NRVJfR0VUIGhhdCAxIERhdGVuc+R0emUgenVy/GNrZ2VnZWJl
-        bg0KTUVTU0FHRTtTOzIwNDAyMDtEYXRlbvxiZXJ0cmFndW5nIGVyZm9sZ3Jl
-        aWNoLiBFcyB3dXJkZW4gMSBEYXRlbnPkdHplIHZlcmFyYmVpdGV0Lg0K
+        TUVTU0FHRTtFOzIwMDAwNDtVbmf8bHRpZ2UgS3VuZGVubnVtbWVyDQo=
     http_version: 
-  recorded_at: Tue, 19 Aug 2014 17:35:43 GMT
+  recorded_at: Mon, 25 Aug 2014 11:46:51 GMT
 recorded_with: VCR 2.9.2
