@@ -15,7 +15,7 @@ describe Collmex::Api::Line do
   filled_csv   = "BLA;0,20;5,10;10;19851012\n"
 
   subject { described_class.new }
-  before  { allow(subject.class).to receive(:specification).and_return(sample_spec) }
+  before  { allow(described_class).to receive(:specification).and_return(sample_spec) }
 
   it { is_expected.to respond_to :to_csv }
   it { is_expected.to respond_to :to_a }
