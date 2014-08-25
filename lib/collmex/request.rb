@@ -22,7 +22,7 @@ module Collmex
     def enqueue(command, args = {})
       if command.is_a? Symbol
         add_command Collmex::Api::const_get(self.class.classify(command)).new(args)
-      elsif Collmex::Api.is_a_collmex_api_line_obj?(command)
+      elsif Collmex::Api.allowed_command?(command)
         add_command command
       else
         return false

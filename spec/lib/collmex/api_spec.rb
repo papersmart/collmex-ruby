@@ -1,25 +1,25 @@
 require "spec_helper"
 
 describe Collmex::Api do
-  describe ".is_a_collmex_api_line_obj?" do
-    it "should fail for an array" do
-      a = Array.new
-      expect(described_class.is_a_collmex_api_line_obj?(a)).to be_falsey
+
+  describe ".allowed_command?" do
+    it "returns false for an Array" do
+      expect(described_class.allowed_command?([])).to be_falsey
     end
 
-    it "should succeed for a Collmex::Api Object" do
-      b = Collmex::Api::AccdocGet.new()
-      expect(described_class.is_a_collmex_api_line_obj?(b)).to be_truthy
+    it "returns true for a Collmex::Api Object" do
+      obj = described_class::AccdocGet.new
+      expect(described_class.allowed_command?(obj)).to be_truthy
     end
   end
 
   describe ".line_class_exists?" do
     it "should be true for a existing class" do
-      expect(Collmex::Api.line_class_exists?("Line")).to be true
+      expect(described_class.line_class_exists?("Line")).to be true
     end
 
     it "should be false for a non existant class" do
-      expect(Collmex::Api.line_class_exists?("asdasdasdasdaaBla")).to be false
+      expect(described_class.line_class_exists?("asdasdasdasdaaBla")).to be false
     end
   end
 
@@ -34,6 +34,12 @@ describe Collmex::Api do
       { type: :integer,     input: 2.2,               outcome: "2" },
       { type: :integer,     input: -2.2,              outcome: "-2" },
       { type: :integer,     input: "-2.2",            outcome: "-2" },
+
+      { type: :int,         input: nil,               outcome: "" },
+      { type: :int,         input: 2,                 outcome: "2" },
+      { type: :int,         input: 2.2,               outcome: "2" },
+      { type: :int,         input: -2.2,              outcome: "-2" },
+      { type: :int,         input: "-2.2",            outcome: "-2" },
 
       { type: :float,       input: nil,               outcome: "" },
       { type: :float,       input: 2.2,               outcome: "2,20" },
@@ -63,13 +69,13 @@ describe Collmex::Api do
 
     context "when given a valid line" do
       context "as an array" do
-        let(:line) { Collmex::Api::Login.new([12,34]).to_a }
-        it { is_expected.to be_a(Collmex::Api::Line) }
+        let(:line) { described_class::Login.new([12,34]).to_a }
+        it { is_expected.to be_a(described_class::Line) }
       end
 
       context "as a CSV string" do
-        let(:line) { Collmex::Api::Login.new([12,34]).to_csv }
-        it { is_expected.to be_a(Collmex::Api::Line) }
+        let(:line) { described_class::Login.new([12,34]).to_csv }
+        it { is_expected.to be_a(described_class::Line) }
       end
     end
 
@@ -102,6 +108,13 @@ describe Collmex::Api do
       { type: :integer,     input: 2,                 outcome: 2 },
       { type: :integer,     input: 2.2,               outcome: 2 },
       { type: :integer,     input: nil,               outcome: nil },          # <= WARNING
+
+      { type: :int,         input: "2,3",             outcome: 2 },          # <= WARNING
+      { type: :int,         input: "2",               outcome: 2 },
+      { type: :int,         input: "2.2",             outcome: 2 },
+      { type: :int,         input: 2,                 outcome: 2 },
+      { type: :int,         input: 2.2,               outcome: 2 },
+      { type: :int,         input: nil,               outcome: nil },          # <= WARNING
 
       { type: :float,       input: "2",               outcome: 2.0 },
       { type: :float,       input: 2,                 outcome: 2.0 },

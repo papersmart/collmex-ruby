@@ -2,17 +2,17 @@ require "csv"
 
 module Collmex
   module Api
-    # Check if a given object is a Collmex::Api object
-    def self.is_a_collmex_api_line_obj?(obj)
-      !!obj.class.name.index("Collmex::Api")
+    # Check if a given object is a subclass of Collmex::Api::Line.
+    def self.allowed_command?(obj)
+      obj.is_a? Collmex::Api::Line
     end
 
     # Check if a Line class exists for the given class name
     def self.line_class_exists?(class_name)
       klass = Collmex::Api.const_get(class_name)
-      return klass.is_a?(Class)
+      klass.is_a?(Class)
     rescue NameError
-      return false
+      false
     end
 
     def self.parse_line(line)
@@ -39,12 +39,11 @@ module Collmex
     # a typecasted object
     def self.parse_field(value, type, opts = nil)
       case type
-      when :string    then value.to_s
-      when :date      then Date.parse(value.to_s) unless value.nil?
-      when :int       then value.to_i unless value.nil?
-      when :integer   then value.to_i unless value.nil?
-      when :float     then value.to_s.gsub(',','.').to_f unless value.nil?
-      when :currency  then Collmex::Api.parse_currency(value) unless value.nil?
+      when :string        then value.to_s
+      when :date          then Date.parse(value.to_s) unless value.nil?
+      when :int, :integer then value.to_i unless value.nil?
+      when :float         then value.to_s.gsub(',','.').to_f unless value.nil?
+      when :currency      then Collmex::Api.parse_currency(value) unless value.nil?
       end
     end
 
@@ -66,11 +65,11 @@ module Collmex
     def self.stringify(data, type)
       return "" if data.nil?
       case type
-      when :integer  then data.to_i.to_s
-      when :string   then data
-      when :float    then sprintf("%.2f", data).gsub('.', ',')
-      when :currency then stringify_currency(data)
-      when :date     then data.strftime("%Y%m%d")
+      when :int, :integer then data.to_i.to_s
+      when :string        then data
+      when :float         then sprintf("%.2f", data).gsub('.', ',')
+      when :currency      then stringify_currency(data)
+      when :date          then data.strftime("%Y%m%d")
       end
     end
 
