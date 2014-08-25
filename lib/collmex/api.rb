@@ -26,7 +26,7 @@ module Collmex
       when :date          then Date.parse(value.to_s) unless value.nil?
       when :int, :integer then value.to_i unless value.nil?
       when :float         then value.to_s.gsub(',','.').to_f unless value.nil?
-      when :currency      then Collmex::Api.parse_currency(value) unless value.nil?
+      when :currency      then parse_currency(value) unless value.nil?
       end
     end
 
@@ -57,15 +57,17 @@ module Collmex
     end
 
     # given an object we want to treat as currency, convert it to a string
-    def self.stringify_currency(data)
-      case
-      when data.is_a?(Integer) then sprintf("%.2f",(data.to_f / 100)).gsub('.',',')
-      when data.is_a?(Float) then sprintf("%.2f",(data.to_f)).gsub('.',',')
-      when data.is_a?(String)
-        int = self.parse_currency(data)
-        sprintf("%.2f",(int.to_f / 100)).gsub('.',',')
-      else data
-      end
+    def self.stringify_currency(amount)
+      amount = case amount
+               when String
+                 parse_currency(amount) / 100.0
+               when Integer
+                 amount / 100.0
+               when Float
+                 amount
+               end
+
+      sprintf("%.2f", amount).gsub(".", ",")
     end
   end
 end

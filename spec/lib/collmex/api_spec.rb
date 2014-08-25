@@ -44,11 +44,11 @@ describe Collmex::Api do
       { type: :currency,    input: "-2,23",           outcome: "-2,23" },   # <= WARNING
       { type: :currency,    input: -2.00,             outcome: "-2,00" },
       { type: :currency,    input: -2.90,             outcome: "-2,90" },
-      { type: :currency,    input: -2.999,             outcome: "-3,00" },
+      { type: :currency,    input: -2.999,            outcome: "-3,00" },
       { type: :currency,    input: -102.90,           outcome: "-102,90" },    # <= WARNING
     ]
     tests.each do |test|
-      it "should represent #{test[:type]} \"#{test[:input].inspect}\" as \"#{test[:outcome]}\"" do
+      it "represents #{test[:type]} \"#{test[:input].inspect}\" as \"#{test[:outcome]}\"" do
         expect(described_class.stringify(test[:input],test[:type])).to be === test[:outcome]
       end
     end
