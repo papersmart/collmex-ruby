@@ -12,6 +12,6 @@ group :development, :test do
   gem "awesome_print"
   gem 'webmock'
   gem 'vcr'
-  gem "pry"
+  gem "pry-byebug"
   gem "simplecov"
 end
