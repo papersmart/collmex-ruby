@@ -87,18 +87,6 @@ module Collmex
   end
 end
 
-require "collmex/api/line"
-require "collmex/api/login"
-require "collmex/api/cmxknd"
-require "collmex/api/message"
-require "collmex/api/customer_get"
-require "collmex/api/accdoc_get"
-require "collmex/api/accdoc"
-require "collmex/api/cmxord2"
-require "collmex/api/sales_order_get"
-require "collmex/api/accbal_get"
-require "collmex/api/accbal"
-
 module Collmex
   module Api
     # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_adressgruppen
@@ -772,7 +760,6 @@ module Collmex
           { name: :line       , type: :integer                  }
         ]
       end
-
 
       def success?
         if @hash.key?(:type) && !@hash[:type].empty? && @hash[:type] == "S"
