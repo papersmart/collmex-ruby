@@ -13,16 +13,6 @@ describe Collmex::Api do
     end
   end
 
-  describe ".line_class_exists?" do
-    it "should be true for a existing class" do
-      expect(described_class.line_class_exists?("Line")).to be true
-    end
-
-    it "should be false for a non existant class" do
-      expect(described_class.line_class_exists?("asdasdasdasdaaBla")).to be false
-    end
-  end
-
   describe ".stringify_field" do
     tests = [
       { type: :string,      input: "asd",             outcome: "asd" },
@@ -69,21 +59,23 @@ describe Collmex::Api do
 
     context "when given a valid line" do
       context "as an array" do
-        let(:line) { described_class::Login.new([12,34]).to_a }
+        let(:line) { described_class::Login.new([12, 34]).to_a }
         it { is_expected.to be_a(described_class::Line) }
       end
 
       context "as a CSV string" do
-        let(:line) { described_class::Login.new([12,34]).to_csv }
+        let(:line) { described_class::Login.new([12, 34]).to_csv }
         it { is_expected.to be_a(described_class::Line) }
       end
     end
 
     context "when given an invalid line" do
-      let(:line) { ["OMG", 2,3,4,5,6] }
+      let(:line) { ["OMG", 2, 3, 4, 5, 6] }
 
       it "throws an error" do
-        expect { subject }.to raise_error(RuntimeError, "Could not find a Collmex::Api::Line class for \"Omg\"")
+        expect { subject }.to raise_error(RuntimeError,
+          "Could not find a subclass of Collmex::Api::Line named \"Omg\""
+        )
       end
     end
   end

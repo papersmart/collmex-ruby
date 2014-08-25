@@ -7,32 +7,15 @@ module Collmex
       obj.is_a? Collmex::Api::Line
     end
 
-    # Check if a Line class exists for the given class name
-    def self.line_class_exists?(class_name)
-      klass = Collmex::Api.const_get(class_name)
-      klass.is_a?(Class)
-    rescue NameError
-      false
-    end
+    def self.parse_line(line, csv_options = Collmex.config.csv_options)
+      line   = Array(line).join(csv_options[:col_sep])
+      parsed = CSV.parse_line(line, csv_options)
+      klass  = parsed.first.split("_").map(&:capitalize).join
 
-    def self.parse_line(line)
-      if line.is_a?(Array) and line.first.is_a?(String)
-        identifier = line.first.split("_").map{ |s| s.downcase.capitalize }.join
-        if self.line_class_exists?(identifier)
-          Collmex::Api.const_get(identifier).new(line)
-        else
-          fail "Could not find a Collmex::Api::Line class for \"#{identifier}\""
-        end
-      elsif line.is_a?(String) && parsed_line = CSV.parse_line(line, Collmex.config.csv_options)
-        identifier = parsed_line.first.split("_").map{ |s| s.downcase.capitalize }.join
-        if self.line_class_exists?(identifier)
-          Collmex::Api.const_get(identifier).new(parsed_line)
-        else
-          fail "Could not find a Collmex::Api::Line class for \"#{identifier}\""
-        end
-      else
-        fail "Could not find a Collmex::Api::Line class for \"#{identifier}\" (\"#{line.first}\")"
-      end
+      const_get(klass).new(parsed)
+
+    rescue NameError
+      raise "Could not find a subclass of Collmex::Api::Line named \"#{klass}\""
     end
 
     # Given a field's content, we parse it here and return
