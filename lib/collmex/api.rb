@@ -99,9 +99,9 @@ module Collmex
       def self.default_hash
         hash = {}
         self.specification.each_with_index do |field_spec, index|
-          if field_spec.has_key? :fix
+          if field_spec.key? :fix
             hash[field_spec[:name]] = field_spec[:fix]
-          elsif field_spec.has_key? :default
+          elsif field_spec.key? :default
             hash[field_spec[:name]] = field_spec[:default]
           else
             hash[field_spec[:name]] = Collmex::Api.parse_field(nil, field_spec[:type])
@@ -116,19 +116,19 @@ module Collmex
 
         if data.is_a? Array
           fields_spec.each_with_index do |field_spec, index|
-            if !data[index].nil? && !field_spec.has_key?(:fix)
+            if !data[index].nil? && !field_spec.key?(:fix)
               hash[field_spec[:name]] = Collmex::Api.parse_field(data[index], field_spec[:type])
             end
           end
         elsif data.is_a? Hash
           fields_spec.each_with_index do |field_spec, index|
-            if data.key?(field_spec[:name]) && !field_spec.has_key?(:fix)
+            if data.key?(field_spec[:name]) && !field_spec.key?(:fix)
               hash[field_spec[:name]] = Collmex::Api.parse_field(data[field_spec[:name]], field_spec[:type])
             end
           end
         elsif data.is_a?(String) && parsed = CSV.parse_line(data, Collmex.config.csv_options)
           fields_spec.each_with_index do |field_spec, index|
-            if !data[index].nil? && !field_spec.has_key?(:fix)
+            if !data[index].nil? && !field_spec.key?(:fix)
               hash[field_spec[:name]] = Collmex::Api.parse_field(parsed[index], field_spec[:type])
             end
           end
@@ -876,7 +876,7 @@ module Collmex
 
 
       def success?
-        if @hash.has_key?(:type) && !@hash[:type].empty? && @hash[:type] == "S"
+        if @hash.key?(:type) && !@hash[:type].empty? && @hash[:type] == "S"
           true
         else
           false
@@ -884,7 +884,7 @@ module Collmex
       end
 
       def result
-        if @hash.has_key?(:type) && !@hash[:type].empty?
+        if @hash.key?(:type) && !@hash[:type].empty?
           case @hash[:type]
           when "S" then :success
           when "W" then :warning

@@ -11,7 +11,7 @@ class Collmex::Api::Message < Collmex::Api::Line
 
 
   def success?
-    if @hash.has_key?(:type) && !@hash[:type].empty? && @hash[:type] == "S"
+    if @hash.key?(:type) && !@hash[:type].empty? && @hash[:type] == "S"
       true
     else
       false
@@ -19,7 +19,7 @@ class Collmex::Api::Message < Collmex::Api::Line
   end
 
   def result
-    if @hash.has_key?(:type) && !@hash[:type].empty?
+    if @hash.key?(:type) && !@hash[:type].empty?
       case @hash[:type]
       when "S" then :success
       when "W" then :warning
