@@ -1,7 +1,7 @@
 class Collmex::Api::Cmxknd < Collmex::Api::Line
   def self.specification
     [
-      { name: :identifyer       , type: :string    , fix: "CMXKND"          },
+      { name: :identifier       , type: :string    , fix: "CMXKND"          },
       { name: :customer_id      , type: :integer                            },
       { name: :company_id       , type: :integer   , default: 1             },
       { name: :salutation       , type: :string                             },

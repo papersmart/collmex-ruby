@@ -2,49 +2,31 @@ require "csv"
 
 module Collmex
   module Api
-    # Check if a given object is a Collmex::Api object
-    def self.is_a_collmex_api_line_obj?(obj)
-      !!obj.class.name.index("Collmex::Api")
+    # Check if a given object is a subclass of Collmex::Api::Line.
+    def self.allowed_command?(obj)
+      obj.is_a? Collmex::Api::Line
     end
 
-    # Check if a Line class exists for the given class name
-    def self.line_class_exists?(class_name)
-      klass = Collmex::Api.const_get(class_name)
-      return klass.is_a?(Class)
+    def self.parse_line(line, csv_options = Collmex.config.csv_options)
+      line   = Array(line).join(csv_options[:col_sep])
+      parsed = CSV.parse_line(line, csv_options)
+      klass  = parsed.first.split("_").map(&:capitalize).join
+
+      const_get(klass).new(parsed)
+
     rescue NameError
-      return false
-    end
-
-    def self.parse_line(line)
-      if line.is_a?(Array) and line.first.is_a?(String)
-        identifier = line.first.split("_").map{ |s| s.downcase.capitalize }.join
-        if self.line_class_exists?(identifier)
-          Collmex::Api.const_get(identifier).new(line)
-        else
-          fail "Could not find a Collmex::Api::Line class for \"#{identifier}\""
-        end
-      elsif line.is_a?(String) && parsed_line = CSV.parse_line(line, Collmex.config.csv_options)
-        identifier = parsed_line.first.split("_").map{ |s| s.downcase.capitalize }.join
-        if self.line_class_exists?(identifier)
-          Collmex::Api.const_get(identifier).new(parsed_line)
-        else
-          fail "Could not find a Collmex::Api::Line class for \"#{identifier}\""
-        end
-      else
-        fail "Could not find a Collmex::Api::Line class for \"#{identifyer}\" (\"#{line.first}\")"
-      end
+      raise "Could not find a subclass of Collmex::Api::Line named \"#{klass}\""
     end
 
     # Given a field's content, we parse it here and return
     # a typecasted object
     def self.parse_field(value, type, opts = nil)
       case type
-      when :string    then value.to_s
-      when :date      then Date.parse(value.to_s) unless value.nil?
-      when :int       then value.to_i unless value.nil?
-      when :integer   then value.to_i unless value.nil?
-      when :float     then value.to_s.gsub(',','.').to_f unless value.nil?
-      when :currency  then Collmex::Api.parse_currency(value) unless value.nil?
+      when :string        then value.to_s
+      when :date          then Date.parse(value.to_s) unless value.nil?
+      when :int, :integer then value.to_i unless value.nil?
+      when :float         then value.to_s.gsub(',','.').to_f unless value.nil?
+      when :currency      then parse_currency(value) unless value.nil?
       end
     end
 
@@ -66,139 +48,29 @@ module Collmex
     def self.stringify(data, type)
       return "" if data.nil?
       case type
-      when :integer  then data.to_i.to_s
-      when :string   then data
-      when :float    then sprintf("%.2f", data).gsub('.', ',')
-      when :currency then stringify_currency(data)
-      when :date     then data.strftime("%Y%m%d")
+      when :int, :integer then data.to_i.to_s
+      when :string        then data
+      when :float         then sprintf("%.2f", data).gsub('.', ',')
+      when :currency      then stringify_currency(data)
+      when :date          then data.strftime("%Y%m%d")
       end
     end
 
     # given an object we want to treat as currency, convert it to a string
-    def self.stringify_currency(data)
-      case
-      when data.is_a?(Integer) then sprintf("%.2f",(data.to_f / 100)).gsub('.',',')
-      when data.is_a?(Float) then sprintf("%.2f",(data.to_f)).gsub('.',',')
-      when data.is_a?(String)
-        int = self.parse_currency(data)
-        sprintf("%.2f",(int.to_f / 100)).gsub('.',',')
-      else data
-      end
+    def self.stringify_currency(amount)
+      amount = case amount
+               when String
+                 parse_currency(amount) / 100.0
+               when Integer
+                 amount / 100.0
+               when Float
+                 amount
+               end
+
+      sprintf("%.2f", amount).gsub(".", ",")
     end
   end
 end
-
-module Collmex
-  module Api
-    class Line
-
-      def self.specification
-        {}
-      end
-
-      def self.default_hash
-        hash = {}
-        self.specification.each_with_index do |field_spec, index|
-          if field_spec.has_key? :fix
-            hash[field_spec[:name]] = field_spec[:fix]
-          elsif field_spec.has_key? :default
-            hash[field_spec[:name]] = field_spec[:default]
-          else
-            hash[field_spec[:name]] = Collmex::Api.parse_field(nil, field_spec[:type])
-          end
-        end
-        hash
-      end
-
-      def self.hashify(data)
-        hash = self.default_hash
-        fields_spec = self.specification
-
-        if data.is_a? Array
-          fields_spec.each_with_index do |field_spec, index|
-            if !data[index].nil? && !field_spec.has_key?(:fix)
-              hash[field_spec[:name]] = Collmex::Api.parse_field(data[index], field_spec[:type])
-            end
-          end
-        elsif data.is_a? Hash
-          fields_spec.each_with_index do |field_spec, index|
-            if data.key?(field_spec[:name]) && !field_spec.has_key?(:fix)
-              hash[field_spec[:name]] = Collmex::Api.parse_field(data[field_spec[:name]], field_spec[:type])
-            end
-          end
-        elsif data.is_a?(String) && parsed = CSV.parse_line(data, Collmex.config.csv_options)
-          fields_spec.each_with_index do |field_spec, index|
-            if !data[index].nil? && !field_spec.has_key?(:fix)
-              hash[field_spec[:name]] = Collmex::Api.parse_field(parsed[index], field_spec[:type])
-            end
-          end
-        end
-        hash
-      end
-
-      def initialize(arg = nil)
-        #puts self.class.name
-        @hash = self.class.default_hash
-        @hash = @hash.merge(self.class.hashify(arg)) if !arg.nil?
-        if self.class.specification.empty? && self.class.name.to_s != "Collmex::Api::Line"
-          fail "#{self.class.name} has no specification"
-        end
-      end
-
-      def to_a
-        array = []
-        self.class.specification.each do |spec|
-          array << @hash[spec[:name]]
-        end
-        array
-      end
-
-      def to_stringified_array
-        array = []
-        self.class.specification.each do |spec|
-          array << Collmex::Api.stringify(@hash[spec[:name]], spec[:type])
-        end
-        array
-      end
-
-      def to_csv
-        array = []
-        self.class.specification.each do |spec|
-          array << Collmex::Api.stringify(@hash[spec[:name]], spec[:type])
-        end
-        CSV.generate_line(array, Collmex.config.csv_options)
-      end
-
-      def to_h
-        @hash
-      end
-
-      # given an object we want to treat as currency, convert it to a string
-      def self.stringify_currency(data)
-        case
-        when data.is_a?(Integer) then sprintf("%.2f",(data.to_f / 100)).gsub('.',',')
-        when data.is_a?(Float) then sprintf("%.2f",(data.to_f)).gsub('.',',')
-        when data.is_a?(String)
-          int = self.parse_currency(data)
-          sprintf("%.2f",(int.to_f / 100)).gsub('.',',')
-        else data
-        end
-      end
-    end
-  end
-end
-
-require "collmex/api/line"
-require "collmex/api/login"
-require "collmex/api/cmxknd"
-require "collmex/api/message"
-require "collmex/api/customer_get"
-require "collmex/api/accdoc_get"
-require "collmex/api/accdoc"
-require "collmex/api/cmxord2"
-require "collmex/api/sales_order_get"
-require "collmex/api/accbal_get"
-require "collmex/api/accbal"
 
 module Collmex
   module Api
@@ -874,9 +746,8 @@ module Collmex
         ]
       end
 
-
       def success?
-        if @hash.has_key?(:type) && !@hash[:type].empty? && @hash[:type] == "S"
+        if @hash.key?(:type) && !@hash[:type].empty? && @hash[:type] == "S"
           true
         else
           false
@@ -884,7 +755,7 @@ module Collmex
       end
 
       def result
-        if @hash.has_key?(:type) && !@hash[:type].empty?
+        if @hash.key?(:type) && !@hash[:type].empty?
           case @hash[:type]
           when "S" then :success
           when "W" then :warning

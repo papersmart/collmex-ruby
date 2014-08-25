@@ -1,7 +1,7 @@
 class Collmex::Api::AccdocGet < Collmex::Api::Line
   def self.specification
     [
-      { name: :identifyer       , type: :string    , fix: "ACCDOC_GET"     },
+      { name: :identifier       , type: :string    , fix: "ACCDOC_GET"     },
       { name: :company_id       , type: :integer   , default: 1             },
       { name: :business_year    , type: :integer                            },
       { name: :id               , type: :integer                            },
