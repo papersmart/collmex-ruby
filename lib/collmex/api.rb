@@ -399,58 +399,6 @@ module Collmex
       end
     end
 
-    # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_kunde
-    class Cmxknd < Line
-      def self.specification
-        [
-          { name: :identifier                     , type: :string  , fix: "CMXKND" },
-          { name: :id                             , type: :integer                 },
-          { name: :company_id                     , type: :integer , default: 1    },
-          { name: :salutation                     , type: :string                  },
-          { name: :title                          , type: :string                  },
-          { name: :firstname                      , type: :string                  },
-          { name: :lastname                       , type: :string                  },
-          { name: :company                        , type: :string                  },
-          { name: :department                     , type: :string                  },
-          { name: :street                         , type: :string                  },
-          { name: :zipcode                        , type: :string                  },
-          { name: :city                           , type: :string                  },
-          { name: :annotation                     , type: :string                  },
-          { name: :inactive                       , type: :integer                 },
-          { name: :country                        , type: :string                  },
-          { name: :phone                          , type: :string                  },
-          { name: :fax                            , type: :string                  },
-          { name: :email                          , type: :string                  },
-          { name: :account_number                 , type: :string                  },
-          { name: :bank_account_number            , type: :string                  },
-          { name: :iban                           , type: :string                  },
-          { name: :bic                            , type: :string                  },
-          { name: :bank_name                      , type: :string                  },
-          { name: :tax_id                         , type: :string                  },
-          { name: :vat_id                         , type: :string                  },
-          { name: :payment_condition              , type: :integer                 },
-          { name: :discount_group_id              , type: :integer                 },
-          { name: :delivery_terms                 , type: :string                  },
-          { name: :delivery_terms_additions       , type: :string                  },
-          { name: :output_media                   , type: :integer                 },
-          { name: :account_owner                  , type: :string                  },
-          { name: :address_group_id               , type: :integer                 },
-          { name: :ebay_member                    , type: :string                  },
-          { name: :price_group_id                 , type: :integer                 },
-          { name: :currency                       , type: :string                  },
-          { name: :agent_id                       , type: :integer                 },
-          { name: :cost_unit                      , type: :string                  },
-          { name: :due_to_review                  , type: :date                    },
-          { name: :delivery_block                 , type: :integer                 },
-          { name: :construction_services_provider , type: :integer                 },
-          { name: :delivery_id_at_customer        , type: :string                  },
-          { name: :output_language                , type: :integer                 },
-          { name: :email_cc                       , type: :string                  },
-          { name: :phone_2                        , type: :string                  }
-        ]
-      end
-    end
-
     class Cmxlif < Line # http://www.collmex.de/cgi-bin/cgi.exe?1005,1,help,daten_importieren_lieferant
       def self.specification
         [
