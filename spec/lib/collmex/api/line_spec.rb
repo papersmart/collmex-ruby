@@ -21,6 +21,7 @@ describe Collmex::Api::Line do
   it { is_expected.to respond_to :to_a }
   it { is_expected.to respond_to :to_s }
   it { is_expected.to respond_to :to_h }
+  it { is_expected.to respond_to :message }
 
   describe ".hashify" do
 

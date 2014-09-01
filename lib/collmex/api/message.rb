@@ -10,11 +10,11 @@ class Collmex::Api::Message < Collmex::Api::Line
   end
 
   def success?
-    if @hash.key?(:type) && !@hash[:type].empty? && @hash[:type] == "S"
-      true
-    else
-      false
-    end
+    result == :success
+  end
+
+  def failed?
+    !success?
   end
 
   def result
