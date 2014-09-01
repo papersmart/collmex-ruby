@@ -74,6 +74,10 @@ module Collmex
       def to_h
         @hash
       end
+
+      def message
+        to_h[:text]
+      end
     end
   end
 end
