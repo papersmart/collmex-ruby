@@ -10,7 +10,9 @@ module Collmex
 
     def self.run(&block)
       new.tap do |request|
-        request.instance_eval(&block) if block_given?
+        if block_given?
+          block.arity == 1 ? yield(request) : request.instance_eval(&block)
+        end
         request.execute
       end
     end
@@ -28,6 +30,8 @@ module Collmex
         return false
       end
     end
+
+    alias_method :add, :enqueue
 
     def initialize(config = Collmex.config)
       @commands     = []

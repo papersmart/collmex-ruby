@@ -16,6 +16,12 @@ describe Collmex::Request do
         enqueue "arr"
       end
     end
+
+    it "yields itself to the block if arity == 1" do
+      described_class.run do |request|
+        expect(request).to be_a(described_class)
+      end
+    end
   end
 
   describe ".uri" do
