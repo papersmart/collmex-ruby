@@ -8,6 +8,7 @@ module Collmex
     autoload :Line,          "collmex/api/line"
     autoload :Login,         "collmex/api/login"
     autoload :Cmxknd,        "collmex/api/cmxknd"
+    autoload :Cmxinv,        "collmex/api/cmxinv"
     autoload :Message,       "collmex/api/message"
     autoload :CustomerGet,   "collmex/api/customer_get"
     autoload :AccdocGet,     "collmex/api/accdoc_get"
