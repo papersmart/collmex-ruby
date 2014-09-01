@@ -9,7 +9,6 @@ class Collmex::Api::Message < Collmex::Api::Line
     ]
   end
 
-
   def success?
     if @hash.key?(:type) && !@hash[:type].empty? && @hash[:type] == "S"
       true
@@ -31,4 +30,3 @@ class Collmex::Api::Message < Collmex::Api::Line
     end
   end
 end
-
