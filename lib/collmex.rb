@@ -16,6 +16,7 @@ module Collmex
     autoload :SalesOrderGet, "collmex/api/sales_order_get"
     autoload :AccbalGet,     "collmex/api/accbal_get"
     autoload :Accbal,        "collmex/api/accbal"
+    autoload :NewObjectId,   "collmex/api/new_object_id"
   end
 
   def self.config

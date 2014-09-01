@@ -48,5 +48,3 @@ class Collmex::Api::Cmxknd < Collmex::Api::Line
     ]
   end
 end
-
-
