@@ -78,6 +78,14 @@ module Collmex
       def message
         to_h[:text]
       end
+
+      def success?
+        false # aka :undefined.. not a Message
+      end
+
+      def failed?
+        false # aka :undefined.. not a Message
+      end
     end
   end
 end

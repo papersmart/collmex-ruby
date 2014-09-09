@@ -48,6 +48,14 @@ module Collmex
       end
     end
 
+    def success?
+      response.any?(&:success?)
+    end
+
+    def failed?
+      !success?
+    end
+
     def add_command(cmd)
       @commands << cmd
       cmd
