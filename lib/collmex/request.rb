@@ -56,6 +56,22 @@ module Collmex
       !success?
     end
 
+    def errors
+      response.select(&:error?).map(&:message)
+    end
+
+    def warnings
+      response.select(&:warning?).map(&:message)
+    end
+
+    def messages
+      response.select(&:message?).map(&:message)
+    end
+
+    def new_ids
+      response.select(&:new_id?).map(&:id)
+    end
+
     def add_command(cmd)
       @commands << cmd
       cmd

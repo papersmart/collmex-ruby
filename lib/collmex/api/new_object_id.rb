@@ -7,4 +7,8 @@ class Collmex::Api::NewObjectId < Collmex::Api::Line
       { name: :line             , type: :integer                            },
     ]
   end
+
+  def new_id?
+    true
+  end
 end

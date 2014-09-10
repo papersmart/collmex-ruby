@@ -47,6 +47,9 @@ describe Collmex::Request do
     end
   end
 
+  describe "#success?" do
+  end
+
   describe "#add_command" do
 
     it "should add the given command to its command array" do

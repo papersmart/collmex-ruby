@@ -79,6 +79,26 @@ module Collmex
         to_h[:text]
       end
 
+      def error?
+        false
+      end
+
+      def warning?
+        false
+      end
+
+      def message?
+        message.present?
+      end
+
+      def new_id?
+        false
+      end
+
+      def id
+        to_h[:id]
+      end
+
       def success?
         false # aka :undefined.. not a Message
       end

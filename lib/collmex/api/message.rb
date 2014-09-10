@@ -17,6 +17,14 @@ class Collmex::Api::Message < Collmex::Api::Line
     !success?
   end
 
+  def error?
+    result == :error
+  end
+
+  def warning?
+    result == :warning
+  end
+
   def result
     if @hash.key?(:type) && !@hash[:type].empty?
       case @hash[:type]
